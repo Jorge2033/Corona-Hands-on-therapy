@@ -1,0 +1,275 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(246, 243, 237, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.brandIcon {
+  width: auto;
+  height: 35px;
+  flex-shrink: 0;
+  color: var(--navy);
+}
+
+.brandName {
+  font-family: var(--font-display), serif;
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--navy);
+  line-height: 1.1;
+}
+
+.brandName small {
+  display: block;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.links a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  position: relative;
+}
+
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.links a:hover::after {
+  transform: scaleX(1);
+}
+
+.navCta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Dropdown de teléfono / WhatsApp */
+.links li {
+  display: flex;
+  align-items: center;
+}
+
+/* Dropdown de nav (Team) */
+.navDropdownWrap {
+  position: relative;
+}
+
+.navDropdownTrigger {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  padding: 0;
+}
+
+.chevron {
+  width: 14px;
+  height: 14px;
+}
+
+.navDropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(15, 42, 74, 0.14);
+  overflow: hidden;
+  min-width: 180px;
+  z-index: 60;
+}
+
+.navDropdownItem {
+  display: block;
+  padding: 12px 18px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.navDropdownItem:hover {
+  background: var(--cream-2);
+}
+
+.phoneMenuWrap {
+  position: relative;
+}
+
+.navPhone {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--navy);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body), sans-serif;
+  padding: 8px 4px;
+}
+
+.phoneIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.phoneDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(15, 42, 74, 0.14);
+  overflow: hidden;
+  min-width: 220px;
+  z-index: 60;
+}
+
+.phoneDropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.phoneDropdownItem:hover {
+  background: var(--cream-2);
+}
+
+.dropdownIcon {
+  width: 17px;
+  height: 17px;
+  color: var(--blue);
+  flex-shrink: 0;
+}
+
+.menuToggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.menuIconSvg {
+  width: 26px;
+  height: 26px;
+  color: var(--navy);
+}
+
+/* Drawer móvil */
+.mobileDrawer {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 42, 74, 0.97);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  z-index: 100;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.mobileDrawer.open {
+  transform: translateY(0);
+}
+
+.mobileDrawer a {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: var(--font-display), serif;
+}
+
+.drawerPhone {
+  color: var(--gold) !important;
+}
+
+.drawerWhatsapp {
+  font-size: 16px !important;
+  font-family: var(--font-body), sans-serif !important;
+  background: #25d366;
+  color: #0a1e38 !important;
+  padding: 10px 22px;
+  border-radius: 999px;
+}
+
+.closeDrawer {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .links,
+  .navPhone span {
+    display: none;
+  }
+  .menuToggle {
+    display: block;
+  }
+}

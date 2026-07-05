@@ -1,0 +1,69 @@
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.teamCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 36px 28px;
+}
+
+.teamPhoto {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--cream-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  font-family: var(--font-display), serif;
+  font-weight: 600;
+  color: var(--blue);
+  font-size: 34px;
+}
+
+.teamPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.teamName {
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--navy);
+}
+
+.teamRole {
+  font-size: 14.5px;
+  color: var(--blue);
+  font-weight: 600;
+  margin: 4px 0 10px;
+}
+
+.teamNote {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 960px) {
+  .teamGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .teamGrid {
+    grid-template-columns: 1fr;
+  }
+}

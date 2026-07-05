@@ -1,0 +1,132 @@
+.section {
+  background: var(--navy);
+  color: var(--white);
+  padding: 80px 0;
+  overflow: hidden;
+}
+
+.title {
+  color: var(--white);
+  font-size: clamp(30px, 4vw, 42px);
+  margin-top: 10px;
+  margin-bottom: 44px;
+}
+
+.eyebrow {
+  color: #8fb6dc;
+}
+
+.eyebrow::before {
+  background: var(--gold);
+}
+
+/* Ventana para ocultar las tarjetas sobrantes */
+.carouselWindow {
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 10px;
+}
+
+/* El Track Deslizable adaptado al bucle infinito */
+.carouselTrack {
+  display: flex;
+  gap: 22px;
+  width: 100%;
+  /* Eliminamos el transition fijo, se controla desde el componente */
+  
+  /* Ajustamos la matemática para el array duplicado */
+  transform: translateX(calc(-1 * var(--current-index) * ((100% - 44px) / 3 + 22px)));
+}
+
+/* Tarjetas */
+.card {
+  /* En escritorio entran 3 exactamente restando los gaps */
+  flex: 0 0 calc((100% - 44px) / 3);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.stars {
+  color: var(--gold);
+  font-size: 15px;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+.quote {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #dce6ef;
+  margin-bottom: 18px;
+  flex-grow: 1;
+}
+
+.name {
+  font-weight: 700;
+  font-size: 14.5px;
+}
+
+.since {
+  font-size: 12.5px;
+  color: #8fa3b8;
+}
+
+/* Controles de las flechas inferiores */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.controlBtn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--white);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.controlBtn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.controlBtn:active {
+  transform: scale(0.95);
+}
+
+/* ==========================================================================
+   RESPONSIVO INFINITO ADAPTADO
+   ========================================================================== */
+@media (max-width: 960px) {
+  .carouselTrack {
+    /* Ajusta el cálculo del transform para avanzar de 2 en 2 en Tablets */
+    transform: translateX(calc(-1 * var(--current-index) * ((100% - 22px) / 2 + 22px)));
+  }
+  .card {
+    flex: 0 0 calc((100% - 22px) / 2);
+  }
+}
+
+@media (max-width: 640px) {
+  .carouselTrack {
+    /* Ajusta el cálculo para avanzar de 1 en 1 en Pantallas Móviles */
+    transform: translateX(calc(-1 * var(--current-index) * (100% + 22px)));
+  }
+  .card {
+    flex: 0 0 100%;
+  }
+}

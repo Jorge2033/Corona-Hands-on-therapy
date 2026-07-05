@@ -1,0 +1,272 @@
+.contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+}
+
+.title {
+  font-size: clamp(30px, 4vw, 42px);
+}
+
+.infoBlock {
+  margin-top: 28px;
+}
+
+.infoRow {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 22px;
+  align-items: flex-start;
+}
+
+.infoIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--cream-2);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoIconSvg {
+  width: 20px;
+  height: 20px;
+  color: var(--blue);
+}
+
+.infoTitle {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 3px;
+}
+
+.infoValue {
+  font-weight: 600;
+  font-size: 15.5px;
+  color: var(--navy);
+}
+
+.infoValue a {
+  text-decoration: none;
+  color: var(--navy);
+}
+
+.hoursBox {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-top: 8px;
+}
+
+.hoursRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 14.5px;
+  border-bottom: 1px solid var(--line);
+}
+
+.hoursRow:last-child {
+  border-bottom: none;
+}
+
+.hoursDay {
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.hoursTime {
+  color: var(--ink-soft);
+}
+
+.mapWrap {
+  margin-top: 20px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.mapWrap iframe {
+  width: 100%;
+  height: 220px;
+  border: 0;
+  display: block;
+}
+
+.formCard {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 36px;
+  height: fit-content;
+  min-height: 590px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.formCard h3 {
+  font-size: 23px;
+}
+
+.formCard > p {
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  margin-bottom: 26px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.field input,
+.field select,
+.field textarea {
+  font-family: var(--font-body), sans-serif;
+  font-size: 15px;
+  padding: 12px 14px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(29, 92, 151, 0.15);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.errorMsg {
+  color: #b3261e;
+  font-size: 13.5px;
+  margin: -4px 0 12px;
+}
+
+.formNote {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-top: 14px;
+  text-align: center;
+}
+
+.formNote a {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.submitBtn {
+  width: 100%;
+  justify-content: center;
+  font-size: 16px;
+  padding: 15px;
+  margin-top: 6px;
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.formCard form {
+  width: 100%;
+}
+
+/* ==========================================
+   ESTADO DE ÉXITO: sin la tarjeta blanca completa.
+   .successOuter solo reserva el espacio en el layout
+   (mismo alto que el form). .successCard es una
+   "píldora" redondeada que se ajusta al contenido
+   (check + título + texto), no al alto de la tarjeta.
+   ========================================== */
+.successOuter {
+  min-height: 590px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.successCard {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  background: var(--white);
+  border-radius: 32px;
+  padding: 48px 44px;
+  max-width: 340px;
+  box-shadow: 0 12px 32px rgba(15, 42, 74, 0.08);
+}
+
+.successIconCircle {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+}
+
+.successIconCircle svg {
+  width: 64px;
+  height: 64px;
+}
+
+.successTitle {
+  font-size: 24px;
+  margin: 0;
+}
+
+.successText {
+  color: var(--ink-soft);
+  font-size: 15px;
+  margin: 0;
+}
+
+@media (max-width: 960px) {
+  .contact {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}

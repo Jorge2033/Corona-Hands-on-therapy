@@ -1,6 +1,7 @@
 import Header from "@/components/Header/Header";
 import Hero from "@/components/Hero/Hero";
 import TrustStrip from "@/components/TrustStrip/TrustStrip";
+import PainAreas from "@/components/PainAreas/PainAreas";
 import Services from "@/components/Services/Services";
 import About from "@/components/About/About";
 import Testimonials from "@/components/Testimonials/Testimonials";
@@ -17,6 +18,7 @@ export default function Home() {
       <main id="main">
         <Hero />
         <TrustStrip />
+        <PainAreas />
         <Services />
         <About />
         <Testimonials />

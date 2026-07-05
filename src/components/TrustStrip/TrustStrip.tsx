@@ -7,15 +7,15 @@ export default function TrustStrip() {
       <div className={`container ${styles.inner}`}>
         <div className={styles.item}>
           <ShieldIcon className={styles.icon} />
-          Auto, work, home &amp; personal injury cases welcome
+          <span>Auto, work, home &amp; personal injury cases welcome</span>
         </div>
         <div className={styles.item}>
           <ClockIcon className={styles.icon} />
-          Same-week appointments available
+          <span>Same-week appointments available</span>
         </div>
         <div className={styles.item}>
           <BuildingIcon className={styles.icon} />
-          Located in Elmhurst, Queens
+          <span>Located in Elmhurst, Queens</span>
         </div>
       </div>
     </div>

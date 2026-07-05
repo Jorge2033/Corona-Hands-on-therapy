@@ -1,0 +1,94 @@
+.chatBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--cream);
+}
+
+.botBubble {
+  align-self: flex-start;
+  background: var(--navy);
+  color: var(--white);
+  padding: 10px 14px;
+  border-radius: 12px 12px 12px 2px;
+  font-size: 14px;
+  max-width: 85%;
+}
+
+.userBubble {
+  align-self: flex-end;
+  background: var(--blue);
+  color: var(--white);
+  padding: 10px 14px;
+  border-radius: 12px 12px 2px 12px;
+  font-size: 14px;
+  max-width: 85%;
+}
+
+.optionsWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.optionBtn {
+  align-self: flex-start;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  text-align: left;
+}
+
+.optionBtn:hover {
+  background: var(--cream-2);
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+  background: var(--white);
+}
+
+.inputRow input {
+  flex: 1;
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.inputRow input:focus {
+  outline: none;
+  border-color: var(--blue);
+}
+
+.inputRow button {
+  background: var(--navy);
+  border: none;
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.inputRow button svg {
+  width: 18px;
+  height: 18px;
+}

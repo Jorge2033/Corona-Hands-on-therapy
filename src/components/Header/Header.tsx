@@ -6,6 +6,9 @@ import { SITE, NAV_LINKS } from "@/lib/siteData";
 import { HandIcon, MenuIcon, CloseIcon, PhoneIcon, WhatsappIcon } from "@/components/icons/Icons";
 import styles from "./Header.module.css";
 
+// NAV_LINKS = [Services, About, Testimonials, Contact].
+// El dropdown de "Team" se inserta manualmente entre About y Testimonials
+// para lograr el orden final: Services, About, Team, Testimonials, Contact.
 export default function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [phoneMenuOpen, setPhoneMenuOpen] = useState(false);
@@ -13,7 +16,6 @@ export default function Header() {
   const phoneMenuRef = useRef<HTMLDivElement>(null);
   const teamMenuRef = useRef<HTMLLIElement>(null);
 
-  // Cierra los dropdowns si se hace click afuera
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (phoneMenuRef.current && !phoneMenuRef.current.contains(e.target as Node)) {
@@ -31,96 +33,110 @@ export default function Header() {
     "Hi, I'd like to request an appointment at Corona Hands-On Therapy."
   )}`;
 
+  const [servicesLink, aboutLink, testimonialsLink, contactLink] = NAV_LINKS;
+
   return (
     <>
       <header className={styles.header}>
         <div className={`container ${styles.nav}`}>
           <Link href="/" className={styles.brand} aria-label={`${SITE.name} home`}>
-            <img src="/images/Logo.png" alt="Corona Logo" className={styles.brandIcon} />
+           <img src="/images/Logo.png" alt="Corona Logo" className={styles.brandIcon} />
             <span className={styles.brandName}>
               {SITE.name}
               <small>{SITE.city}</small>
             </span>
           </Link>
 
-          <ul className={styles.links}>
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <a href={link.href}>{link.label}</a>
+          <div className={styles.navRight}>
+            <ul className={styles.links}>
+              <li>
+                <a href={servicesLink.href}>{servicesLink.label}</a>
               </li>
-            ))}
+              <li>
+                <a href={aboutLink.href}>{aboutLink.label}</a>
+              </li>
 
-            {/* Dropdown de Team: lleva a la página /team con la info de los providers */}
-            <li className={styles.navDropdownWrap} ref={teamMenuRef}>
+              {/* Dropdown de Team: Our Team + Join Our Team */}
+              <li className={styles.navDropdownWrap} ref={teamMenuRef}>
+                <button
+                  type="button"
+                  className={styles.navDropdownTrigger}
+                  onClick={() => setTeamMenuOpen((v) => !v)}
+                  aria-haspopup="true"
+                  aria-expanded={teamMenuOpen}
+                >
+                  Team
+                  <svg viewBox="0 0 24 24" fill="none" className={styles.chevron} aria-hidden="true">
+                    <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+
+                {teamMenuOpen && (
+                  <div className={styles.navDropdown} role="menu">
+                    <Link href="/team" role="menuitem" className={styles.navDropdownItem} onClick={() => setTeamMenuOpen(false)}>
+                      Our Team
+                    </Link>
+                    <Link href="/careers" role="menuitem" className={styles.navDropdownItem} onClick={() => setTeamMenuOpen(false)}>
+                      Join Our Team
+                    </Link>
+                  </div>
+                )}
+              </li>
+
+              <li>
+                <a href={testimonialsLink.href}>{testimonialsLink.label}</a>
+              </li>
+              <li>
+                <a href={contactLink.href}>{contactLink.label}</a>
+              </li>
+            </ul>
+
+            <div className={styles.navCta}>
+              {/* Botón de teléfono con menú: Llamar o WhatsApp */}
+              <div className={styles.phoneMenuWrap} ref={phoneMenuRef}>
+                <button
+                  type="button"
+                  className={styles.navPhone}
+                  onClick={() => setPhoneMenuOpen((v) => !v)}
+                  aria-haspopup="true"
+                  aria-expanded={phoneMenuOpen}
+                >
+                  <PhoneIcon className={styles.phoneIcon} />
+                  <span>{SITE.phoneDisplay}</span>
+                </button>
+
+                {phoneMenuOpen && (
+                  <div className={styles.phoneDropdown} role="menu">
+                    <a href={`tel:${SITE.phoneHref}`} role="menuitem" className={styles.phoneDropdownItem}>
+                      <PhoneIcon className={styles.dropdownIcon} />
+                      Call {SITE.phoneDisplay}
+                    </a>
+                    <a
+                      href={whatsappHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      role="menuitem"
+                      className={styles.phoneDropdownItem}
+                    >
+                      <WhatsappIcon className={styles.dropdownIcon} />
+                      Message on WhatsApp
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              <a href="/#contact" className="btn btn-primary">
+                Book Appointment
+              </a>
+
               <button
-                type="button"
-                className={styles.navDropdownTrigger}
-                onClick={() => setTeamMenuOpen((v) => !v)}
-                aria-haspopup="true"
-                aria-expanded={teamMenuOpen}
+                className={styles.menuToggle}
+                aria-label="Open menu"
+                onClick={() => setDrawerOpen(true)}
               >
-                Team
-                <svg viewBox="0 0 24 24" fill="none" className={styles.chevron} aria-hidden="true">
-                  <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <MenuIcon className={styles.menuIconSvg} />
               </button>
-
-              {teamMenuOpen && (
-                <div className={styles.navDropdown} role="menu">
-                  <Link href="/team" role="menuitem" className={styles.navDropdownItem} onClick={() => setTeamMenuOpen(false)}>
-                    Our Team
-                  </Link>
-                  {/* Para agregar "Join Our Team" (careers) más adelante, se añade otro <Link> aquí */}
-                </div>
-              )}
-            </li>
-          </ul>
-
-          <div className={styles.navCta}>
-            {/* Botón de teléfono con menú: Llamar o WhatsApp */}
-            <div className={styles.phoneMenuWrap} ref={phoneMenuRef}>
-              <button
-                type="button"
-                className={styles.navPhone}
-                onClick={() => setPhoneMenuOpen((v) => !v)}
-                aria-haspopup="true"
-                aria-expanded={phoneMenuOpen}
-              >
-                <PhoneIcon className={styles.phoneIcon} />
-                <span>{SITE.phoneDisplay}</span>
-              </button>
-
-              {phoneMenuOpen && (
-                <div className={styles.phoneDropdown} role="menu">
-                  <a href={`tel:${SITE.phoneHref}`} role="menuitem" className={styles.phoneDropdownItem}>
-                    <PhoneIcon className={styles.dropdownIcon} />
-                    Call {SITE.phoneDisplay}
-                  </a>
-                  <a
-                    href={whatsappHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    role="menuitem"
-                    className={styles.phoneDropdownItem}
-                  >
-                    <WhatsappIcon className={styles.dropdownIcon} />
-                    Message on WhatsApp
-                  </a>
-                </div>
-              )}
             </div>
-
-            <a href="/#contact" className="btn btn-primary">
-              Book Appointment
-            </a>
-
-            <button
-              className={styles.menuToggle}
-              aria-label="Open menu"
-              onClick={() => setDrawerOpen(true)}
-            >
-              <MenuIcon className={styles.menuIconSvg} />
-            </button>
           </div>
         </div>
       </header>
@@ -133,14 +149,24 @@ export default function Header() {
         >
           <CloseIcon className={styles.menuIconSvg} />
         </button>
-        {NAV_LINKS.map((link) => (
-          <a key={link.href} href={link.href} onClick={() => setDrawerOpen(false)}>
-            {link.label}
-          </a>
-        ))}
+        <a href={servicesLink.href} onClick={() => setDrawerOpen(false)}>
+          {servicesLink.label}
+        </a>
+        <a href={aboutLink.href} onClick={() => setDrawerOpen(false)}>
+          {aboutLink.label}
+        </a>
         <Link href="/team" onClick={() => setDrawerOpen(false)}>
           Our Team
         </Link>
+        <Link href="/careers" onClick={() => setDrawerOpen(false)}>
+          Join Our Team
+        </Link>
+        <a href={testimonialsLink.href} onClick={() => setDrawerOpen(false)}>
+          {testimonialsLink.label}
+        </a>
+        <a href={contactLink.href} onClick={() => setDrawerOpen(false)}>
+          {contactLink.label}
+        </a>
         <a href={`tel:${SITE.phoneHref}`} className={styles.drawerPhone}>
           {SITE.phoneDisplay}
         </a>

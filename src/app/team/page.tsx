@@ -18,11 +18,11 @@ export default function TeamPage() {
       <main>
         <section className={`container ${styles.hero}`}>
           <div className="eyebrow">Our Team</div>
-          <h1 className={styles.title}>The providers behind your recovery.</h1>
+          <h1 className={styles.title}>The specialists behind your recovery.</h1>
           <p className={styles.intro}>{TEAM_INTRO}</p>
         </section>
 
-        <section className="container" style={{ paddingTop: 0 }}>
+        <section className="container" style={{ paddingTop: 5, paddingBottom: 80 }}>
           <Team />
         </section>
       </main>

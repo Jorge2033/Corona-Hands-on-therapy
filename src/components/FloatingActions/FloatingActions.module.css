@@ -16,12 +16,15 @@
   background: var(--navy);
   color: var(--white);
   text-decoration: none;
+  font-family: var(--font-body), sans-serif;
   font-size: 14px;
   font-weight: 700;
   padding: 12px 18px;
+  border: none;
   border-radius: 10px;
   box-shadow: 0 8px 20px rgba(15, 42, 74, 0.25);
   white-space: nowrap;
+  cursor: pointer;
   transition: background 0.15s ease, transform 0.15s ease;
 }
 

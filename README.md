@@ -108,12 +108,3 @@ git push -u origin main
 
 Cada vez que hagas `git push` a `main`, Vercel vuelve a desplegar automáticamente.
 
-## Pendientes (marcados como PLACEHOLDER en el código)
-
-- [ ] Fotos reales de la clínica (`src/components/Hero/Hero.tsx`)
-- [ ] Fotos reales de los 3 providers (`src/lib/siteData.ts` → campo `photo` de `TEAM`,
-      subir las imágenes a `public/images/team/` y poner la ruta ahí)
-- [ ] Testimonios reales de pacientes con su consentimiento (`src/lib/siteData.ts` →
-      `TESTIMONIALS`)
-- [ ] Página de Política de Privacidad y Términos de Uso (los links del footer y del
-      formulario apuntan a `#` por ahora)

@@ -1,7 +1,47 @@
+.breadcrumbContainer {
+  width: 100%;
+  padding-top: 104px;
+  box-sizing: border-box;
+}
+
+.breadcrumb {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.pageGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 48px;
+  align-items: start;
+  padding-bottom: 88px;
+}
+
+.mainCol {
+  min-width: 0;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  position: sticky;
+  top: 100px;
+}
+
 .hero {
-  padding-top: 64px;
-  padding-bottom: 20px;
+  padding-top: 28px;
+  padding-bottom: 8px;
   max-width: 800px;
+}
+
+.infoSection {
+  padding-bottom: 32px;
+}
+
+.plansSection {
+  padding-top: 8px;
 }
 
 .title {
@@ -136,6 +176,14 @@
 }
 
 @media (max-width: 960px) {
+  .pageGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
   .infoGrid {
     grid-template-columns: 1fr;
   }

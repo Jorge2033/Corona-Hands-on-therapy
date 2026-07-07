@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
-import { SITE } from "@/lib/siteData";
+import { SITE, PATIENT_QUICK_LINKS } from "@/lib/siteData";
+import QuickLinksCard from "@/components/Sidebar/QuickLinksCard";
+import PainFreeCta from "@/components/Sidebar/PainFreeCta";
 import styles from "./forms.module.css";
 
 export const metadata: Metadata = {
@@ -27,15 +29,15 @@ export default function PatientFormsPage() {
           {/* COLUMNA IZQUIERDA: CONTENIDO PRINCIPAL */}
           <div className={styles.leftColumn}>
             
-            <section className={styles.hero}>
+            <div className={styles.hero}>
               <h1 className={styles.title}>Welcome to Hands-On Physical Therapy</h1>
               <p className={styles.intro}>
                 We are here to help you enjoy your life, pain-free! To make a convenient appointment, simply call us
                 today at <a href={`tel:${SITE.phoneHref}`}>{SITE.phoneDisplay}</a>. Our practice is dedicated to helping our patients identify the cause of their pain and creating a custom treatment program that will allow them to return to normal activities pain-free.
               </p>
-            </section>
+            </div>
 
-            <section className={styles.contentSection}>
+            <div className={styles.contentSection}>
               <h2 className={styles.sectionHeading}>Patient Forms</h2>
               <p className={styles.sectionSubtitle}>
                 At Hands-On Physical Therapy, we want to maximize your time with us. Therefore, we offer our paperwork online, so you can complete it in the privacy of your own home. Prior to your first visit, please download the Patient Intake Forms and bring them with you to your first visit, along with your insurance information and photo ID.
@@ -112,49 +114,13 @@ export default function PatientFormsPage() {
                   <strong>PLEASE NOTE:</strong> Remember consistency of your visits and physical therapy treatment are very important in reaching your goals and help return you to a healthy lifestyle.
                 </p>
               </div>
-            </section>
+            </div>
           </div>
 
           {/* COLUMNA DERECHA: SIDEBAR */}
           <aside className={styles.sidebar}>
-            
-            {/* ENLACES RÁPIDOS CON ENRUTAMIENTO EMULADO Y TONO MEJORADO */}
-            <div className={styles.sidebarWidget}>
-              <h4 className={styles.widgetTitle}>Quick links</h4>
-              <ul className={styles.quickLinksList}>
-                <li className={styles.activeLink}>
-                  <a href="/patient-info/forms">
-                    <span className={styles.linkIcon}>📋</span> Patient Info / Forms
-                  </a>
-                </li>
-                <li>
-                  <a href="/#contact">
-                    <span className={styles.linkIcon}>📍</span> Our Locations
-                  </a>
-                </li>
-                <li>
-                  <a href="/patient-info/faqs">
-                    <span className={styles.linkIcon}>❓</span> FAQs
-                  </a>
-                </li>
-                <li>
-                  <a href="/conditions">
-                    <span className={styles.linkIcon}>🚶‍♂️</span> View More Conditions
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* CUADRO PROMOCIONAL CORREGIDO (Lleva a la sección de contacto global #contact) */}
-            <div className={styles.promoWidget}>
-              <div className={styles.promoImagePlaceholder}>
-                <div className={styles.promoOverlay}>
-                  <h5>Are You Ready To Live Pain-Free?</h5>
-                  <a href="/#contact" className={styles.promoBtn}>Request Appointment</a>
-                </div>
-              </div>
-            </div>
-
+            <QuickLinksCard links={PATIENT_QUICK_LINKS} activeHref="/patient-info/forms" />
+            <PainFreeCta />
           </aside>
         </div>
       </main>

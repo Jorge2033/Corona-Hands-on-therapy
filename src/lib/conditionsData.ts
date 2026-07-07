@@ -7,7 +7,12 @@ export interface ConditionData {
   slug: string;
   name: string;
   shortName: string;
+  category: string;
   heroSubtitle: string;
+  // Ruta de imagen de fondo para el hero (ej. "/images/conditions/back-pain.jpg").
+  // Déjalo sin definir (undefined) hasta tener la foto real: el hero usa un
+  // degradado de marca de respaldo automáticamente mientras tanto.
+  heroImage?: string;
   overview: string[];
   commonCauses: string[];
   symptoms: string[];
@@ -22,6 +27,7 @@ export const CONDITIONS: ConditionData[] = [
     slug: "back-pain",
     name: "Back Pain Relief",
     shortName: "Back Pain",
+    category: "Joint & Muscle Pain",
     heroSubtitle:
       "From a dull ache to sharp, limiting pain, our team helps you find and treat the real source of back pain.",
     overview: [
@@ -79,6 +85,7 @@ export const CONDITIONS: ConditionData[] = [
     slug: "neck-pain",
     name: "Neck Pain Relief",
     shortName: "Neck Pain",
+    category: "Joint & Muscle Pain",
     heroSubtitle:
       "Whiplash, tech neck, or an old injury — we help identify what's really causing your neck pain and treat it at the source.",
     overview: [
@@ -136,6 +143,7 @@ export const CONDITIONS: ConditionData[] = [
     slug: "shoulder-pain",
     name: "Shoulder Pain Relief",
     shortName: "Shoulder Pain",
+    category: "Joint & Muscle Pain",
     heroSubtitle:
       "From rotator cuff strain to post-accident injuries, we help restore shoulder strength and motion without surgery.",
     overview: [
@@ -193,6 +201,7 @@ export const CONDITIONS: ConditionData[] = [
     slug: "hip-pain",
     name: "Hip Pain Relief",
     shortName: "Hip Pain",
+    category: "Joint & Muscle Pain",
     heroSubtitle:
       "Hip pain affects how you walk, sit, and sleep — we help identify the cause and get you moving comfortably again.",
     overview: [
@@ -250,6 +259,7 @@ export const CONDITIONS: ConditionData[] = [
     slug: "knee-pain",
     name: "Knee Pain Relief",
     shortName: "Knee Pain",
+    category: "Joint & Muscle Pain",
     heroSubtitle:
       "Whether it's an old injury or a new one, we help you rebuild knee strength and stability without unnecessary surgery.",
     overview: [
@@ -307,6 +317,7 @@ export const CONDITIONS: ConditionData[] = [
     slug: "elbow-pain",
     name: "Elbow Pain Relief",
     shortName: "Elbow Pain",
+    category: "Joint & Muscle Pain",
     heroSubtitle:
       "From tennis elbow to work-related strain, we help resolve elbow pain so you can grip, lift, and work without discomfort.",
     overview: [
@@ -364,6 +375,7 @@ export const CONDITIONS: ConditionData[] = [
     slug: "wrist-pain",
     name: "Wrist Pain Relief",
     shortName: "Wrist Pain",
+    category: "Joint & Muscle Pain",
     heroSubtitle:
       "Whether it's from a fall, repetitive strain, or an old injury, we help restore wrist strength and pain-free motion.",
     overview: [
@@ -421,6 +433,7 @@ export const CONDITIONS: ConditionData[] = [
     slug: "hand-pain",
     name: "Hand Pain Relief",
     shortName: "Hand Pain",
+    category: "Joint & Muscle Pain",
     heroSubtitle:
       "Hand pain affects everything from typing to gripping a steering wheel — we help you regain full, pain-free function.",
     overview: [
@@ -478,6 +491,7 @@ export const CONDITIONS: ConditionData[] = [
     slug: "foot-pain",
     name: "Foot Pain Relief",
     shortName: "Foot Pain",
+    category: "Joint & Muscle Pain",
     heroSubtitle:
       "From plantar fasciitis to post-injury pain, we help get you back on your feet comfortably.",
     overview: [
@@ -535,6 +549,7 @@ export const CONDITIONS: ConditionData[] = [
     slug: "ankle-pain",
     name: "Ankle Pain Relief",
     shortName: "Ankle Pain",
+    category: "Joint & Muscle Pain",
     heroSubtitle:
       "From sprains to post-accident instability, we help rebuild ankle strength so you can move confidently again.",
     overview: [
@@ -585,6 +600,285 @@ export const CONDITIONS: ConditionData[] = [
         question: "How long does an ankle sprain take to heal?",
         answer:
           "Mild sprains often improve within a few weeks with proper treatment, while more significant sprains can take longer — consistent rehab is the biggest factor in a full recovery.",
+      },
+    ],
+  },
+  {
+    slug: "sciatica",
+    name: "Sciatica Relief",
+    shortName: "Sciatica",
+    category: "Nerve Pain",
+    heroSubtitle:
+      "Sharp, shooting pain down the leg isn't something to push through — we treat the nerve irritation at its source.",
+    overview: [
+      "Sciatica is pain that travels along the sciatic nerve, usually starting in the lower back or buttock and radiating down one leg. It's a symptom of an underlying issue — most often a disc or muscle putting pressure on the nerve — rather than a condition on its own.",
+      "Because sciatica can come from several different sources, an accurate evaluation is the first step. From there, we build a plan that relieves pressure on the nerve and restores normal movement in the low back and hips.",
+    ],
+    commonCauses: [
+      "Herniated or bulging discs in the lower spine",
+      "Auto accidents and sudden impact injuries",
+      "Piriformis syndrome (muscle irritation of the nerve in the buttock)",
+      "Spinal stenosis narrowing the space around the nerve",
+      "Work injuries from heavy lifting or prolonged sitting",
+      "Degenerative disc disease",
+      "Pregnancy-related pelvic and lower back changes",
+      "Prolonged sitting with poor posture",
+    ],
+    symptoms: [
+      "Sharp, shooting, or burning pain from the low back into the leg",
+      "Numbness or tingling in the leg or foot",
+      "Pain that worsens with sitting or coughing",
+      "Weakness in the leg or foot",
+      "A dull ache in the buttock that radiates downward",
+      "Pain typically affecting only one side of the body",
+    ],
+    ifTreatedEarly:
+      "Sciatica addressed early with the right combination of manual therapy and targeted exercise usually improves significantly within weeks, since reducing pressure on the nerve early prevents symptoms from becoming more entrenched.",
+    ifLeftUntreated:
+      "Untreated sciatica can lead to worsening numbness and weakness in the leg, and in more severe cases can affect balance and the ability to walk normally. The longer a nerve stays irritated, the longer it can take to fully recover once treatment begins.",
+    howWeTreatIt: [
+      "A thorough evaluation to identify exactly where the nerve is being irritated",
+      "Physical therapy focused on relieving pressure on the nerve and building core support",
+      "Chiropractic adjustments to reduce disc or joint pressure on the sciatic nerve",
+      "Acupuncture for nerve-related pain relief",
+      "Movement and posture guidance to prevent the pain from returning",
+    ],
+    faqs: [
+      {
+        question: "Is sciatica the same as a herniated disc?",
+        answer:
+          "Not exactly — a herniated disc is one common cause of sciatica, but sciatica itself refers to the nerve pain, which can also come from muscle irritation or spinal narrowing.",
+      },
+      {
+        question: "Should I rest completely with sciatica?",
+        answer:
+          "Usually not — gentle, guided movement tends to help more than complete rest, which can allow supporting muscles to weaken further.",
+      },
+      {
+        question: "When does sciatica need imaging or a specialist referral?",
+        answer:
+          "If there's significant weakness, loss of bladder or bowel control, or no improvement with conservative care, we'll refer you promptly for further evaluation.",
+      },
+    ],
+  },
+  {
+    slug: "arthritis",
+    name: "Arthritis Pain Relief",
+    shortName: "Arthritis",
+    category: "Chronic Conditions",
+    heroSubtitle:
+      "Joint stiffness and pain don't have to limit your daily life — we help you stay strong, mobile, and active.",
+    overview: [
+      "Arthritis causes inflammation, stiffness, and pain in one or more joints, and tends to worsen over time without proper management. While it can't always be reversed, the right combination of movement, manual therapy, and pain management can dramatically improve how you feel day to day.",
+      "Our approach focuses on keeping the affected joints as mobile and well-supported as possible, so arthritis interferes with your life as little as possible.",
+    ],
+    commonCauses: [
+      "Osteoarthritis from joint wear over time",
+      "Rheumatoid arthritis and other autoimmune conditions",
+      "Past joint injuries that develop into post-traumatic arthritis",
+      "Genetics and family history",
+      "Excess joint stress from repetitive work or activity",
+      "Reduced muscle support around an aging joint",
+    ],
+    symptoms: [
+      "Joint stiffness, especially in the morning or after rest",
+      "Swelling around one or more joints",
+      "Pain that worsens with activity or weather changes",
+      "Reduced range of motion",
+      "A grinding or clicking sensation in the joint",
+      "Muscle weakness around the affected joint",
+    ],
+    ifTreatedEarly:
+      "Managing arthritis early with movement-based therapy helps preserve joint function and muscle strength for much longer, and can meaningfully slow how quickly symptoms progress.",
+    ifLeftUntreated:
+      "Unmanaged arthritis symptoms tend to lead to increasing stiffness and muscle weakness around the joint, which can accelerate the loss of mobility and make basic daily tasks progressively more difficult.",
+    howWeTreatIt: [
+      "A joint-by-joint evaluation of mobility, strength, and pain patterns",
+      "Physical therapy to maintain range of motion and build supportive muscle strength",
+      "Chiropractic and manual therapy to ease stiffness in surrounding joints",
+      "Acupuncture as a drug-free option for ongoing pain management",
+      "Guidance on activity pacing and joint protection for daily life",
+    ],
+    faqs: [
+      {
+        question: "Can physical therapy help arthritis even though it can't be cured?",
+        answer:
+          "Yes — while therapy can't reverse joint changes, it can significantly reduce pain and preserve function by keeping the muscles around the joint strong and the joint itself mobile.",
+      },
+      {
+        question: "Is exercise safe with arthritis?",
+        answer:
+          "Generally yes, and it's often recommended — we guide you toward movement that supports the joint without aggravating it.",
+      },
+      {
+        question: "Will weather really affect my arthritis pain?",
+        answer:
+          "Many patients do notice more stiffness with cold or damp weather, though the exact reason isn't fully understood — staying active tends to help regardless.",
+      },
+    ],
+  },
+  {
+    slug: "whiplash-auto-injury",
+    name: "Whiplash & Auto Injury Recovery",
+    shortName: "Whiplash & Auto Injuries",
+    category: "Injury Recovery",
+    heroSubtitle:
+      "Even a low-speed collision can cause real injury — we evaluate and treat auto accident injuries from day one.",
+    overview: [
+      "Auto accidents can cause injuries that aren't obvious right away, since adrenaline and shock often mask pain in the first hours or days. Whiplash, the sudden back-and-forth motion of the neck, is one of the most common auto accident injuries, but impacts can also affect the back, shoulders, and joints.",
+      "We evaluate the full body after an accident, document findings for any related claims, and build a recovery plan across physical therapy, chiropractic care, and acupuncture.",
+    ],
+    commonCauses: [
+      "Rear-end and side-impact car accidents",
+      "Sudden braking or low-speed collisions",
+      "Motorcycle and pedestrian accidents",
+      "Workplace vehicle incidents",
+      "Falls that occur as a result of an accident",
+    ],
+    symptoms: [
+      "Neck pain and stiffness, often appearing a day or two after the accident",
+      "Headaches starting at the base of the skull",
+      "Back pain or muscle spasms",
+      "Dizziness or difficulty concentrating",
+      "Shoulder or arm pain",
+      "Fatigue in the days following the accident",
+    ],
+    ifTreatedEarly:
+      "Getting evaluated within the first days after an accident — even if pain feels mild — allows us to catch and treat injuries before they progress, and creates a clear medical record connected to the incident.",
+    ifLeftUntreated:
+      "Auto accident injuries left untreated often become chronic pain conditions, since soft tissue damage that isn't properly rehabilitated tends to heal with scar tissue and lasting stiffness rather than full function.",
+    howWeTreatIt: [
+      "A full-body evaluation to identify all injuries related to the accident, not just the most obvious one",
+      "Physical therapy to restore strength, motion, and function",
+      "Chiropractic care to address whiplash and spinal alignment issues",
+      "Acupuncture for pain management throughout recovery",
+      "Documentation to support any auto insurance or personal injury claim",
+    ],
+    faqs: [
+      {
+        question: "I feel fine after my accident — do I still need to get checked?",
+        answer:
+          "Yes, we recommend it — many soft tissue and whiplash injuries don't cause noticeable pain until a day or two after the accident.",
+      },
+      {
+        question: "Do you work with auto insurance and personal injury cases?",
+        answer:
+          "Yes, we regularly treat patients recovering from auto accidents and can provide documentation to support your claim.",
+      },
+      {
+        question: "How soon after an accident should I start treatment?",
+        answer:
+          "As soon as possible — early evaluation and treatment generally leads to a faster, fuller recovery.",
+      },
+    ],
+  },
+  {
+    slug: "sports-injuries",
+    name: "Sports Injuries",
+    shortName: "Sports Injuries",
+    category: "Injury Recovery",
+    heroSubtitle:
+      "Whether it's a weekend game or competitive training, we help athletes recover fully and get back in the game safely.",
+    overview: [
+      "Sports injuries range from sudden sprains and strains to overuse injuries that build up over a season of training. Recovering properly — not just resting until pain fades — is what prevents the same injury from coming back once you return to activity.",
+      "Our team builds sport-specific rehabilitation plans that restore strength and movement patterns, so you return to your sport with confidence, not hesitation.",
+    ],
+    commonCauses: [
+      "Sprains and strains from sudden changes in direction",
+      "Overuse injuries from repetitive training",
+      "Direct contact or collision injuries",
+      "Poor warm-up or recovery habits",
+      "Muscle imbalances or weakness",
+      "Returning to activity too soon after a prior injury",
+    ],
+    symptoms: [
+      "Pain that appears during or after specific movements or activities",
+      "Swelling or bruising around the injured area",
+      "Reduced strength or power in the affected limb",
+      "Instability or a feeling the joint might give way",
+      "Stiffness that limits your normal range of motion",
+      "Pain that returns whenever you try to resume the sport",
+    ],
+    ifTreatedEarly:
+      "Sports injuries treated with a proper rehabilitation plan — rather than just rest — heal stronger and are far less likely to recur once you return to your sport.",
+    ifLeftUntreated:
+      "Returning to sport before an injury is fully rehabilitated is one of the most common causes of repeat injury, often to the same area, and can turn a short recovery into a recurring, nagging problem.",
+    howWeTreatIt: [
+      "A movement and strength assessment specific to your sport and injury",
+      "Physical therapy focused on strength, stability, and safe return-to-play progressions",
+      "Chiropractic care to keep the whole kinetic chain moving well",
+      "Acupuncture for pain relief during active training or competition seasons",
+      "A structured, criteria-based return-to-sport plan",
+    ],
+    faqs: [
+      {
+        question: "When is it safe to return to my sport?",
+        answer:
+          "We use specific strength and movement benchmarks, not just how you feel, to determine when it's safe to return — this significantly lowers your risk of re-injury.",
+      },
+      {
+        question: "Can I keep training while recovering from a sports injury?",
+        answer:
+          "Often yes, with modifications — we'll guide you on what to adjust so you can stay conditioned while the injury heals.",
+      },
+      {
+        question: "Do you treat both acute injuries and overuse injuries?",
+        answer:
+          "Yes, we treat both sudden sports injuries and gradual overuse conditions like tendinitis or stress reactions.",
+      },
+    ],
+  },
+  {
+    slug: "post-surgical-rehab",
+    name: "Post-Surgical Rehabilitation",
+    shortName: "Post-Surgical Rehab",
+    category: "Chronic Conditions",
+    heroSubtitle:
+      "Surgery is only part of the recovery — proper rehab is what restores your strength, motion, and confidence.",
+    overview: [
+      "Recovering from surgery — whether it's a joint replacement, ligament repair, or spinal procedure — depends heavily on the rehabilitation that follows. Without a structured plan, muscles around the surgical site can stay weak and stiff long after the incision has healed.",
+      "We work closely with your surgeon's protocol to guide you safely through each phase of recovery, from early mobility work to a full return to normal activity.",
+    ],
+    commonCauses: [
+      "Joint replacement surgery (hip, knee, shoulder)",
+      "Ligament repair, such as ACL reconstruction",
+      "Spinal surgery",
+      "Rotator cuff or tendon repair surgery",
+      "Fracture repair with surgical fixation",
+    ],
+    symptoms: [
+      "Stiffness and limited range of motion around the surgical site",
+      "Muscle weakness from a period of reduced activity",
+      "Swelling that lingers longer than expected",
+      "Difficulty with normal walking or movement patterns",
+      "Apprehension about moving or loading the area normally",
+    ],
+    ifTreatedEarly:
+      "Starting guided rehabilitation as soon as your surgeon clears you generally leads to a faster return of strength and motion, and helps prevent stiffness or muscle loss from setting in.",
+    ifLeftUntreated:
+      "Skipping structured post-surgical rehab often leads to lasting stiffness, weakness, and altered movement patterns — sometimes requiring more intensive treatment later to recover the function that early rehab would have preserved.",
+    howWeTreatIt: [
+      "Coordination with your surgeon's post-operative protocol and timeline",
+      "Phase-based physical therapy progressing from gentle mobility to full strengthening",
+      "Manual therapy to address scar tissue and surrounding joint stiffness",
+      "Acupuncture to help manage post-surgical pain",
+      "A gradual, criteria-based return to daily activities, work, or sport",
+    ],
+    faqs: [
+      {
+        question: "How soon after surgery can I start physical therapy?",
+        answer:
+          "It depends on your procedure and surgeon's protocol, but many patients begin some form of guided movement within days to a couple of weeks after surgery.",
+      },
+      {
+        question: "Will therapy be painful after surgery?",
+        answer:
+          "Some discomfort during early mobility work is normal, but we pace your program carefully to stay within safe, appropriate limits for your recovery stage.",
+      },
+      {
+        question: "How long does post-surgical rehab typically take?",
+        answer:
+          "It varies by procedure, ranging from several weeks to a few months, with your progress guiding how the plan is adjusted along the way.",
       },
     ],
   },

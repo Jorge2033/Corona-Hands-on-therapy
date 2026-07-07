@@ -3,14 +3,24 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation"; // Hook esencial para detectar la sección activa
-import { SITE, NAV_LINKS } from "@/lib/siteData";
+import { SITE, NAV_LINKS, PATIENT_QUICK_LINKS } from "@/lib/siteData";
 import { CONDITIONS } from "@/lib/conditionsData";
 import { MenuIcon, CloseIcon, PhoneIcon, WhatsappIcon } from "@/components/icons/Icons";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./Header.module.css";
+
+// Etiquetas de Patient Info por href, para traducir la lista compartida PATIENT_QUICK_LINKS.
+const PATIENT_INFO_KEY_BY_HREF: Record<string, "patientInfoForms" | "insurancePlans" | "faqs" | "referAFriend"> = {
+  "/patient-info/forms": "patientInfoForms",
+  "/patient-info/insurance": "insurancePlans",
+  "/patient-info/faqs": "faqs",
+  "/patient-info/refer-a-friend": "referAFriend",
+};
 
 export default function Header() {
   const pathname = usePathname(); // Guardamos la ruta actual (ej: '/team' o '/conditions/hand-pain')
-  
+  const { language, t, toggleLanguage } = useLanguage();
+
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [phoneMenuOpen, setPhoneMenuOpen] = useState(false);
   const [teamMenuOpen, setTeamMenuOpen] = useState(false);
@@ -53,10 +63,10 @@ export default function Header() {
           <div className={styles.navRight}>
             <ul className={styles.links}>
               <li>
-                <a href={servicesLink.href} className={isActive(servicesLink.href)}>{servicesLink.label}</a>
+                <a href={servicesLink.href} className={isActive(servicesLink.href)}>{t.nav.services}</a>
               </li>
               <li>
-                <a href={aboutLink.href} className={isActive(aboutLink.href)}>{aboutLink.label}</a>
+                <a href={aboutLink.href} className={isActive(aboutLink.href)}>{t.nav.about}</a>
               </li>
 
               {/* Dropdown de Team */}
@@ -68,7 +78,7 @@ export default function Header() {
                   aria-haspopup="true"
                   aria-expanded={teamMenuOpen}
                 >
-                  Team
+                  {t.nav.team}
                   <svg viewBox="0 0 24 24" fill="none" className={styles.chevron} aria-hidden="true">
                     <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -77,10 +87,10 @@ export default function Header() {
                 {teamMenuOpen && (
                   <div className={styles.navDropdown} role="menu">
                     <Link href="/team" role="menuitem" className={`${styles.navDropdownItem} ${isActive("/team")}`} onClick={() => setTeamMenuOpen(false)}>
-                      Our Team
+                      {t.nav.ourTeam}
                     </Link>
                     <Link href="/careers" role="menuitem" className={`${styles.navDropdownItem} ${isActive("/careers")}`} onClick={() => setTeamMenuOpen(false)}>
-                      Join Our Team
+                      {t.nav.joinOurTeam}
                     </Link>
                   </div>
                 )}
@@ -95,7 +105,7 @@ export default function Header() {
                   aria-haspopup="true"
                   aria-expanded={conditionsMenuOpen}
                 >
-                  Conditions
+                  {t.nav.conditions}
                   <svg viewBox="0 0 24 24" fill="none" className={styles.chevron} aria-hidden="true">
                     <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -113,7 +123,7 @@ export default function Header() {
                           className={`${styles.navDropdownItem} ${isActive(href)}`}
                           onClick={() => setConditionsMenuOpen(false)}
                         >
-                          {c.name}
+                          {t.conditionsNav[c.slug]?.name ?? c.name}
                         </Link>
                       );
                     })}
@@ -123,7 +133,7 @@ export default function Header() {
                       className={`${styles.navDropdownItem} ${styles.navDropdownItemAccent} ${isActive("/conditions")}`}
                       onClick={() => setConditionsMenuOpen(false)}
                     >
-                      View All Conditions
+                      {t.nav.viewAllConditions}
                     </Link>
                   </div>
                 )}
@@ -138,7 +148,7 @@ export default function Header() {
                   aria-haspopup="true"
                   aria-expanded={patientInfoMenuOpen}
                 >
-                  Patient Info
+                  {t.nav.patientInfo}
                   <svg viewBox="0 0 24 24" fill="none" className={styles.chevron} aria-hidden="true">
                     <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -147,26 +157,26 @@ export default function Header() {
                 {patientInfoMenuOpen && (
                   <div className={styles.navDropdown} role="menu">
                     <Link href="/patient-info/forms" role="menuitem" className={`${styles.navDropdownItem} ${isActive("/patient-info/forms")}`} onClick={() => setPatientInfoMenuOpen(false)}>
-                      Patient Info / Forms
+                      {t.nav.patientInfoForms}
                     </Link>
                     <Link href="/patient-info/insurance" role="menuitem" className={`${styles.navDropdownItem} ${isActive("/patient-info/insurance")}`} onClick={() => setPatientInfoMenuOpen(false)}>
-                      Insurance Plans
+                      {t.nav.insurancePlans}
                     </Link>
                     <Link href="/patient-info/refer-a-friend" role="menuitem" className={`${styles.navDropdownItem} ${isActive("/patient-info/refer-a-friend")}`} onClick={() => setPatientInfoMenuOpen(false)}>
-                      Refer a Friend
+                      {t.nav.referAFriend}
                     </Link>
                     <Link href="/patient-info/faqs" role="menuitem" className={`${styles.navDropdownItem} ${isActive("/patient-info/faqs")}`} onClick={() => setPatientInfoMenuOpen(false)}>
-                      FAQs
+                      {t.nav.faqs}
                     </Link>
                   </div>
                 )}
               </li>
 
               <li>
-                <a href={testimonialsLink.href} className={isActive(testimonialsLink.href)}>{testimonialsLink.label}</a>
+                <a href={testimonialsLink.href} className={isActive(testimonialsLink.href)}>{t.nav.reviews}</a>
               </li>
               <li>
-                <a href={contactLink.href} className={isActive(contactLink.href)}>{contactLink.label}</a>
+                <a href={contactLink.href} className={isActive(contactLink.href)}>{t.nav.contact}</a>
               </li>
             </ul>
 
@@ -187,18 +197,27 @@ export default function Header() {
                   <div className={styles.phoneDropdown} role="menu">
                     <a href={`tel:${SITE.phoneHref}`} role="menuitem" className={styles.phoneDropdownItem}>
                       <PhoneIcon className={styles.dropdownIcon} />
-                      Call {SITE.phoneDisplay}
+                      {t.nav.call} {SITE.phoneDisplay}
                     </a>
                     <a href={whatsappHref} target="_blank" rel="noopener noreferrer" role="menuitem" className={styles.phoneDropdownItem}>
                       <WhatsappIcon className={styles.dropdownIcon} />
-                      Message on WhatsApp
+                      {t.nav.messageWhatsapp}
                     </a>
                   </div>
                 )}
               </div>
 
+              <button
+                type="button"
+                className={styles.langToggle}
+                onClick={toggleLanguage}
+                aria-label={`Switch to ${language === "en" ? "Spanish" : "English"}`}
+              >
+                {t.nav.langToggleLabel}
+              </button>
+
               <a href="/#contact" className="btn btn-primary">
-                Book Appointment
+                {t.nav.bookAppointment}
               </a>
 
               <button
@@ -225,24 +244,67 @@ export default function Header() {
           <CloseIcon className={styles.menuIconSvg} />
         </button>
         
-        <a href={servicesLink.href} className={isActive(servicesLink.href)} onClick={() => setDrawerOpen(false)}>{servicesLink.label}</a>
-        <a href={aboutLink.href} className={isActive(aboutLink.href)} onClick={() => setDrawerOpen(false)}>{aboutLink.label}</a>
-        <Link href="/team" className={isActive("/team")} onClick={() => setDrawerOpen(false)}>Our Team</Link>
-        <Link href="/careers" className={isActive("/careers")} onClick={() => setDrawerOpen(false)}>Join Our Team</Link>
-        <Link href="/conditions" className={isActive("/conditions") || pathname.startsWith("/conditions/") ? styles.active : ""} onClick={() => setDrawerOpen(false)}>Conditions</Link>
-        <Link href="/patient-info/forms" className={pathname.startsWith("/patient-info") ? styles.active : ""} onClick={() => setDrawerOpen(false)}>Patient Info</Link>
-        <a href={testimonialsLink.href} className={isActive(testimonialsLink.href)} onClick={() => setDrawerOpen(false)}>{testimonialsLink.label}</a>
-        <a href={contactLink.href} className={isActive(contactLink.href)} onClick={() => setDrawerOpen(false)}>{contactLink.label}</a>
-        
-        <a href="/#contact" className={`btn btn-primary ${styles.drawerBookBtn}`} onClick={() => setDrawerOpen(false)}>
-          Book Appointment
-        </a>
-        <a href={`tel:${SITE.phoneHref}`} className={styles.drawerPhone}>
-          {SITE.phoneDisplay}
-        </a>
-        <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className={styles.drawerWhatsapp}>
-          WhatsApp Chat
-        </a>
+        <nav className={styles.drawerNav}>
+          <a href={servicesLink.href} className={`${styles.drawerLink} ${isActive(servicesLink.href)}`} onClick={() => setDrawerOpen(false)}>{t.nav.services}</a>
+          <a href={aboutLink.href} className={`${styles.drawerLink} ${isActive(aboutLink.href)}`} onClick={() => setDrawerOpen(false)}>{t.nav.about}</a>
+
+          <div className={styles.drawerGroup}>
+            <span className={styles.drawerGroupLabel}>{t.nav.team}</span>
+            <Link href="/team" className={`${styles.drawerSubLink} ${isActive("/team")}`} onClick={() => setDrawerOpen(false)}>{t.nav.ourTeam}</Link>
+            <Link href="/careers" className={`${styles.drawerSubLink} ${isActive("/careers")}`} onClick={() => setDrawerOpen(false)}>{t.nav.joinOurTeam}</Link>
+          </div>
+
+          <div className={styles.drawerGroup}>
+            <span className={styles.drawerGroupLabel}>{t.breadcrumb.conditionsWeTreat}</span>
+            {CONDITIONS.map((c) => {
+              const href = `/conditions/${c.slug}`;
+              return (
+                <Link key={c.slug} href={href} className={`${styles.drawerSubLink} ${isActive(href)}`} onClick={() => setDrawerOpen(false)}>
+                  {t.conditionsNav[c.slug]?.shortName ?? c.shortName}
+                </Link>
+              );
+            })}
+            <Link href="/conditions" className={`${styles.drawerSubLink} ${styles.drawerSubLinkAccent} ${isActive("/conditions")}`} onClick={() => setDrawerOpen(false)}>
+              {t.nav.viewAllConditions}
+            </Link>
+          </div>
+
+          <div className={styles.drawerGroup}>
+            <span className={styles.drawerGroupLabel}>{t.nav.patientInfo}</span>
+            {PATIENT_QUICK_LINKS.filter((l) => l.href.startsWith("/patient-info")).map((l) => {
+              const key = PATIENT_INFO_KEY_BY_HREF[l.href];
+              return (
+                <Link key={l.href} href={l.href} className={`${styles.drawerSubLink} ${isActive(l.href)}`} onClick={() => setDrawerOpen(false)}>
+                  {key ? t.nav[key] : l.label}
+                </Link>
+              );
+            })}
+          </div>
+
+          <a href={testimonialsLink.href} className={`${styles.drawerLink} ${isActive(testimonialsLink.href)}`} onClick={() => setDrawerOpen(false)}>{t.nav.reviews}</a>
+          <a href={contactLink.href} className={`${styles.drawerLink} ${isActive(contactLink.href)}`} onClick={() => setDrawerOpen(false)}>{t.nav.contact}</a>
+        </nav>
+
+        <div className={styles.drawerFooter}>
+          <button
+            type="button"
+            className={styles.drawerLangToggle}
+            onClick={toggleLanguage}
+            aria-label={`Switch to ${language === "en" ? "Spanish" : "English"}`}
+          >
+            {t.nav.langToggleLabel}
+          </button>
+
+          <a href="/#contact" className={`btn btn-primary ${styles.drawerBookBtn}`} onClick={() => setDrawerOpen(false)}>
+            {t.nav.bookAppointment}
+          </a>
+          <a href={`tel:${SITE.phoneHref}`} className={styles.drawerPhone}>
+            {SITE.phoneDisplay}
+          </a>
+          <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className={styles.drawerWhatsapp}>
+            {t.nav.whatsappChat}
+          </a>
+        </div>
       </div>
     </>
   );

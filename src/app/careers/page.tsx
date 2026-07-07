@@ -13,7 +13,7 @@ export default function CareersPage() {
   return (
     <>
       <Header />
-      <main style={{ backgroundColor: "#fbf9f6" }}>
+      <main>
         {/* Eliminamos el contenedor global que limitaba el ancho */}
         <CareersForm />
       </main>

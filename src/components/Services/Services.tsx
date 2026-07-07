@@ -1,4 +1,8 @@
+"use client";
+
 import { SERVICES } from "@/lib/siteData";
+import { CheckIcon } from "@/components/icons/Icons";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./Services.module.css";
 
 // Iconos profesionales vectoriales SVG nativos para uso médico
@@ -45,6 +49,8 @@ function AcupunctureIcon({ className }: { className?: string }) {
 }
 
 export default function Services() {
+  const { t } = useLanguage();
+
   // Mapeo preciso basado en el índice o ID de tus servicios médicos
   const getProfessionalIcon = (id: string, index: number) => {
     if (id?.toLowerCase().includes("chiro") || index === 1) return <ChiropracticIcon className={styles.icon} />;
@@ -55,27 +61,34 @@ export default function Services() {
   return (
     <section id="services" className={styles.sectionBanner}>
       <div className={styles.overlay}></div>
-      
+
       <div className={`container ${styles.contentWrapper}`}>
         <div className={styles.head}>
-          <div className={`${styles.eyebrowWhite} eyebrow`}>What we treat</div>
-          <h2 className={styles.title}>Three disciplines, one recovery plan.</h2>
-          <p className={styles.lead}>
-            Whether your injury happened in a car accident, at work, at home, or another
-            way, our providers work from a shared plan so your care stays coordinated from
-            your first visit to your last.
-          </p>
+          <div className={`${styles.eyebrowWhite} eyebrow`}>{t.services.eyebrow}</div>
+          <h2 className={styles.title}>{t.services.title}</h2>
+          <p className={styles.lead}>{t.services.lead}</p>
         </div>
 
         <div className={styles.grid}>
           {SERVICES.map((service, index) => {
+            const localized = t.services.items[service.id] ?? service;
             return (
               <div key={service.id || index} className={styles.card}>
                 <div className={styles.iconWrap}>
                   {getProfessionalIcon(service.id, index)}
                 </div>
-                <h3>{service.name}</h3>
-                <p className={styles.desc}>{service.description}</p>
+                <h3>{localized.name}</h3>
+                <p className={styles.desc}>{localized.description}</p>
+
+                <ul className={styles.highlights}>
+                  {localized.highlights.map((h) => (
+                    <li key={h}>
+                      <CheckIcon className={styles.highlightIcon} />
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+
                 <span className={styles.tag}>{service.provider}</span>
               </div>
             );

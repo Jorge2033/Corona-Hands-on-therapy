@@ -3,11 +3,13 @@
 import { useState, FormEvent } from "react";
 import { CASE_TYPES, SERVICES } from "@/lib/siteData";
 import type { ContactApiResponse } from "@/lib/types";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./Contact.module.css";
 
 type Status = "idle" | "sending" | "success" | "error";
 
 export default function ContactForm() {
+  const { t } = useLanguage();
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -70,11 +72,8 @@ export default function ContactForm() {
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
-          <h3 className={styles.successTitle}>Request received</h3>
-          <p className={styles.successText}>
-            Thank you — we&apos;ve received your appointment request and will call you
-            shortly to confirm.
-          </p>
+          <h3 className={styles.successTitle}>{t.contact.successTitle}</h3>
+          <p className={styles.successText}>{t.contact.successText}</p>
         </div>
       </div>
     );
@@ -82,54 +81,54 @@ export default function ContactForm() {
 
   return (
     <div className={styles.formCard}>
-      <h3>Request an Appointment</h3>
-      <p>Fill out the form and our team will call to confirm your visit.</p>
+      <h3>{t.contact.formTitle}</h3>
+      <p>{t.contact.formLead}</p>
 
       <form onSubmit={handleSubmit}>
         <div className={styles.formGrid}>
           <div className={styles.field}>
-            <label htmlFor="fullName">Full Name</label>
+            <label htmlFor="fullName">{t.contact.fullName}</label>
             <input type="text" id="fullName" name="fullName" placeholder="Jane Doe" required />
           </div>
           <div className={styles.field}>
-            <label htmlFor="phone">Phone Number</label>
+            <label htmlFor="phone">{t.contact.phoneNumber}</label>
             <input type="tel" id="phone" name="phone" placeholder="(347) 000-0000" required />
           </div>
           <div className={`${styles.field} ${styles.full}`}>
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="email">{t.contact.email}</label>
             <input type="email" id="email" name="email" placeholder="jane@example.com" />
           </div>
           <div className={`${styles.field} ${styles.full}`}>
-            <label htmlFor="caseType">Case Type</label>
+            <label htmlFor="caseType">{t.contact.caseType}</label>
             <select id="caseType" name="caseType" required defaultValue="">
               <option value="" disabled>
-                Select one
+                {t.contact.selectOne}
               </option>
               {CASE_TYPES.map((c) => (
                 <option key={c.value} value={c.value}>
-                  {c.label}
+                  {t.contact.caseTypes[c.value] ?? c.label}
                 </option>
               ))}
             </select>
           </div>
           <div className={`${styles.field} ${styles.full}`}>
-            <label htmlFor="serviceNeeded">Service Needed</label>
+            <label htmlFor="serviceNeeded">{t.contact.serviceNeeded}</label>
             <select id="serviceNeeded" name="serviceNeeded" defaultValue="">
-              <option value="">Select one</option>
+              <option value="">{t.contact.selectOne}</option>
               {SERVICES.map((s) => (
                 <option key={s.id} value={s.id}>
-                  {s.name}
+                  {t.services.items[s.id]?.name ?? s.name}
                 </option>
               ))}
-              <option value="not-sure">Not sure yet</option>
+              <option value="not-sure">{t.contact.notSureYet}</option>
             </select>
           </div>
           <div className={`${styles.field} ${styles.full}`}>
-            <label htmlFor="notes">Notes (optional)</label>
+            <label htmlFor="notes">{t.contact.notes}</label>
             <textarea
               id="notes"
               name="notes"
-              placeholder="Briefly describe your injury or preferred appointment time..."
+              placeholder={t.contact.notesPlaceholder}
             />
           </div>
         </div>
@@ -137,11 +136,10 @@ export default function ContactForm() {
         {status === "error" && <p className={styles.errorMsg}>{errorMsg}</p>}
 
         <button type="submit" className={`btn btn-gold ${styles.submitBtn}`} disabled={status === "sending"}>
-          {status === "sending" ? "Sending..." : "Submit Appointment Request"}
+          {status === "sending" ? t.contact.sending : t.contact.submit}
         </button>
         <p className={styles.formNote}>
-          By submitting, you agree to our <a href="#">Privacy Policy</a>. Your
-          information is never shared or sold.
+          {t.contact.privacyNote} <a href="#">{t.contact.privacyPolicy}</a>. {t.contact.neverShared}
         </p>
       </form>
     </div>

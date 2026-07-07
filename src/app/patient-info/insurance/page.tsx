@@ -4,6 +4,9 @@ import type { Metadata } from "next"; // Nota: Si exportas metadatos estáticos 
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { INSURANCE_CATEGORIES, TOTAL_INSURANCE_COUNT } from "@/lib/insuranceData";
+import { PATIENT_QUICK_LINKS } from "@/lib/siteData";
+import QuickLinksCard from "@/components/Sidebar/QuickLinksCard";
+import PainFreeCta from "@/components/Sidebar/PainFreeCta";
 import styles from "./insurance.module.css";
 
 // Helper para limpiar el nombre y armar la búsqueda en Google
@@ -44,110 +47,125 @@ export default function InsurancePlansPage() {
     <>
       <Header />
       <main>
-        <section className={`container ${styles.hero}`}>
-          <div className="eyebrow">Patient Info</div>
-          <h1 className={styles.title}>Insurance we commonly work with.</h1>
-          <p className={styles.intro}>
-            Understanding your insurance coverage shouldn&apos;t be complicated. Below is a
-            list of insurance types and carriers we commonly work with for auto
-            accident, work injury, home accident, and general health insurance cases in
-            the Elmhurst area.
-          </p>
-          <div className={styles.disclaimer}>
-            <strong>Please note:</strong> insurance networks and coverage change often.
-            This list reflects plans we commonly work with in our area — it doesn&apos;t
-            guarantee coverage for every policy under a given carrier. Please call our
-            front desk at least once before your visit so we can verify your specific
-            plan and benefits.
+        <div className={styles.breadcrumbContainer}>
+          <div className={`container ${styles.breadcrumb}`}>
+            Home » Patient Information » Insurance Plans
           </div>
-        </section>
+        </div>
 
-        <section className="container" style={{ paddingTop: 0, paddingBottom: 40 }}>
-          <div className={styles.infoGrid}>
-            <div className={styles.infoCard}>
-              <h3>Why verifying your insurance matters</h3>
-              <p>
-                Every plan is different — even two people with the same insurance
-                company can have different deductibles, copays, or authorization
-                requirements. Verifying your specific policy before treatment helps
-                avoid surprise bills and lets us build a treatment plan around what
-                your plan actually covers.
+        <div className={`container ${styles.pageGrid}`}>
+          <div className={styles.mainCol}>
+            <div className={styles.hero}>
+              
+              <h1 className={styles.title}>Insurance we commonly work with.</h1>
+              <p className={styles.intro}>
+                Understanding your insurance coverage shouldn&apos;t be complicated. Below is a
+                list of insurance types and carriers we commonly work with for auto
+                accident, work injury, home accident, and general health insurance cases in
+                the Elmhurst area.
               </p>
-            </div>
-            <div className={styles.infoCard}>
-              <h3>Auto accident &amp; work injury claims</h3>
-              <p>
-                Auto accident and work injury cases are usually billed directly to the
-                insurance carrier or claims adjuster handling your case rather than
-                through a standard health insurance copay. Bring your claim number and
-                adjuster information if you have it, and our billing team will handle
-                the rest.
-              </p>
-            </div>
-            <div className={styles.infoCard}>
-              <h3>What to bring</h3>
-              <p>
-                Your insurance card, a photo ID, and — for accident or injury cases —
-                any paperwork you&apos;ve received related to your claim, such as a claim
-                number or adjuster contact information.
-              </p>
-            </div>
-            <div className={`${styles.infoCard} ${styles.noInsuranceCard}`}>
-              <h3>What if I don&apos;t have insurance?</h3>
-              <p>
-                Don&apos;t worry! We offer affordable self-pay rates and flexible payment 
-                options so you can focus on your recovery without barriers. Contact 
-                our front desk to discuss custom packages or pricing tailored to your needs.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="container" style={{ paddingBottom: 80 }}>
-          <h2 className={styles.listTitle}>
-            Plans &amp; Carriers We Commonly Work With ({TOTAL_INSURANCE_COUNT}+)
-          </h2>
-
-          {INSURANCE_CATEGORIES.map((cat) => (
-            <div key={cat.category} className={styles.categoryBlock}>
-              <h3 className={styles.categoryTitle}>{cat.category}</h3>
-              <div className={styles.planGrid}>
-                {cat.plans.map((plan) => {
-                  const targetUrl = getInsuranceUrl(plan);
-                  const faviconUrl = getFallbackFavicon(plan);
-
-                  return (
-                    <a
-                      key={plan}
-                      href={targetUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.planChip}
-                      title={`Visit official website for ${plan}`}
-                    >
-                      <img 
-                        src={faviconUrl} 
-                        alt="" 
-                        className={styles.planLogo}
-                        onError={(e) => {
-                          // Ahora se ejecutará de forma segura en el cliente si una imagen falla
-                          (e.target as HTMLImageElement).src = "https://www.google.com/favicon.ico";
-                        }}
-                      />
-                      <span>{plan}</span>
-                    </a>
-                  );
-                })}
+              <div className={styles.disclaimer}>
+                <strong>Please note:</strong> insurance networks and coverage change often.
+                This list reflects plans we commonly work with in our area — it doesn&apos;t
+                guarantee coverage for every policy under a given carrier. Please call our
+                front desk at least once before your visit so we can verify your specific
+                plan and benefits.
               </div>
             </div>
-          ))}
 
-          <p className={styles.footNote}>
-            Don&apos;t see your plan listed? Call us at{" "}
-            <a href="tel:+13472299167">(347) 229-9167</a> — we work with many plans not
-            listed here and can quickly confirm whether we&apos;re in-network for you.
-          </p>
-        </section>
+            <div className={styles.infoSection}>
+              <div className={styles.infoGrid}>
+                <div className={styles.infoCard}>
+                  <h3>Why verifying your insurance matters</h3>
+                  <p>
+                    Every plan is different — even two people with the same insurance
+                    company can have different deductibles, copays, or authorization
+                    requirements. Verifying your specific policy before treatment helps
+                    avoid surprise bills and lets us build a treatment plan around what
+                    your plan actually covers.
+                  </p>
+                </div>
+                <div className={styles.infoCard}>
+                  <h3>Auto accident &amp; work injury claims</h3>
+                  <p>
+                    Auto accident and work injury cases are usually billed directly to the
+                    insurance carrier or claims adjuster handling your case rather than
+                    through a standard health insurance copay. Bring your claim number and
+                    adjuster information if you have it, and our billing team will handle
+                    the rest.
+                  </p>
+                </div>
+                <div className={styles.infoCard}>
+                  <h3>What to bring</h3>
+                  <p>
+                    Your insurance card, a photo ID, and — for accident or injury cases —
+                    any paperwork you&apos;ve received related to your claim, such as a claim
+                    number or adjuster contact information.
+                  </p>
+                </div>
+                <div className={`${styles.infoCard} ${styles.noInsuranceCard}`}>
+                  <h3>What if I don&apos;t have insurance?</h3>
+                  <p>
+                    Don&apos;t worry! We offer affordable self-pay rates and flexible payment
+                    options so you can focus on your recovery without barriers. Contact
+                    our front desk to discuss custom packages or pricing tailored to your needs.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.plansSection}>
+              <h2 className={styles.listTitle}>
+                Plans &amp; Carriers We Commonly Work With ({TOTAL_INSURANCE_COUNT}+)
+              </h2>
+
+              {INSURANCE_CATEGORIES.map((cat) => (
+                <div key={cat.category} className={styles.categoryBlock}>
+                  <h3 className={styles.categoryTitle}>{cat.category}</h3>
+                  <div className={styles.planGrid}>
+                    {cat.plans.map((plan) => {
+                      const targetUrl = getInsuranceUrl(plan);
+                      const faviconUrl = getFallbackFavicon(plan);
+
+                      return (
+                        <a
+                          key={plan}
+                          href={targetUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.planChip}
+                          title={`Visit official website for ${plan}`}
+                        >
+                          <img
+                            src={faviconUrl}
+                            alt=""
+                            className={styles.planLogo}
+                            onError={(e) => {
+                              // Ahora se ejecutará de forma segura en el cliente si una imagen falla
+                              (e.target as HTMLImageElement).src = "https://www.google.com/favicon.ico";
+                            }}
+                          />
+                          <span>{plan}</span>
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+
+              <p className={styles.footNote}>
+                Don&apos;t see your plan listed? Call us at{" "}
+                <a href="tel:+13472299167">(347) 229-9167</a> — we work with many plans not
+                listed here and can quickly confirm whether we&apos;re in-network for you.
+              </p>
+            </div>
+          </div>
+
+          <aside className={styles.sidebar}>
+            <QuickLinksCard links={PATIENT_QUICK_LINKS} activeHref="/patient-info/insurance" />
+            <PainFreeCta />
+          </aside>
+        </div>
       </main>
       <Footer />
     </>

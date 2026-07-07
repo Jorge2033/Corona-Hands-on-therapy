@@ -2,12 +2,22 @@
 
 import { useState, FormEvent } from "react";
 import { CASE_TYPES } from "@/lib/siteData";
-import { CloseIcon } from "@/components/icons/Icons";
+import {
+  CloseIcon,
+  AssistantPersonIcon,
+  PhoneIcon,
+  MailIcon,
+  CalendarIcon,
+  ClockIcon,
+  ClipboardIcon,
+} from "@/components/icons/Icons";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./Modal.module.css";
 
 type Status = "idle" | "sending" | "success" | "error";
 
 export default function AppointmentModal({ onClose }: { onClose: () => void }) {
+  const { t } = useLanguage();
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -54,8 +64,8 @@ export default function AppointmentModal({ onClose }: { onClose: () => void }) {
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.panel} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
-          <span className={styles.headerTitle}>Request Appointment</span>
-          <button className={styles.closeBtn} onClick={onClose} aria-label="Close">
+          <span className={styles.headerTitle}>{t.modals.requestAppointmentTitle}</span>
+          <button className={styles.closeBtn} onClick={onClose} aria-label={t.modals.close}>
             <CloseIcon />
           </button>
         </div>
@@ -66,61 +76,79 @@ export default function AppointmentModal({ onClose }: { onClose: () => void }) {
               <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={styles.successIcon}>
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              <h3>Request received</h3>
-              <p>We&apos;ll call you shortly to confirm your appointment.</p>
+              <h3>{t.modals.appointmentReceivedTitle}</h3>
+              <p>{t.modals.appointmentReceivedText}</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
               <div className={styles.field}>
-                <label htmlFor="am-name">Name</label>
-                <input id="am-name" name="fullName" type="text" placeholder="Jane Doe" required />
-              </div>
-
-              <div className={styles.grid2}>
-                <div className={styles.field}>
-                  <label htmlFor="am-email">Email</label>
-                  <input id="am-email" name="email" type="email" placeholder="jane@example.com" />
-                </div>
-                <div className={styles.field}>
-                  <label htmlFor="am-phone">Phone</label>
-                  <input id="am-phone" name="phone" type="tel" placeholder="(347) 000-0000" required />
+                <label htmlFor="am-name">{t.modals.name}</label>
+                <div className={styles.fieldIconWrap}>
+                  <AssistantPersonIcon className={styles.fieldIcon} />
+                  <input id="am-name" name="fullName" type="text" placeholder="Jane Doe" required />
                 </div>
               </div>
 
               <div className={styles.grid2}>
                 <div className={styles.field}>
-                  <label htmlFor="am-date">Preferred Date</label>
-                  <input id="am-date" name="preferredDate" type="date" required />
+                  <label htmlFor="am-email">{t.modals.email}</label>
+                  <div className={styles.fieldIconWrap}>
+                    <MailIcon className={styles.fieldIcon} />
+                    <input id="am-email" name="email" type="email" placeholder="jane@example.com" />
+                  </div>
                 </div>
                 <div className={styles.field}>
-                  <label htmlFor="am-time">Preferred Time</label>
-                  <input id="am-time" name="preferredTime" type="time" required />
+                  <label htmlFor="am-phone">{t.modals.phone}</label>
+                  <div className={styles.fieldIconWrap}>
+                    <PhoneIcon className={styles.fieldIcon} />
+                    <input id="am-phone" name="phone" type="tel" placeholder="(347) 000-0000" required />
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.grid2}>
+                <div className={styles.field}>
+                  <label htmlFor="am-date">{t.modals.preferredDate}</label>
+                  <div className={styles.fieldIconWrap}>
+                    <CalendarIcon className={styles.fieldIcon} />
+                    <input id="am-date" name="preferredDate" type="date" required />
+                  </div>
+                </div>
+                <div className={styles.field}>
+                  <label htmlFor="am-time">{t.modals.preferredTime}</label>
+                  <div className={styles.fieldIconWrap}>
+                    <ClockIcon className={styles.fieldIcon} />
+                    <input id="am-time" name="preferredTime" type="time" required />
+                  </div>
                 </div>
               </div>
 
               <div className={styles.field}>
-                <label htmlFor="am-case">Case Type</label>
-                <select id="am-case" name="caseType" required defaultValue="">
-                  <option value="" disabled>
-                    Select one
-                  </option>
-                  {CASE_TYPES.map((c) => (
-                    <option key={c.value} value={c.value}>
-                      {c.label}
+                <label htmlFor="am-case">{t.modals.caseType}</label>
+                <div className={styles.fieldIconWrap}>
+                  <ClipboardIcon className={styles.fieldIcon} />
+                  <select id="am-case" name="caseType" required defaultValue="">
+                    <option value="" disabled>
+                      {t.modals.selectOne}
                     </option>
-                  ))}
-                </select>
+                    {CASE_TYPES.map((c) => (
+                      <option key={c.value} value={c.value}>
+                        {t.contact.caseTypes[c.value] ?? c.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               <div className={styles.field}>
-                <label htmlFor="am-notes">Additional Comments</label>
-                <textarea id="am-notes" name="notes" placeholder="Anything else we should know?" />
+                <label htmlFor="am-notes">{t.modals.additionalComments}</label>
+                <textarea id="am-notes" name="notes" placeholder={t.modals.additionalCommentsPlaceholder} />
               </div>
 
               {status === "error" && <p className={styles.errorMsg}>{errorMsg}</p>}
 
               <button type="submit" className={`btn btn-primary ${styles.submitBtn}`} disabled={status === "sending"}>
-                {status === "sending" ? "Sending..." : "Request Appointment"}
+                {status === "sending" ? t.contact.sending : t.modals.requestAppointmentBtn}
               </button>
             </form>
           )}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { SITE, HOURS, SERVICES } from "@/lib/siteData";
 import { CloseIcon } from "@/components/icons/Icons";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./Modal.module.css";
 import chatStyles from "./WebChatModal.module.css";
 
@@ -17,36 +18,66 @@ interface QuickOption {
   onSelect: () => void;
 }
 
+// Avatar de Vika con foto real, si existe /images/assistant-avatar.jpg.
+// Mientras no se agregue esa imagen, cae automáticamente en la inicial "V".
+function AssistantAvatar({ size, className }: { size: number; className: string }) {
+  const [imageFailed, setImageFailed] = useState(false);
+
+  if (imageFailed) {
+    return (
+      <span className={className} style={{ width: size, height: size }} aria-hidden="true">
+        V
+      </span>
+    );
+  }
+
+  return (
+    <img
+      src="/images/assistant-avatar.jpg"
+      alt=""
+      className={`${className} ${chatStyles.avatarImg}`}
+      style={{ width: size, height: size }}
+      onError={() => setImageFailed(true)}
+    />
+  );
+}
+
 // Bot de preguntas guiadas: NO es un modelo de IA ni WhatsApp.
 // Es un árbol de opciones fijas + un input de texto libre con una
 // respuesta de respaldo que siempre dirige a llamar o escribir por email.
+// El indicador de "escribiendo..." es solo una pausa simulada para que la
+// experiencia se sienta como un chat en vivo, no una respuesta real generada.
 export default function WebChatModal({ onClose }: { onClose: () => void }) {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: 1,
-      from: "bot",
-      text: `Hi! I'm Vika, the virtual assistant for ${SITE.name}.`,
-    },
-    { id: 2, from: "bot", text: "Please select an option below, or type your own question." },
-  ]);
+  const { t } = useLanguage();
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [options, setOptions] = useState<QuickOption[]>([]);
   const [inputValue, setInputValue] = useState("");
-
-  function pushBotMessage(text: string) {
-    setMessages((prev) => [...prev, { id: prev.length + 1, from: "bot", text }]);
-  }
+  const [isTyping, setIsTyping] = useState(false);
 
   function pushUserMessage(text: string) {
     setMessages((prev) => [...prev, { id: prev.length + 1, from: "user", text }]);
   }
 
+  // Simula una breve pausa de "escribiendo" antes de insertar el mensaje del bot,
+  // y opcionalmente ejecuta algo después (mostrar las siguientes opciones, etc.)
+  function pushBotMessage(text: string, after?: () => void) {
+    setOptions([]);
+    setIsTyping(true);
+    const delay = 500 + Math.random() * 400;
+    setTimeout(() => {
+      setMessages((prev) => [...prev, { id: prev.length + 1, from: "bot", text }]);
+      setIsTyping(false);
+      after?.();
+    }, delay);
+  }
+
   function showMainMenu() {
     setOptions([
-      { label: "Request an appointment", onSelect: () => selectOption("Request an appointment", showAppointmentInfo) },
-      { label: "Office hours", onSelect: () => selectOption("Office hours", showHours) },
-      { label: "Insurance", onSelect: () => selectOption("Insurance", showInsurance) },
-      { label: "Location", onSelect: () => selectOption("Location", showLocation) },
-      { label: "Services offered", onSelect: () => selectOption("Services offered", showServices) },
+      { label: t.webchat.optionAppointment, onSelect: () => selectOption(t.webchat.optionAppointment, showAppointmentInfo) },
+      { label: t.webchat.optionHours, onSelect: () => selectOption(t.webchat.optionHours, showHours) },
+      { label: t.webchat.optionInsurance, onSelect: () => selectOption(t.webchat.optionInsurance, showInsurance) },
+      { label: t.webchat.optionLocation, onSelect: () => selectOption(t.webchat.optionLocation, showLocation) },
+      { label: t.webchat.optionServices, onSelect: () => selectOption(t.webchat.optionServices, showServices) },
     ]);
   }
 
@@ -57,37 +88,31 @@ export default function WebChatModal({ onClose }: { onClose: () => void }) {
 
   function showAppointmentInfo() {
     pushBotMessage(
-      `You can request an appointment using the "Request Appointment" button, or call us directly at ${SITE.phoneDisplay}.`
+      `${t.webchat.appointmentInfoPrefix} ${SITE.phoneDisplay}.`,
+      backToMenuOption
     );
-    backToMenuOption();
   }
 
   function showHours() {
-    const hoursText = HOURS.map((h) => `${h.day}: ${h.time}`).join(" · ");
-    pushBotMessage(hoursText);
-    backToMenuOption();
+    const hoursText = HOURS.map((h) => `${t.contact.days[h.day] ?? h.day}: ${h.time}`).join(" · ");
+    pushBotMessage(hoursText, backToMenuOption);
   }
 
   function showInsurance() {
-    pushBotMessage(
-      "We work with most major insurance plans, including coverage for auto accident, work injury, home accident, and personal injury cases. Call us and we can check your specific plan."
-    );
-    backToMenuOption();
+    pushBotMessage(t.webchat.insuranceInfo, backToMenuOption);
   }
 
   function showLocation() {
-    pushBotMessage(`We're located at ${SITE.address.line1}, ${SITE.address.line2}.`);
-    backToMenuOption();
+    pushBotMessage(`${t.webchat.locationPrefix} ${SITE.address.line1}, ${SITE.address.line2}.`, backToMenuOption);
   }
 
   function showServices() {
-    const list = SERVICES.map((s) => s.name).join(", ");
-    pushBotMessage(`We offer: ${list}.`);
-    backToMenuOption();
+    const list = SERVICES.map((s) => t.services.items[s.id]?.name ?? s.name).join(", ");
+    pushBotMessage(`${t.webchat.servicesPrefix} ${list}.`, backToMenuOption);
   }
 
   function backToMenuOption() {
-    setOptions([{ label: "Back to main menu", onSelect: showMainMenu }]);
+    setOptions([{ label: t.webchat.backToMenu, onSelect: showMainMenu }]);
   }
 
   function handleTextSubmit(e: React.FormEvent) {
@@ -96,46 +121,73 @@ export default function WebChatModal({ onClose }: { onClose: () => void }) {
     if (!text) return;
     pushUserMessage(text);
     setInputValue("");
-    setOptions([]);
-    setTimeout(() => {
-      pushBotMessage(
-        `I'm a simple assistant so I can't answer everything, but you can call us at ${SITE.phoneDisplay} or email ${SITE.email} and our team will help right away.`
-      );
-      backToMenuOption();
-    }, 400);
+    pushBotMessage(
+      `${t.webchat.fallbackPrefix} ${SITE.phoneDisplay} ${t.webchat.fallbackMiddle} ${SITE.email} ${t.webchat.fallbackSuffix}`,
+      backToMenuOption
+    );
   }
 
-  // Muestra el menú principal la primera vez que se abre el chat
+  // Saludo inicial escalonado (con pausa de "escribiendo") al abrir el chat
   useEffect(() => {
-    showMainMenu();
+    pushBotMessage(`${t.webchat.greeting1Prefix} ${SITE.name}.`, () => {
+      pushBotMessage(t.webchat.greeting2, showMainMenu);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.panel} onClick={(e) => e.stopPropagation()}>
-        <div className={styles.header}>
-          <span className={styles.headerTitle}>Web Chat</span>
-          <button className={styles.closeBtn} onClick={onClose} aria-label="Close">
+        <div className={`${styles.header} ${chatStyles.chatHeader}`}>
+          <div className={chatStyles.headerIdentity}>
+            <AssistantAvatar size={34} className={chatStyles.headerAvatar} />
+            <div className={chatStyles.headerText}>
+              <span className={styles.headerTitle}>Vika</span>
+              <span className={chatStyles.headerSubtitle}>
+                <span className={chatStyles.onlineDot} aria-hidden="true" />
+                {t.webchat.virtualAssistant}
+              </span>
+            </div>
+          </div>
+          <button className={styles.closeBtn} onClick={onClose} aria-label={t.modals.close}>
             <CloseIcon />
           </button>
         </div>
 
         <div className={`${styles.body} ${chatStyles.chatBody}`}>
           {messages.map((m) => (
-            <div key={m.id} className={m.from === "bot" ? chatStyles.botBubble : chatStyles.userBubble}>
-              {m.text}
+            <div key={m.id} className={m.from === "bot" ? chatStyles.botRow : chatStyles.userRow}>
+              {m.from === "bot" && <AssistantAvatar size={26} className={chatStyles.avatar} />}
+              <div className={m.from === "bot" ? chatStyles.botBubble : chatStyles.userBubble}>
+                {m.text}
+              </div>
             </div>
           ))}
 
-          {options.length > 0 && (
-            <div className={chatStyles.optionsWrap}>
-              {options.map((opt) => (
-                <button key={opt.label} className={chatStyles.optionBtn} onClick={opt.onSelect}>
-                  {opt.label}
-                </button>
-              ))}
+          {isTyping && (
+            <div className={chatStyles.botRow}>
+              <AssistantAvatar size={26} className={chatStyles.avatar} />
+              <div className={chatStyles.typingBubble} aria-label={`Vika ${t.webchat.virtualAssistant}`}>
+                <span className={chatStyles.typingDot} />
+                <span className={chatStyles.typingDot} />
+                <span className={chatStyles.typingDot} />
+              </div>
             </div>
+          )}
+
+          {!isTyping && options.length > 0 && (
+            <>
+              <div className={chatStyles.timestamp}>
+                {new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}
+              </div>
+              <div className={chatStyles.optionsWrap}>
+                {options.map((opt) => (
+                  <button key={opt.label} className={chatStyles.optionBtn} onClick={opt.onSelect}>
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </>
           )}
         </div>
 

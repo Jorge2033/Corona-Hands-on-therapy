@@ -1,7 +1,8 @@
 :root {
   --navy: #0f2a4a;
   --navy-dark: #0a1e38;
-  --blue: #1d5c97;
+  --blue: #2478ba;
+  --blue-dark: #1d5c97;
   --gold: #c97b2e;
   --gold-dark: #ad6822;
   --cream: #f6f3ed;
@@ -121,21 +122,21 @@ section:first-of-type {
 }
 
 .btn-primary {
-  background: var(--navy);
+  background: var(--blue);
   color: var(--white);
 }
 .btn-primary:hover {
-  background: var(--navy-dark);
+  background: var(--blue-dark);
   transform: translateY(-1px);
 }
 
 .btn-ghost {
   background: transparent;
-  border-color: var(--navy);
-  color: var(--navy);
+  border-color: var(--blue);
+  color: var(--blue);
 }
 .btn-ghost:hover {
-  background: var(--navy);
+  background: var(--blue);
   color: var(--white);
 }
 
@@ -349,7 +350,7 @@ section + section .eyebrow {
 .field textarea:focus {
   outline: none;
   border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(29, 92, 151, 0.15);
+  box-shadow: 0 0 0 3px rgba(36, 120, 186, 0.25);
 }
 
 .field textarea {

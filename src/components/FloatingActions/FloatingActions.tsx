@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { MailIcon, ClockIcon, WhatsappIcon } from "@/components/icons/Icons";
+import { MailIcon, ClockIcon, AssistantPersonIcon } from "@/components/icons/Icons";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import ContactModal from "./ContactModal";
 import AppointmentModal from "./AppointmentModal";
 import WebChatModal from "./WebChatModal";
@@ -14,24 +15,31 @@ type ModalType = "contact" | "appointment" | "webchat" | null;
 // - Request Appointment -> formulario más completo que manda un correo real
 // - Web Chat -> bot de preguntas guiadas (no es WhatsApp ni IA real)
 export default function FloatingActions() {
+  const { t } = useLanguage();
   const [activeModal, setActiveModal] = useState<ModalType>(null);
 
   return (
     <>
       <div className={styles.wrap} aria-label="Quick actions">
         <button type="button" className={styles.action} onClick={() => setActiveModal("contact")}>
-          <MailIcon className={styles.icon} />
-          <span>Contact Us</span>
+          <span className={styles.iconCircle}>
+            <MailIcon className={styles.icon} />
+          </span>
+          <span>{t.floatingActions.contactUs}</span>
         </button>
 
         <button type="button" className={styles.action} onClick={() => setActiveModal("appointment")}>
-          <ClockIcon className={styles.icon} />
-          <span>Request Appointment</span>
+          <span className={styles.iconCircle}>
+            <ClockIcon className={styles.icon} />
+          </span>
+          <span>{t.floatingActions.requestAppointment}</span>
         </button>
 
-        <button type="button" className={styles.action} onClick={() => setActiveModal("webchat")}>
-          <WhatsappIcon className={styles.icon} />
-          <span>Web Chat</span>
+        <button type="button" className={`${styles.action} ${styles.actionHighlight}`} onClick={() => setActiveModal("webchat")}>
+          <span className={styles.iconCircle}>
+            <AssistantPersonIcon className={styles.icon} />
+          </span>
+          <span>{t.floatingActions.webChat}</span>
         </button>
       </div>
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import Team from "@/components/Team/Team";
@@ -15,22 +16,25 @@ export default function TeamPage() {
   return (
     <>
       <Header />
-      <main style={{ backgroundColor: "#fbf9f6", overflowX: "hidden" }}>
-        
-        {/* Sección Hero Ampliada y Centrada */}
-        <section className={styles.hero}>
-          <div className="eyebrow" style={{ textTransform: "uppercase", letterSpacing: "1.5px", fontWeight: 600, color: "#00a896" }}>
-            Our Team
+      <main className={styles.main}>
+        <div className={styles.breadcrumbContainer}>
+          <div className={`container ${styles.breadcrumb}`}>
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">»</span>
+            <span aria-current="page">Our Team</span>
           </div>
+        </div>
+
+        {/* Sección Hero Ampliada y Centrada */}
+        <div className={styles.hero}>
           <h1 className={styles.title}>The specialists behind your recovery.</h1>
           <p className={styles.intro}>{TEAM_INTRO}</p>
-        </section>
+        </div>
 
         {/* Cuadrícula del equipo con un contenedor alineado */}
-        <section style={{ maxWidth: "960px", margin: "0 auto", padding: "10px 20px 80px 20px" }}>
+        <div className={styles.teamSection}>
           <Team />
-        </section>
-        
+        </div>
       </main>
       <Footer />
     </>

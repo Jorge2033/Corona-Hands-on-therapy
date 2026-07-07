@@ -106,6 +106,7 @@
   padding: 36px;
   height: fit-content;
   min-height: 590px;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -162,7 +163,7 @@
 .field textarea:focus {
   outline: none;
   border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(29, 92, 151, 0.15);
+  box-shadow: 0 0 0 3px rgba(36, 120, 186, 0.25);
 }
 
 .field textarea {

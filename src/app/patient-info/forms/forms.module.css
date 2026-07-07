@@ -9,7 +9,7 @@
 .breadcrumbContainer {
   background-color: #f5f4f0;
   width: 100%;
-  padding: 20px;
+  padding: 104px 20px 20px;
   box-sizing: border-box;
 }
 
@@ -40,9 +40,9 @@
 }
 
 .hero {
-  margin-bottom: 30px;
+  margin-bottom: 16px;
   border-bottom: 2px solid #f2eee6;
-  padding-bottom: 24px;
+  padding-bottom: 16px;
 }
 
 .title {
@@ -200,132 +200,6 @@
   display: flex;
   flex-direction: column;
   gap: 32px; /* SEPARACIÓN PERFECTA: Evita que los Quick Links queden pegados al banner */
-}
-
-.sidebarWidget {
-  /* Nuevo color: Azul médico profundo texturizado (más suave y premium que el anterior) */
-  background: linear-gradient(135deg, #102a43 0%, #183b5a 100%) !important;
-  border-radius: 14px;
-  padding: 26px 22px;
-  box-shadow: 0 6px 18px rgba(16, 42, 67, 0.08);
-  box-sizing: border-box;
-}
-
-.widgetTitle {
-  font-size: 16px;
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-weight: 700;
-  color: #ffffff !important;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding-left: 6px;
-}
-
-.quickLinksList {
-  list-style: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.quickLinksList li {
-  list-style-type: none !important;
-  padding: 0 !important; /* Reseteamos padding para que lo maneje el enlace */
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-sizing: border-box;
-}
-
-/* Hacemos que la etiqueta <a> ocupe todo el botón para hacer click en cualquier parte */
-.quickLinksList li a {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 14px 18px;
-  color: #f5f7fa !important;
-  text-decoration: none;
-  font-size: 14.5px;
-  font-weight: 500;
-  box-sizing: border-box;
-  transition: color 0.2s;
-}
-
-.quickLinksList li:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateX(4px);
-}
-
-/* ESTILO DE LA PESTAÑA ACTIVA */
-.quickLinksList .activeLink {
-  background: #ffffff !important;
-  border: 1px solid #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-
-.quickLinksList .activeLink a {
-  color: #102a43 !important; /* Letras azul oscuro sobre el fondo blanco */
-  font-weight: 700;
-}
-
-.linkIcon {
-  margin-right: 12px;
-  font-size: 16px;
-  display: inline-flex;
-  align-items: center;
-}
-
-/* WIDGET PUBLICITARIO APPOINTMENT */
-.promoWidget {
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-}
-
-.promoImagePlaceholder {
-  background: linear-gradient(rgba(16, 42, 67, 0.8), rgba(16, 42, 67, 0.85)),
-              url('/images/GroupShot.jpg') center/cover no-repeat;
-  height: 220px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  text-align: center;
-}
-
-.promoOverlay h5 {
-  color: #ffffff;
-  font-size: 18px;
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.promoBtn {
-  display: inline-block;
-  background: #ff4d4d;
-  color: white;
-  padding: 12px 28px;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-radius: 30px;
-  letter-spacing: 0.5px;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
-}
-
-.promoBtn:hover {
-  background: #ff3333;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 15px rgba(255, 77, 77, 0.4);
 }
 
 @media (max-width: 960px) {

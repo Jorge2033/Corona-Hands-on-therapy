@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { SITE } from "@/lib/siteData";
 import { CheckIcon } from "@/components/icons/Icons";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./Hero.module.css";
 
 const BACKGROUND_IMAGES = [
@@ -13,6 +14,7 @@ const BACKGROUND_IMAGES = [
 ];
 
 export default function Hero() {
+  const { t } = useLanguage();
   const [currentIdx, setCurrentIdx] = useState(0);
 
   useEffect(() => {
@@ -44,56 +46,27 @@ export default function Hero() {
         <div className={`container ${styles.hero}`}>
           <div>
             <div className={`eyebrow ${styles.heroEyebrow}`}>
-              Auto · Work · Home · Personal Injury Recovery
+              {t.hero.eyebrow}
             </div>
             <h1 className={styles.headline}>
-              Your recovery, in <em>expert hands.</em>
+              {t.hero.titleStart} <em>{t.hero.titleEm}</em>
             </h1>
-            <p className={styles.subhead}>
-              Corona Hands-On Therapy provides physical therapy, chiropractic care, and
-              acupuncture for patients recovering from auto accidents, work injuries, home
-              accidents, and other personal injuries — all under one roof in Elmhurst, NY.
-            </p>
+            <p className={styles.subhead}>{t.hero.subhead}</p>
             <div className={styles.ctas}>
               <a href="/#contact" className="btn btn-primary">
-                Request an Appointment
+                {t.hero.requestAppointment}
               </a>
               {/* Añadimos clase específica para que el botón fantasma sea visible sobre azul */}
               <a href={`tel:${SITE.phoneHref}`} className={`btn btn-ghost ${styles.heroGhostBtn}`}>
-                Call {SITE.phoneDisplay}
+                {t.nav.call} {SITE.phoneDisplay}
               </a>
             </div>
             <div className={styles.badgeRow}>
-              <span className={styles.badge}>
-                <CheckIcon className={styles.badgeIcon} /> Auto accident recovery
-              </span>
-              <span className={styles.badge}>
-                <CheckIcon className={styles.badgeIcon} /> Work &amp; home injury care
-              </span>
-              <span className={styles.badge}>
-                <CheckIcon className={styles.badgeIcon} /> Se habla Español
-              </span>
-              <span className={styles.badge}>
-                <CheckIcon className={styles.badgeIcon} /> Chiropractic &amp; Acupuncture
-              </span>
-              <span className={styles.badge}>
-                <CheckIcon className={styles.badgeIcon} /> Chronic pain management
-              </span>
-              <span className={styles.badge}>
-                <CheckIcon className={styles.badgeIcon} /> Sports injury rehab
-              </span>
-              <span className={styles.badge}>
-                <CheckIcon className={styles.badgeIcon} /> Personalized care plans
-              </span>
-              <span className={styles.badge}>
-                <CheckIcon className={styles.badgeIcon} /> Most insurance plans accepted
-              </span>
-              <span className={styles.badge}>
-                <CheckIcon className={styles.badgeIcon} /> Evening &amp; weekend hours
-              </span>
-              <span className={styles.badge}>
-                <CheckIcon className={styles.badgeIcon} /> Same-day appointments available
-              </span>
+              {t.hero.badges.map((badge) => (
+                <span key={badge} className={styles.badge}>
+                  <CheckIcon className={styles.badgeIcon} /> {badge}
+                </span>
+              ))}
             </div>
           </div>
         </div>

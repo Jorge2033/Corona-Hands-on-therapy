@@ -1,15 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import { CheckIcon } from "@/components/icons/Icons";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./About.module.css";
 
-const ABOUT_POINTS = [
-  "Auto accident, work injury, home accident & personal injury cases welcome",
-  "Physical therapy, chiropractic, and acupuncture under one roof",
-  "Spanish-speaking staff available",
-  "Personalized treatment plans for every patient",
-];
-
 export default function About() {
+  const { t } = useLanguage();
+  const [step1, step2, step3] = t.about.steps;
+
   return (
     <section id="about" className={styles.section}>
       <div className={`container ${styles.about}`}>
@@ -17,23 +16,19 @@ export default function About() {
         {/* LEFT SIDE */}
         <div className={styles.textContent}>
           <div className="eyebrow">
-            About Corona Hands-On Therapy
+            {t.about.eyebrow}
           </div>
 
           <h2 className={styles.title}>
-            Recovery-focused care for accident and injury patients.
+            {t.about.title}
           </h2>
 
           <p className={styles.lead}>
-            Based in Elmhurst, NY, Corona Hands-On Therapy combines
-            physical therapy, chiropractic care and acupuncture under
-            one roof. We provide coordinated treatment plans designed
-            for patients recovering from auto accidents, work injuries,
-            home accidents and other personal injuries.
+            {t.about.lead}
           </p>
 
           <ul className={styles.list}>
-            {ABOUT_POINTS.map((point) => (
+            {t.about.points.map((point) => (
               <li key={point}>
                 <CheckIcon className={styles.checkIcon} />
                 {point}
@@ -42,7 +37,7 @@ export default function About() {
           </ul>
 
           <Link href="/team" className={styles.meetTeamLink}>
-            Meet our providers →
+            {t.about.meetProviders}
           </Link>
         </div>
 
@@ -71,11 +66,8 @@ export default function About() {
           <article className={`${styles.card} ${styles.left}`}>
             <div className={styles.circle}>01</div>
             <div className={styles.cardBody}>
-              <h3>Personalized Evaluation</h3>
-              <p>
-                Every patient begins with a comprehensive assessment to
-                identify the root cause of pain before treatment starts.
-              </p>
+              <h3>{step1.title}</h3>
+              <p>{step1.text}</p>
             </div>
           </article>
 
@@ -83,11 +75,8 @@ export default function About() {
           <article className={`${styles.card} ${styles.right}`}>
             <div className={styles.circle}>02</div>
             <div className={styles.cardBody}>
-              <h3>Coordinated Treatment</h3>
-              <p>
-                Physical therapy, chiropractic care and acupuncture
-                work together to maximize your recovery.
-              </p>
+              <h3>{step2.title}</h3>
+              <p>{step2.text}</p>
             </div>
           </article>
 
@@ -95,19 +84,40 @@ export default function About() {
           <article className={`${styles.card} ${styles.leftBottom}`}>
             <div className={styles.circle}>03</div>
             <div className={styles.cardBody}>
-              <h3>Recovery Monitoring</h3>
-              <p>
-                We measure your progress every visit and adapt your
-                treatment plan as your body heals.
-              </p>
+              <h3>{step3.title}</h3>
+              <p>{step3.text}</p>
             </div>
           </article>
 
           {/* CTA WRAPPER */}
           <div className={styles.ctaWrapper}>
+            <span className={`${styles.ctaArrow} ${styles.ctaArrowLeft}`} aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M3 12h16M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+
             <a href="#contact" className={styles.ctaButton}>
-              Request Appointment
+              {t.about.ctaButton}
             </a>
+
+            <span className={`${styles.ctaArrow} ${styles.ctaArrowRight}`} aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M21 12H5M11 6l-6 6 6 6"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
           </div>
 
         </div>

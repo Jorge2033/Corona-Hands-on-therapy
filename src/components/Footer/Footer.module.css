@@ -1,40 +1,27 @@
 .footer {
   background: var(--navy-dark);
   color: #b9c7d6;
-  padding: 56px 0 26px;
+  padding: 48px 0 24px;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 40px;
-  margin-bottom: 36px;
+  gap: 36px;
+  margin-bottom: 32px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
-.brandIcon {
-  height: 100px;       
-  width: 280px;          /* Evita que se estire o aplaste horizontalmente */
-  object-fit: contain;  /* Mantiene la proporción intacta */
+.brandLogo {
+  height: 74px;
+  width: auto;
+  object-fit: contain;
   flex-shrink: 0;
-}
-
-.brand span {
-  font-family: var(--font-display), serif;
-  font-weight: 600;
-  font-size: 18px;
-  color: var(--white);
-}
-
-.blurb {
-  font-size: 14.5px;
-  max-width: 280px;
 }
 
 .emergency {
@@ -60,9 +47,28 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 18px;
+}
+
+.grid ul.contactList {
   display: flex;
   flex-direction: column;
+}
+
+.contactList li {
+  display: flex;
+  align-items: flex-start;
   gap: 10px;
+}
+
+.contactIcon {
+  width: 15px;
+  height: 15px;
+  color: var(--blue);
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .grid a {

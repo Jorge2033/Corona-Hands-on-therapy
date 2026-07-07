@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import Link from "next/link";
 import { CAREER_ROLES } from "@/lib/siteData";
 import styles from "./CareersForm.module.css";
 
@@ -76,13 +77,17 @@ export default function CareersForm() {
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
           <h1>Join Our Team</h1>
-          <p>Home » Join Our Team</p>
+          <nav className={styles.heroBreadcrumb} aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">»</span>
+            <span aria-current="page">Join Our Team</span>
+          </nav>
         </div>
       </section>
 
       {/* CONTENEDOR CONTINUO Y COMPACTO DE CONTENIDO (PEGADO) */}
       <main className={styles.contentWrapper}>
-        
+
         {/* TÍTULO PRINCIPAL DE BIENVENIDA PEGADO ABAJO DEL HERO */}
         <h2 className={styles.sectionTitle} style={{ marginTop: 0, marginBottom: "8px" }}>
           Grow your career at Corona Hands-On Therapy.
@@ -144,102 +149,98 @@ export default function CareersForm() {
           </div>
         </section>
 
-        {/* 4. SECCIÓN PUESTOS EN CERRADO (−) PEGADA */}
-        <section className={styles.vacanciesSection} style={{ marginBottom: "20px" }}>
+        {/* 4. SECCIÓN PUESTOS ABIERTOS */}
+        <section className={styles.vacanciesSection}>
           <h2 className={styles.sectionTitle}>Looking for a career at Corona Hands-On Therapy?</h2>
-          
-          <div className={styles.accordion}>
-            <div className={styles.accordionHeader}>
-              <span>Physical Therapist – Elmhurst Clinic</span>
-              <span className={styles.accordionIcon}>−</span>
-            </div>
+
+          <div className={styles.vacancyCard}>
+            <span>Physical Therapist – Elmhurst Clinic</span>
+            <span className={styles.vacancyBadge}>Open Position</span>
           </div>
 
-          <div className={styles.accordion}>
-            <div className={styles.accordionHeader}>
-              <span>Chiropractor – Full Time</span>
-              <span className={styles.accordionIcon}>−</span>
-            </div>
+          <div className={styles.vacancyCard}>
+            <span>Chiropractor – Full Time</span>
+            <span className={styles.vacancyBadge}>Open Position</span>
           </div>
 
-          <div className={styles.accordion}>
-            <div className={styles.accordionHeader}>
-              <span>Physical Therapy Assistant</span>
-              <span className={styles.accordionIcon}>−</span>
-            </div>
+          <div className={styles.vacancyCard}>
+            <span>Physical Therapy Assistant</span>
+            <span className={styles.vacancyBadge}>Open Position</span>
           </div>
         </section>
 
-        {/* 5. SECCIÓN FORMULARIO TOTALMENTE CONECTADO Y PEGADO ABAJO */}
+        {/* 5. SECCIÓN FORMULARIO, EN TARJETA BLANCA SOBRE EL MISMO FONDO DE LA PÁGINA */}
         <section className={styles.formSection}>
-          <div className={styles.formSectionHeader}>
-            <h2 style={{ marginBottom: "4px" }}>Contact us today or submit the form below</h2>
-            <p style={{ marginTop: 0 }}>
-              Advance your PT career by joining our team and training under the leaders in Diagnostic Testing. Gain expertise in EMG, NCV and MSK Ultrasound.
-            </p>
-          </div>
-
-          {status === "success" ? (
-            <div style={{ textAlign: "center", padding: "20px" }}>
-              <h3 style={{ color: "#0f2c59", marginBottom: "4px" }}>Application Received Successfully!</h3>
-              <p>Thank you for applying. Our recruitment team will review your profile shortly.</p>
+          <div className={styles.formCard}>
+            <div className={styles.formSectionHeader}>
+              <h2 style={{ marginBottom: "4px" }}>Contact us today or submit the form below</h2>
+              <p style={{ marginTop: 0 }}>
+                Advance your PT career by joining our team and training under the leaders in Diagnostic Testing. Gain expertise in EMG, NCV and MSK Ultrasound.
+              </p>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <div className={styles.grid}>
-                
-                <div className={styles.field}>
-                  <label htmlFor="firstName">First Name *</label>
-                  <input type="text" id="firstName" name="firstName" required />
-                </div>
 
-                <div className={styles.field}>
-                  <label htmlFor="lastName">Last Name *</label>
-                  <input type="text" id="lastName" name="lastName" required />
-                </div>
-
-                <div className={styles.field}>
-                  <label htmlFor="phone">Phone *</label>
-                  <input type="tel" id="phone" name="phone" placeholder="(347) 000-0000" required />
-                </div>
-
-                <div className={styles.field}>
-                  <label htmlFor="email">Email *</label>
-                  <input type="email" id="email" name="email" placeholder="name@example.com" required />
-                </div>
-
-                <div className={`${styles.field} ${styles.full}`}>
-                  <label htmlFor="role">Position Applying For *</label>
-                  <select id="role" name="role" required defaultValue="">
-                    <option value="" disabled>Select a position</option>
-                    {CAREER_ROLES.map((r) => (
-                      <option key={r.value} value={r.value}>{r.label}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className={`${styles.field} ${styles.full}`}>
-                  <label htmlFor="resume">Upload Resume *</label>
-                  <div className={styles.fileInputContainer}>
-                    <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required />
-                    <div className={styles.fileHelpText}>Accepted file types: pdf, doc, docx. Max file size: 50 MB.</div>
-                  </div>
-                </div>
-
-                <div className={`${styles.field} ${styles.full}`}>
-                  <label htmlFor="message">Cover Letter</label>
-                  <textarea id="message" name="message" placeholder="Tell us more about your clinical experience..." />
-                </div>
-
-                {status === "error" && <p className={styles.errorMsg}>{errorMsg}</p>}
-
-                <button type="submit" className={styles.submitBtn} disabled={status === "sending"}>
-                  {status === "sending" ? "Sending..." : "Submit Application"}
-                </button>
-
+            {status === "success" ? (
+              <div style={{ textAlign: "center", padding: "20px" }}>
+                <h3 style={{ color: "var(--navy)", marginBottom: "4px" }}>Application Received Successfully!</h3>
+                <p>Thank you for applying. Our recruitment team will review your profile shortly.</p>
               </div>
-            </form>
-          )}
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <div className={styles.grid}>
+
+                  <div className={styles.field}>
+                    <label htmlFor="firstName">First Name *</label>
+                    <input type="text" id="firstName" name="firstName" required />
+                  </div>
+
+                  <div className={styles.field}>
+                    <label htmlFor="lastName">Last Name *</label>
+                    <input type="text" id="lastName" name="lastName" required />
+                  </div>
+
+                  <div className={styles.field}>
+                    <label htmlFor="phone">Phone *</label>
+                    <input type="tel" id="phone" name="phone" placeholder="(347) 000-0000" required />
+                  </div>
+
+                  <div className={styles.field}>
+                    <label htmlFor="email">Email *</label>
+                    <input type="email" id="email" name="email" placeholder="name@example.com" required />
+                  </div>
+
+                  <div className={`${styles.field} ${styles.full}`}>
+                    <label htmlFor="role">Position Applying For *</label>
+                    <select id="role" name="role" required defaultValue="">
+                      <option value="" disabled>Select a position</option>
+                      {CAREER_ROLES.map((r) => (
+                        <option key={r.value} value={r.value}>{r.label}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className={`${styles.field} ${styles.full}`}>
+                    <label htmlFor="resume">Upload Resume *</label>
+                    <div className={styles.fileInputContainer}>
+                      <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required />
+                      <div className={styles.fileHelpText}>Accepted file types: pdf, doc, docx. Max file size: 50 MB.</div>
+                    </div>
+                  </div>
+
+                  <div className={`${styles.field} ${styles.full}`}>
+                    <label htmlFor="message">Cover Letter</label>
+                    <textarea id="message" name="message" placeholder="Tell us more about your clinical experience..." />
+                  </div>
+
+                  {status === "error" && <p className={styles.errorMsg}>{errorMsg}</p>}
+
+                  <button type="submit" className={styles.submitBtn} disabled={status === "sending"}>
+                    {status === "sending" ? "Sending..." : "Submit Application"}
+                  </button>
+
+                </div>
+              </form>
+            )}
+          </div>
         </section>
 
       </main>

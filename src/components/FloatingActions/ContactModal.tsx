@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { CloseIcon } from "@/components/icons/Icons";
+import { CloseIcon, AssistantPersonIcon, PhoneIcon, MailIcon } from "@/components/icons/Icons";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./Modal.module.css";
 
 type Status = "idle" | "sending" | "success" | "error";
 
 export default function ContactModal({ onClose }: { onClose: () => void }) {
+  const { t } = useLanguage();
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -50,8 +52,8 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.panel} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
-          <span className={styles.headerTitle}>Contact Us</span>
-          <button className={styles.closeBtn} onClick={onClose} aria-label="Close">
+          <span className={styles.headerTitle}>{t.floatingActions.contactUs}</span>
+          <button className={styles.closeBtn} onClick={onClose} aria-label={t.modals.close}>
             <CloseIcon />
           </button>
         </div>
@@ -62,32 +64,41 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
               <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={styles.successIcon}>
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              <h3>Message sent</h3>
-              <p>Thanks for reaching out — we&apos;ll get back to you shortly.</p>
+              <h3>{t.modals.messageSentTitle}</h3>
+              <p>{t.modals.messageSentText}</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
               <div className={styles.field}>
-                <label htmlFor="cm-name">Name</label>
-                <input id="cm-name" name="fullName" type="text" placeholder="Jane Doe" required />
+                <label htmlFor="cm-name">{t.modals.name}</label>
+                <div className={styles.fieldIconWrap}>
+                  <AssistantPersonIcon className={styles.fieldIcon} />
+                  <input id="cm-name" name="fullName" type="text" placeholder="Jane Doe" required />
+                </div>
               </div>
               <div className={styles.field}>
-                <label htmlFor="cm-phone">Phone</label>
-                <input id="cm-phone" name="phone" type="tel" placeholder="(347) 000-0000" required />
+                <label htmlFor="cm-phone">{t.modals.phone}</label>
+                <div className={styles.fieldIconWrap}>
+                  <PhoneIcon className={styles.fieldIcon} />
+                  <input id="cm-phone" name="phone" type="tel" placeholder="(347) 000-0000" required />
+                </div>
               </div>
               <div className={styles.field}>
-                <label htmlFor="cm-email">Email</label>
-                <input id="cm-email" name="email" type="email" placeholder="jane@example.com" />
+                <label htmlFor="cm-email">{t.modals.email}</label>
+                <div className={styles.fieldIconWrap}>
+                  <MailIcon className={styles.fieldIcon} />
+                  <input id="cm-email" name="email" type="email" placeholder="jane@example.com" />
+                </div>
               </div>
               <div className={styles.field}>
-                <label htmlFor="cm-message">Message</label>
-                <textarea id="cm-message" name="message" placeholder="Type your message here" required />
+                <label htmlFor="cm-message">{t.modals.message}</label>
+                <textarea id="cm-message" name="message" placeholder={t.modals.messagePlaceholder} required />
               </div>
 
               {status === "error" && <p className={styles.errorMsg}>{errorMsg}</p>}
 
               <button type="submit" className={`btn btn-primary ${styles.submitBtn}`} disabled={status === "sending"}>
-                {status === "sending" ? "Sending..." : "Send Message"}
+                {status === "sending" ? t.contact.sending : t.modals.sendMessage}
               </button>
             </form>
           )}

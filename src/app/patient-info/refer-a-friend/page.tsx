@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import ReferralForm from "./ReferralForm";
+import { PATIENT_QUICK_LINKS } from "@/lib/siteData";
+import QuickLinksCard from "@/components/Sidebar/QuickLinksCard";
+import PainFreeCta from "@/components/Sidebar/PainFreeCta";
 import styles from "./referral.module.css";
 
 export const metadata: Metadata = {
@@ -26,7 +29,7 @@ export default function ReferAFriendPage() {
           
           {/* COLUMNA IZQUIERDA: CONTENIDO Y FORMULARIO CENTRADO */}
           <div className={styles.leftColumn}>
-            <section className={styles.hero}>
+            <div className={styles.hero}>
               <h1 className={styles.title}>Refer a friend or family member.</h1>
               <p className={styles.intro}>
                 If someone you know is dealing with pain, recovering from an accident, or
@@ -40,7 +43,7 @@ export default function ReferAFriendPage() {
                 from our care, let us know below and our team will reach out to them
                 directly.
               </p>
-            </section>
+            </div>
 
             {/* Contenedor que centra el formulario */}
             <div className={styles.formCenteringWrapper}>
@@ -48,46 +51,10 @@ export default function ReferAFriendPage() {
             </div>
           </div>
 
-          {/* COLUMNA DERECHA: SIDEBAR IDÉNTICO A PATIENT FORMS */}
+          {/* COLUMNA DERECHA: SIDEBAR */}
           <aside className={styles.sidebar}>
-            
-            {/* Widget de Enlaces Rápidos */}
-            <div className={styles.sidebarWidget}>
-              <h4 className={styles.widgetTitle}>Quick links</h4>
-              <ul className={styles.quickLinksList}>
-                <li>
-                  <a href="/patient-info/forms">
-                    <span className={styles.linkIcon}>📋</span> Patient Info / Forms
-                  </a>
-                </li>
-                <li>
-                  <a href="/#contact">
-                    <span className={styles.linkIcon}>📍</span> Our Locations
-                  </a>
-                </li>
-                <li>
-                  <a href="/patient-info/faqs">
-                    <span className={styles.linkIcon}>❓</span> FAQs
-                  </a>
-                </li>
-                <li>
-                  <a href="/conditions">
-                    <span className={styles.linkIcon}>🚶‍♂️</span> View More Conditions
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Banner Promocional idéntico */}
-            <div className={styles.promoWidget}>
-              <div className={styles.promoImagePlaceholder}>
-                <div className={styles.promoOverlay}>
-                  <h5>Are You Ready To Live Pain-Free?</h5>
-                  <a href="/#contact" className={styles.promoBtn}>Request Appointment</a>
-                </div>
-              </div>
-            </div>
-
+            <QuickLinksCard links={PATIENT_QUICK_LINKS} activeHref="/patient-info/refer-a-friend" />
+            <PainFreeCta />
           </aside>
 
         </div>

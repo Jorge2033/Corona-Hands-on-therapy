@@ -15,16 +15,22 @@ export default function TeamPage() {
   return (
     <>
       <Header />
-      <main>
-        <section className={`container ${styles.hero}`}>
-          <div className="eyebrow">Our Team</div>
+      <main style={{ backgroundColor: "#fbf9f6", overflowX: "hidden" }}>
+        
+        {/* Sección Hero Ampliada y Centrada */}
+        <section className={styles.hero}>
+          <div className="eyebrow" style={{ textTransform: "uppercase", letterSpacing: "1.5px", fontWeight: 600, color: "#00a896" }}>
+            Our Team
+          </div>
           <h1 className={styles.title}>The specialists behind your recovery.</h1>
           <p className={styles.intro}>{TEAM_INTRO}</p>
         </section>
 
-        <section className="container" style={{ paddingTop: 5, paddingBottom: 80 }}>
+        {/* Cuadrícula del equipo con un contenedor alineado */}
+        <section style={{ maxWidth: "960px", margin: "0 auto", padding: "10px 20px 80px 20px" }}>
           <Team />
         </section>
+        
       </main>
       <Footer />
     </>

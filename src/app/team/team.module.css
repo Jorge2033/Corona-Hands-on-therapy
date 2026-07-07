@@ -1,13 +1,24 @@
 .hero {
-
-  max-width: 720px;
+  padding-top: 80px;
+  padding-bottom: 40px;
+  max-width: 960px; /* 🌟 Ahora coincide con el ancho máximo de la cuadrícula de abajo */
+  margin: 0 auto;   /* Lo centra perfectamente en pantallas grandes */
+  text-align: center; /* Centra los títulos para una jerarquía visual premium */
 }
 
 .title {
-  font-size: clamp(32px, 4.5vw, 48px);
+  font-size: clamp(36px, 5.5vw, 56px); /* Un poco más grande y expansivo */
+  font-weight: 700;
+  color: #0f2c59;
+  margin-top: 12px;
+  margin-bottom: 16px;
+  line-height: 1.2;
 }
 
 .intro {
   color: var(--ink-soft);
-  font-size: 16.5px;
+  font-size: 18px; /* Texto de introducción más legible y estilizado */
+  line-height: 1.6;
+  max-width: 800px; /* Evita que las líneas de texto sean demasiado largas para leer */
+  margin: 0 auto;
 }

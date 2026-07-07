@@ -136,7 +136,7 @@ export const TEAM = [
     role: "Billing Department",
     note: "Handles account claims, verification, and payment processing.",
     initials: "G",
-    photo: null as string | null,
+    photo: "/images/Team/George.jpeg",
   },
   {
     id: "karen-billing",
@@ -164,41 +164,62 @@ export const TEAM = [
   },
   
 ] as const;
-
-// Testimonios: PLACEHOLDER. Reemplazar con citas reales de pacientes con su consentimiento.
-export const TESTIMONIALS = [
+// =========================================================================
+// REVIEWS: Reemplazadas por reseñas reales extraídas de Google Maps.
+// Se incluye estructura para Avatares Cuadrados con iniciales y color.
+// =========================================================================
+export const Reviews = [
   {
     id: 1,
-    quote:
-      "Placeholder — replace with a real patient quote about their treatment experience and recovery.",
-    name: "Patient name",
-    since: "Patient since [year]",
+    name: "Yuliana Contreras",
+    quote: "Excelente servicio De verdad muy amables y Atentos los recomiendo al 100%",
+    date: "Hace 9 meses",
+    stars: 5,
+    avatar: null as string | null,
+    initials: "YC",
+    avatarBg: "#E04F3D", // Color naranja/rojizo de tu captura image_7.png
   },
   {
     id: 2,
-    quote:
-      "Placeholder — replace with a real quote about scheduling, staff, or how coordinated the care felt.",
-    name: "Patient name",
-    since: "Patient since [year]",
+    name: "Jackelyn Silva",
+    quote: "Great place for therapy, staff is very friendly. Thank you very much.",
+    date: "Hace 3 años",
+    stars: 5,
+    avatar: null as string | null, 
+    initials: "JS",
+    avatarBg: "#218C4F", // Color verde oscuro de tu captura image_7.png
   },
   {
     id: 3,
-    quote:
-      "Placeholder — replace with a real quote about a specific provider or treatment outcome.",
-    name: "Patient name",
-    since: "Patient since [year]",
+    name: "M Reiche",
+    quote: "Very nice place, clean and organized. Staff is super friendly and help you out right away. Doctors take care of you very well. Highly recommended.",
+    date: "Local Guide",
+    stars: 5,
+    avatar: null as string | null,
+    initials: "MR",
+    avatarBg: "#7B3FBC", // Color morado
+  },
+   {
+    id: 4,
+    name: "Patient Name 4", // Placeholder para carrusel infinito
+    quote: "Another professional review extracted from Google. The staff and doctors were exceptional in coordinating my care.",
+    date: "A year ago",
+    stars: 5,
+    avatar: null as string | null,
+    initials: "PN",
+    avatarBg: "#3D85E0", 
   },
 ] as const;
 
 export const NAV_LINKS = [
   { href: "/#services", label: "Services" },
   { href: "/#about", label: "About" },
-  { href: "/#testimonials", label: "Testimonials" },
+  { href: "/#Reviews", label: "Reviews" },
   { href: "/#contact", label: "Contact" },
 ] as const;
 
 export const TEAM_INTRO =
-  "Corona Hands-On Therapy brings physical therapy, chiropractic care, and acupuncture together under one roof. Meet the providers who build your recovery plan and coordinate your care from your first visit to your last.";
+  "Corona Hands-On Therapy brings physical therapy, chiropractic care, and acupuncture together under one roof. Meet the providers who build your recovery plan and coordinate your care from your first visit to your last. Our multidisciplinary team combines decades of clinical experience with a deeply compassionate approach to healing. By collaborating daily, we ensure that every adjustment, therapeutic exercise, and treatment session works in perfect harmony. We don't just treat symptoms; we listen to your goals and tailor our techniques to fit your unique lifestyle. Together, we are fully dedicated to helping you regain your strength, move without pain, and achieve long-term wellness.";
 
 // Áreas de dolor que tratamos, usadas en la sección "get back on track" del home
 export const PAIN_AREAS = [

@@ -4,7 +4,7 @@ import TrustStrip from "@/components/TrustStrip/TrustStrip";
 import PainAreas from "@/components/PainAreas/PainAreas";
 import Services from "@/components/Services/Services";
 import About from "@/components/About/About";
-import Testimonials from "@/components/Testimonials/Testimonials";
+import ReviewsCarousel from "@/components/Reviews/Reviews"; // Importación corregida y limpia
 import Contact from "@/components/Contact/Contact";
 import Footer from "@/components/Footer/Footer";
 
@@ -21,7 +21,7 @@ export default function Home() {
         <PainAreas />
         <Services />
         <About />
-        <Testimonials />
+        <ReviewsCarousel />
         <Contact />
       </main>
       <Footer />

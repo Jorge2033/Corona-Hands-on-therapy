@@ -1,0 +1,294 @@
+.mainBackground {
+  background-color: #f5f4f0;
+  padding-bottom: 80px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.breadcrumbContainer {
+  background-color: #f5f4f0;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.breadcrumb {
+  max-width: 1120px;
+  margin: 0 auto;
+  font-size: 13px;
+  color: #00a896;
+  font-weight: 600;
+}
+
+/* CONTAINER PRINCIPAL EN DOS COLUMNAS */
+.layoutContainer {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 40px;
+  padding: 0 20px;
+  align-items: start;
+}
+
+.leftColumn {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  border: 1px solid #e2dfd8;
+}
+
+.hero {
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f2eee6;
+  padding-bottom: 24px;
+}
+
+.title {
+  font-size: clamp(28px, 4vw, 36px);
+  color: #102a43;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.intro {
+  color: #486581;
+  font-size: 15.5px;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+/* CENTRADO PERFECTO DEL FORMULARIO INTERNO */
+.formCenteringWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 24px;
+}
+
+/* TARJETA INTERNA DEL FORMULARIO */
+.card {
+  background: var(--white);
+  border: 1px solid #e8e4da;
+  border-radius: 14px;
+  padding: 36px;
+  width: 100%;
+  max-width: 640px;
+}
+
+.card h3 {
+  font-size: 22px;
+  color: #102a43;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.sectionLabel {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #00a896;
+  margin: 24px 0 14px;
+  border-bottom: 1px dashed #e2dfd8;
+  padding-bottom: 4px;
+}
+
+.sectionLabel:first-of-type {
+  margin-top: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #102a43;
+}
+
+.field input,
+.field textarea {
+  font-family: inherit;
+  font-size: 15px;
+  padding: 12px 14px;
+  border-radius: 9px;
+  border: 1px solid #e2dfd8;
+  background: #fbf9f6;
+  color: #102a43;
+  transition: all 0.2s ease;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: #00a896;
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(0, 168, 150, 0.15);
+}
+
+.errorMsg {
+  color: #b3261e;
+  font-size: 13.5px;
+  margin: 12px 0 0 0;
+}
+
+/* ==========================================================================
+   BARRA LATERAL - SIDEBAR (REPLICADO DE PATIENT FORMS)
+   ========================================================================== */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.sidebarWidget {
+  background: linear-gradient(135deg, #102a43 0%, #183b5a 100%) !important;
+  border-radius: 14px;
+  padding: 26px 22px;
+  box-shadow: 0 6px 18px rgba(16, 42, 67, 0.08);
+  box-sizing: border-box;
+}
+
+.widgetTitle {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #ffffff !important;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding-left: 6px;
+}
+
+.quickLinksList {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quickLinksList li {
+  list-style-type: none !important;
+  padding: 0 !important;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.quickLinksList li a {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 14px 18px;
+  color: #f5f7fa !important;
+  text-decoration: none;
+  font-size: 14.5px;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+.quickLinksList li:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+}
+
+.linkIcon {
+  margin-right: 12px;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* WIDGET PUBLICITARIO APPOINTMENT EXPENDED */
+.promoWidget {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.promoImagePlaceholder {
+  background: linear-gradient(rgba(16, 42, 67, 0.8), rgba(16, 42, 67, 0.85)),
+              url('/images/GroupShot.jpg') center/cover no-repeat;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.promoOverlay h5 {
+  color: #ffffff;
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.promoBtn {
+  display: inline-block;
+  background: #ff4d4d;
+  color: white;
+  padding: 12px 28px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 30px;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
+}
+
+.promoBtn:hover {
+  background: #ff3333;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(255, 77, 77, 0.4);
+}
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  .layoutContainer {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .leftColumn {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 20px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,7 +1,7 @@
 .section {
   text-align: center;
-  padding-top: 60px;
-
+  padding-top: 80px;      /* Un toque más de aire arriba */
+  padding-bottom: 90px;   /* AQUÍ SE SEPARA DE LA SECCIÓN DE ABAJO */
 }
 
 .head {
@@ -65,6 +65,10 @@
 @media (max-width: 720px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+  .section {
+    padding-top: 60px;
+    padding-bottom: 60px; /* Ajuste adaptativo para móviles */
   }
 }
 

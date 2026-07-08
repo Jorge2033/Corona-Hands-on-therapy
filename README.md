@@ -79,6 +79,8 @@ Below are the visual highlights of the modular design implemented for the clinic
 ### 1. Hero Section & Main Value Proposition
 
 *Professional design optimized for patient conversion, clear calls to action, and seamless mobile engagement.*
+<img width="1469" height="803" alt="Captura de pantalla 2026-07-07 a la(s) 11 11 23 p  m" src="https://github.com/user-attachments/assets/b59bd748-69b1-4ccf-a537-8ac48f24a0d0" />
+
 
 ### 2. Clinical Disciplines & Services Offered
 

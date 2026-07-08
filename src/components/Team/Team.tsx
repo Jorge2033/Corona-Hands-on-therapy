@@ -1,5 +1,8 @@
+"use client";
+
 import { TEAM } from "@/lib/siteData";
 import { StethoscopeIcon, HeadsetIcon } from "@/components/icons/Icons";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./Team.module.css";
 
 const DEPARTMENT_ICON: Record<string, (props: { className?: string }) => JSX.Element> = {
@@ -12,6 +15,8 @@ function slugifyDepartment(department: string): string {
 }
 
 export default function Team() {
+  const { t } = useLanguage();
+
   // Agrupamos por departamento manteniendo el orden de aparición en TEAM.
   const departments: string[] = [];
   const byDepartment: Record<string, typeof TEAM[number][]> = {};
@@ -29,7 +34,7 @@ export default function Team() {
       <nav className={styles.jumpNav} aria-label="Jump to department">
         {departments.map((department) => (
           <a key={department} href={`#${slugifyDepartment(department)}`} className={styles.jumpPill}>
-            {department}
+            {t.team.departments[department] ?? department}
             <span className={styles.jumpCount}>{byDepartment[department].length}</span>
           </a>
         ))}
@@ -37,15 +42,16 @@ export default function Team() {
 
       {departments.map((department) => {
         const DepartmentIcon = DEPARTMENT_ICON[department] ?? StethoscopeIcon;
+        const count = byDepartment[department].length;
         return (
           <div key={department} id={slugifyDepartment(department)} className={styles.departmentBlock}>
             <div className={styles.departmentHead}>
               <span className={styles.departmentIconWrap}>
                 <DepartmentIcon className={styles.departmentIcon} />
               </span>
-              <h2 className={styles.departmentTitle}>{department}</h2>
+              <h2 className={styles.departmentTitle}>{t.team.departments[department] ?? department}</h2>
               <span className={styles.departmentCount}>
-                {byDepartment[department].length} member{byDepartment[department].length > 1 ? "s" : ""}
+                {count} {count > 1 ? t.team.memberPlural : t.team.memberSingular}
               </span>
             </div>
 
@@ -63,8 +69,8 @@ export default function Team() {
                   </div>
                   <div>
                     <div className={styles.teamName}>{member.name}</div>
-                    <div className={styles.teamRole}>{member.role}</div>
-                    <div className={styles.teamNote}>{member.note}</div>
+                    <div className={styles.teamRole}>{t.teamMembers[member.id]?.role ?? member.role}</div>
+                    <div className={styles.teamNote}>{t.teamMembers[member.id]?.note ?? member.note}</div>
                   </div>
                 </div>
               ))}

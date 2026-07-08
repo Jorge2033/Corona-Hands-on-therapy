@@ -157,6 +157,45 @@
   height: 52px;
 }
 
+.tabBar {
+  display: flex;
+  border-top: 1px solid var(--line);
+  background: var(--white);
+  flex-shrink: 0;
+}
+
+.tabBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.tabBtn:hover {
+  background: var(--cream);
+  color: var(--blue-dark);
+}
+
+.tabBtn + .tabBtn {
+  border-left: 1px solid var(--line);
+}
+
+.tabBtnActive {
+  color: var(--blue);
+  background: var(--cream);
+}
+
+.tabIcon {
+  width: 20px;
+  height: 20px;
+}
+
 @media (max-width: 480px) {
   .overlay {
     padding: 0;

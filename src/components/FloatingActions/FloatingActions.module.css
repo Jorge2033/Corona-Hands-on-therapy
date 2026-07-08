@@ -4,71 +4,58 @@
   bottom: 20px;
   z-index: 80;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
   align-items: flex-end;
 }
 
-.action {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--blue);
-  color: var(--white);
-  text-decoration: none;
-  font-family: var(--font-body), sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 8px 20px 8px 8px;
+/* Botón flotante: sin fondo, sin borde, sin texto — solo el avatar. */
+.launcher {
+  display: block;
+  background: none;
   border: none;
-  border-radius: 999px;
-  box-shadow: 0 10px 24px rgba(36, 120, 186, 0.35);
-  white-space: nowrap;
+  padding: 0;
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  border-radius: 50%;
   opacity: 0;
   animation: floatIn 0.4s ease forwards;
+  transition: transform 0.15s ease;
 }
 
-.action:nth-child(1) { animation-delay: 0.05s; }
-.action:nth-child(2) { animation-delay: 0.15s; }
-.action:nth-child(3) { animation-delay: 0.25s; }
-
-.action:hover {
-  background: var(--blue-dark);
-  color: var(--white);
+.launcher:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(29, 92, 151, 0.4);
 }
 
-/* Web Chat se destaca del resto con el acento dorado de la marca */
-.actionHighlight {
-  background: var(--gold);
-  color: var(--white);
-  box-shadow: 0 10px 24px rgba(201, 123, 46, 0.35);
+/* Envoltorio del avatar: SIN overflow:hidden, para que el punto verde
+   pueda asomarse fuera del círculo sin que se recorte. */
+.avatarCircle {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  flex-shrink: 0;
 }
 
-.actionHighlight:hover {
-  background: var(--gold-dark);
-  color: var(--white);
-  box-shadow: 0 14px 30px rgba(173, 104, 34, 0.42);
-}
-
-.iconCircle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
+/* El círculo lo recorta la propia imagen (border-radius), sin div extra
+   de por medio. */
+.avatarImg {
+  display: block;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.18);
-  flex-shrink: 0;
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgba(15, 42, 74, 0.3);
 }
 
-.icon {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
+/* Punto verde de "en línea" sobre la esquina superior derecha del avatar */
+.onlineDot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #22c55e;
+  border: 2px solid var(--white);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  z-index: 1;
 }
 
 @keyframes floatIn {
@@ -83,33 +70,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .action {
+  .launcher {
     animation: none;
     opacity: 1;
   }
 }
 
-/* En móvil se colapsa a solo el ícono para no tapar contenido */
 @media (max-width: 640px) {
   .wrap {
     right: 14px;
     bottom: 14px;
-    gap: 10px;
-  }
-  .action {
-    padding: 6px;
-    border-radius: 50%;
-  }
-  .action span:not(.iconCircle) {
-    display: none;
-  }
-  .iconCircle {
-    width: 44px;
-    height: 44px;
-    background: transparent;
-  }
-  .icon {
-    width: 20px;
-    height: 20px;
   }
 }

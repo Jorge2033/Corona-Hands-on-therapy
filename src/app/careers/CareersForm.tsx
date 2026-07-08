@@ -3,11 +3,13 @@
 import { useState, FormEvent } from "react";
 import Link from "next/link";
 import { CAREER_ROLES } from "@/lib/siteData";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./CareersForm.module.css";
 
 type Status = "idle" | "sending" | "success" | "error";
 
 export default function CareersForm() {
+  const { t } = useLanguage();
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -76,11 +78,11 @@ export default function CareersForm() {
       {/* 1. SECCIÓN HERO (FULL WIDTH & HEIGHT) */}
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
-          <h1>Join Our Team</h1>
+          <h1>{t.careers.heroTitle}</h1>
           <nav className={styles.heroBreadcrumb} aria-label="Breadcrumb">
-            <Link href="/">Home</Link>
+            <Link href="/">{t.careers.breadcrumbHome}</Link>
             <span aria-hidden="true">»</span>
-            <span aria-current="page">Join Our Team</span>
+            <span aria-current="page">{t.careers.breadcrumbJoinTeam}</span>
           </nav>
         </div>
       </section>
@@ -90,29 +92,29 @@ export default function CareersForm() {
 
         {/* TÍTULO PRINCIPAL DE BIENVENIDA PEGADO ABAJO DEL HERO */}
         <h2 className={styles.sectionTitle} style={{ marginTop: 0, marginBottom: "8px" }}>
-          Grow your career at Corona Hands-On Therapy.
+          {t.careers.growTitle}
         </h2>
 
         {/* 2. SECCIÓN WHO ARE WE? PEGADA */}
         <section style={{ marginBottom: "15px" }}>
-          <h2 className={styles.sectionTitle}>Who are we?</h2>
+          <h2 className={styles.sectionTitle}>{t.careers.whoAreWeTitle}</h2>
           <div className={styles.featuresGrid}>
             <div className={styles.featureItem}>
               <div className={styles.checkIcon}>✓</div>
               <div className={styles.featureText}>
-                <p><strong>Forward-Thinking and Progressive:</strong> Our group of physical therapy offices is dedicated to enhancing patient well-being through manual therapy and advanced techniques.</p>
+                <p><strong>{t.careers.whoAreWe1Title}</strong> {t.careers.whoAreWe1Text}</p>
               </div>
             </div>
             <div className={styles.featureItem}>
               <div className={styles.checkIcon}>✓</div>
               <div className={styles.featureText}>
-                <p><strong>Advanced Diagnostic Testing:</strong> We offer cutting-edge diagnostic testing opportunities that allow our staff to stay at the forefront of physical therapy innovations.</p>
+                <p><strong>{t.careers.whoAreWe2Title}</strong> {t.careers.whoAreWe2Text}</p>
               </div>
             </div>
             <div className={styles.featureItem}>
               <div className={styles.checkIcon}>✓</div>
               <div className={styles.featureText}>
-                <p><strong>Career Growth:</strong> We provide significant career growth opportunities, including professional development, continuous education, and leadership training programs.</p>
+                <p><strong>{t.careers.whoAreWe3Title}</strong> {t.careers.whoAreWe3Text}</p>
               </div>
             </div>
           </div>
@@ -120,30 +122,30 @@ export default function CareersForm() {
 
         {/* 3. SECCIÓN WHY WORK WITH US? PEGADA */}
         <section style={{ marginBottom: "15px" }}>
-          <h2 className={styles.sectionTitle}>Why Work with Us?:</h2>
+          <h2 className={styles.sectionTitle}>{t.careers.whyWorkTitle}</h2>
           <div className={styles.featuresGrid}>
             <div className={styles.featureItem}>
               <div className={styles.checkIcon}>✓</div>
               <div className={styles.featureText}>
-                <p>Join a team committed to innovative patient care.</p>
+                <p>{t.careers.whyWork1}</p>
               </div>
             </div>
             <div className={styles.featureItem}>
               <div className={styles.checkIcon}>✓</div>
               <div className={styles.featureText}>
-                <p>Access to the latest advancements in diagnostic testing.</p>
+                <p>{t.careers.whyWork2}</p>
               </div>
             </div>
             <div className={styles.featureItem}>
               <div className={styles.checkIcon}>✓</div>
               <div className={styles.featureText}>
-                <p>Grow your career with our extensive development programs.</p>
+                <p>{t.careers.whyWork3}</p>
               </div>
             </div>
             <div className={styles.featureItem}>
               <div className={styles.checkIcon}>✓</div>
               <div className={styles.featureText}>
-                <p>Be part of a supportive and dynamic work environment.</p>
+                <p>{t.careers.whyWork4}</p>
               </div>
             </div>
           </div>
@@ -151,21 +153,21 @@ export default function CareersForm() {
 
         {/* 4. SECCIÓN PUESTOS ABIERTOS */}
         <section className={styles.vacanciesSection}>
-          <h2 className={styles.sectionTitle}>Looking for a career at Corona Hands-On Therapy?</h2>
+          <h2 className={styles.sectionTitle}>{t.careers.vacanciesTitle}</h2>
 
           <div className={styles.vacancyCard}>
-            <span>Physical Therapist – Elmhurst Clinic</span>
-            <span className={styles.vacancyBadge}>Open Position</span>
+            <span>{t.careers.vacancy1}</span>
+            <span className={styles.vacancyBadge}>{t.careers.openPosition}</span>
           </div>
 
           <div className={styles.vacancyCard}>
-            <span>Chiropractor – Full Time</span>
-            <span className={styles.vacancyBadge}>Open Position</span>
+            <span>{t.careers.vacancy2}</span>
+            <span className={styles.vacancyBadge}>{t.careers.openPosition}</span>
           </div>
 
           <div className={styles.vacancyCard}>
-            <span>Physical Therapy Assistant</span>
-            <span className={styles.vacancyBadge}>Open Position</span>
+            <span>{t.careers.vacancy3}</span>
+            <span className={styles.vacancyBadge}>{t.careers.openPosition}</span>
           </div>
         </section>
 
@@ -173,68 +175,68 @@ export default function CareersForm() {
         <section className={styles.formSection}>
           <div className={styles.formCard}>
             <div className={styles.formSectionHeader}>
-              <h2 style={{ marginBottom: "4px" }}>Contact us today or submit the form below</h2>
+              <h2 style={{ marginBottom: "4px" }}>{t.careers.formHeading}</h2>
               <p style={{ marginTop: 0 }}>
-                Advance your PT career by joining our team and training under the leaders in Diagnostic Testing. Gain expertise in EMG, NCV and MSK Ultrasound.
+                {t.careers.formSubtitle}
               </p>
             </div>
 
             {status === "success" ? (
               <div style={{ textAlign: "center", padding: "20px" }}>
-                <h3 style={{ color: "var(--navy)", marginBottom: "4px" }}>Application Received Successfully!</h3>
-                <p>Thank you for applying. Our recruitment team will review your profile shortly.</p>
+                <h3 style={{ color: "var(--navy)", marginBottom: "4px" }}>{t.careers.receivedTitle}</h3>
+                <p>{t.careers.receivedText}</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
                 <div className={styles.grid}>
 
                   <div className={styles.field}>
-                    <label htmlFor="firstName">First Name *</label>
+                    <label htmlFor="firstName">{t.careers.firstName}</label>
                     <input type="text" id="firstName" name="firstName" required />
                   </div>
 
                   <div className={styles.field}>
-                    <label htmlFor="lastName">Last Name *</label>
+                    <label htmlFor="lastName">{t.careers.lastName}</label>
                     <input type="text" id="lastName" name="lastName" required />
                   </div>
 
                   <div className={styles.field}>
-                    <label htmlFor="phone">Phone *</label>
+                    <label htmlFor="phone">{t.careers.phone}</label>
                     <input type="tel" id="phone" name="phone" placeholder="(347) 000-0000" required />
                   </div>
 
                   <div className={styles.field}>
-                    <label htmlFor="email">Email *</label>
+                    <label htmlFor="email">{t.careers.email}</label>
                     <input type="email" id="email" name="email" placeholder="name@example.com" required />
                   </div>
 
                   <div className={`${styles.field} ${styles.full}`}>
-                    <label htmlFor="role">Position Applying For *</label>
+                    <label htmlFor="role">{t.careers.positionApplyingFor}</label>
                     <select id="role" name="role" required defaultValue="">
-                      <option value="" disabled>Select a position</option>
+                      <option value="" disabled>{t.careers.selectPosition}</option>
                       {CAREER_ROLES.map((r) => (
-                        <option key={r.value} value={r.value}>{r.label}</option>
+                        <option key={r.value} value={r.value}>{t.careers.roles[r.value] ?? r.label}</option>
                       ))}
                     </select>
                   </div>
 
                   <div className={`${styles.field} ${styles.full}`}>
-                    <label htmlFor="resume">Upload Resume *</label>
+                    <label htmlFor="resume">{t.careers.uploadResume}</label>
                     <div className={styles.fileInputContainer}>
                       <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required />
-                      <div className={styles.fileHelpText}>Accepted file types: pdf, doc, docx. Max file size: 50 MB.</div>
+                      <div className={styles.fileHelpText}>{t.careers.fileHelpText}</div>
                     </div>
                   </div>
 
                   <div className={`${styles.field} ${styles.full}`}>
-                    <label htmlFor="message">Cover Letter</label>
-                    <textarea id="message" name="message" placeholder="Tell us more about your clinical experience..." />
+                    <label htmlFor="message">{t.careers.coverLetter}</label>
+                    <textarea id="message" name="message" placeholder={t.careers.coverLetterPlaceholder} />
                   </div>
 
                   {status === "error" && <p className={styles.errorMsg}>{errorMsg}</p>}
 
                   <button type="submit" className={styles.submitBtn} disabled={status === "sending"}>
-                    {status === "sending" ? "Sending..." : "Submit Application"}
+                    {status === "sending" ? t.careers.sending : t.careers.submitApplication}
                   </button>
 
                 </div>

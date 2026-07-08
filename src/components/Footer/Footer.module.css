@@ -13,15 +13,29 @@
 
 .brand {
   display: flex;
+  justify-content: center;
   align-items: center;
   margin-bottom: 16px;
 }
 
 .brandLogo {
-  height: 74px;
+  height: 100px;
   width: auto;
   object-fit: contain;
   flex-shrink: 0;
+}
+
+/* Centra el título y la cuadrícula de enlaces sobre el ancho real de su
+   contenido (no sobre el ancho completo de la columna), para que "Enlaces
+   Rápidos" quede exactamente centrado encima de las dos columnas de links. */
+.quickLinksCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quickLinksCol ul {
+  width: fit-content;
 }
 
 .emergency {

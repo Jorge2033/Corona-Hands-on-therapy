@@ -327,18 +327,13 @@ main section.body {
 /* ==========================================================================
    CTA BAND
    Misma banda para TODAS las condition pages (este archivo es compartido por
-   la ruta dinámica /conditions/[slug]). Para ponerle una imagen de fondo:
-   1) Coloca el archivo en /public/images/cta-band-bg.jpg (o cambia el nombre
-      de archivo abajo).
-   2) Ajusta la opacidad del overlay navy si la imagen queda muy clara u oscura.
-   Mientras no exista el archivo, el navegador simplemente usa background-color
-   como respaldo, así que es seguro dejarlo así hasta que agregues la imagen.
+   la ruta dinámica /conditions/[slug]).
    ========================================================================== */
 .ctaBand {
   position: relative;
   background-color: var(--navy);
   background-image: linear-gradient(rgba(15, 42, 74, 0.82), rgba(10, 30, 56, 0.88)),
-    url("/images/cta-band-bg.jpg");
+    url("/images/conditions/banner.png");
   background-size: cover;
   background-position: center;
   color: var(--white);

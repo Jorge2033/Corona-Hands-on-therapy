@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./referral.module.css";
 
 type Status = "idle" | "sending" | "success" | "error";
 
 export default function ReferralForm() {
+  const { t } = useLanguage();
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -50,48 +52,48 @@ export default function ReferralForm() {
   if (status === "success") {
     return (
       <div className={styles.card}>
-        <h3>Referral received</h3>
-        <p style={{ color: "var(--ink-soft)" }}>Thank you — our team will reach out to your friend directly.</p>
+        <h3>{t.referral.receivedTitle}</h3>
+        <p style={{ color: "var(--ink-soft)" }}>{t.referral.receivedText}</p>
       </div>
     );
   }
 
   return (
     <div className={styles.card}>
-      <h3>Referral Form</h3>
+      <h3>{t.referral.formTitle}</h3>
       <form onSubmit={handleSubmit}>
-        <div className={styles.sectionLabel}>Your Information</div>
+        <div className={styles.sectionLabel}>{t.referral.yourInfo}</div>
         <div className={styles.grid}>
           <div className={styles.field}>
-            <label htmlFor="referrerName">Your Name</label>
+            <label htmlFor="referrerName">{t.referral.yourName}</label>
             <input type="text" id="referrerName" name="referrerName" placeholder="Jane Doe" required />
           </div>
           <div className={styles.field}>
-            <label htmlFor="referrerPhone">Your Phone</label>
+            <label htmlFor="referrerPhone">{t.referral.yourPhone}</label>
             <input type="tel" id="referrerPhone" name="referrerPhone" placeholder="(347) 000-0000" required />
           </div>
           <div className={`${styles.field} ${styles.full}`}>
-            <label htmlFor="referrerEmail">Your Email (optional)</label>
+            <label htmlFor="referrerEmail">{t.referral.yourEmail}</label>
             <input type="email" id="referrerEmail" name="referrerEmail" placeholder="jane@example.com" />
           </div>
         </div>
 
-        <div className={styles.sectionLabel}>Who You&apos;re Referring</div>
+        <div className={styles.sectionLabel}>{t.referral.whoReferring}</div>
         <div className={styles.grid}>
           <div className={styles.field}>
-            <label htmlFor="friendName">Their Name</label>
+            <label htmlFor="friendName">{t.referral.theirName}</label>
             <input type="text" id="friendName" name="friendName" placeholder="Full name" required />
           </div>
           <div className={styles.field}>
-            <label htmlFor="friendPhone">Their Phone (if known)</label>
+            <label htmlFor="friendPhone">{t.referral.theirPhone}</label>
             <input type="tel" id="friendPhone" name="friendPhone" placeholder="(347) 000-0000" />
           </div>
           <div className={`${styles.field} ${styles.full}`}>
-            <label htmlFor="notes">Notes (optional)</label>
+            <label htmlFor="notes">{t.referral.notes}</label>
             <textarea
               id="notes"
               name="notes"
-              placeholder="Anything that would help us reach out, like what they're dealing with or the best time to contact them..."
+              placeholder={t.referral.notesPlaceholder}
             />
           </div>
         </div>
@@ -100,7 +102,7 @@ export default function ReferralForm() {
 
         <div style={{ marginTop: "24px" }}>
           <button type="submit" className="btn btn-gold" disabled={status === "sending"} style={{ width: "100%", padding: "14px" }}>
-            {status === "sending" ? "Sending..." : "Send Referral"}
+            {status === "sending" ? t.referral.sending : t.referral.send}
           </button>
         </div>
       </form>

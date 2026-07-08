@@ -1,12 +1,14 @@
 "use client"; // <--- Esto soluciona el error habilitando la interactividad del lado del cliente
 
 import type { Metadata } from "next"; // Nota: Si exportas metadatos estáticos en Next.js App Router, deben ir en un archivo layout o remover el tipo si da conflicto en modo "use client"
+import Link from "next/link";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { INSURANCE_CATEGORIES, TOTAL_INSURANCE_COUNT } from "@/lib/insuranceData";
 import { PATIENT_QUICK_LINKS } from "@/lib/siteData";
 import QuickLinksCard from "@/components/Sidebar/QuickLinksCard";
 import PainFreeCta from "@/components/Sidebar/PainFreeCta";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./insurance.module.css";
 
 // Helper para limpiar el nombre y armar la búsqueda en Google
@@ -43,85 +45,57 @@ function getFallbackFavicon(name: string): string {
 }
 
 export default function InsurancePlansPage() {
+  const { t } = useLanguage();
   return (
     <>
       <Header />
       <main>
         <div className={styles.breadcrumbContainer}>
           <div className={`container ${styles.breadcrumb}`}>
-            Home » Patient Information » Insurance Plans
+            <Link href="/">{t.breadcrumb.home}</Link> » {t.breadcrumb.patientInformation} » {t.insurance.breadcrumbLabel}
           </div>
         </div>
 
         <div className={`container ${styles.pageGrid}`}>
           <div className={styles.mainCol}>
             <div className={styles.hero}>
-              
-              <h1 className={styles.title}>Insurance we commonly work with.</h1>
-              <p className={styles.intro}>
-                Understanding your insurance coverage shouldn&apos;t be complicated. Below is a
-                list of insurance types and carriers we commonly work with for auto
-                accident, work injury, home accident, and general health insurance cases in
-                the Elmhurst area.
-              </p>
+
+              <h1 className={styles.title}>{t.insurance.title}</h1>
+              <p className={styles.intro}>{t.insurance.intro}</p>
               <div className={styles.disclaimer}>
-                <strong>Please note:</strong> insurance networks and coverage change often.
-                This list reflects plans we commonly work with in our area — it doesn&apos;t
-                guarantee coverage for every policy under a given carrier. Please call our
-                front desk at least once before your visit so we can verify your specific
-                plan and benefits.
+                <strong>{t.insurance.disclaimerLabel}</strong> {t.insurance.disclaimer}
               </div>
             </div>
 
             <div className={styles.infoSection}>
               <div className={styles.infoGrid}>
                 <div className={styles.infoCard}>
-                  <h3>Why verifying your insurance matters</h3>
-                  <p>
-                    Every plan is different — even two people with the same insurance
-                    company can have different deductibles, copays, or authorization
-                    requirements. Verifying your specific policy before treatment helps
-                    avoid surprise bills and lets us build a treatment plan around what
-                    your plan actually covers.
-                  </p>
+                  <h3>{t.insurance.card1Title}</h3>
+                  <p>{t.insurance.card1Text}</p>
                 </div>
                 <div className={styles.infoCard}>
-                  <h3>Auto accident &amp; work injury claims</h3>
-                  <p>
-                    Auto accident and work injury cases are usually billed directly to the
-                    insurance carrier or claims adjuster handling your case rather than
-                    through a standard health insurance copay. Bring your claim number and
-                    adjuster information if you have it, and our billing team will handle
-                    the rest.
-                  </p>
+                  <h3>{t.insurance.card2Title}</h3>
+                  <p>{t.insurance.card2Text}</p>
                 </div>
                 <div className={styles.infoCard}>
-                  <h3>What to bring</h3>
-                  <p>
-                    Your insurance card, a photo ID, and — for accident or injury cases —
-                    any paperwork you&apos;ve received related to your claim, such as a claim
-                    number or adjuster contact information.
-                  </p>
+                  <h3>{t.insurance.card3Title}</h3>
+                  <p>{t.insurance.card3Text}</p>
                 </div>
                 <div className={`${styles.infoCard} ${styles.noInsuranceCard}`}>
-                  <h3>What if I don&apos;t have insurance?</h3>
-                  <p>
-                    Don&apos;t worry! We offer affordable self-pay rates and flexible payment
-                    options so you can focus on your recovery without barriers. Contact
-                    our front desk to discuss custom packages or pricing tailored to your needs.
-                  </p>
+                  <h3>{t.insurance.card4Title}</h3>
+                  <p>{t.insurance.card4Text}</p>
                 </div>
               </div>
             </div>
 
             <div className={styles.plansSection}>
               <h2 className={styles.listTitle}>
-                Plans &amp; Carriers We Commonly Work With ({TOTAL_INSURANCE_COUNT}+)
+                {t.insurance.plansTitle} ({TOTAL_INSURANCE_COUNT}+)
               </h2>
 
               {INSURANCE_CATEGORIES.map((cat) => (
                 <div key={cat.category} className={styles.categoryBlock}>
-                  <h3 className={styles.categoryTitle}>{cat.category}</h3>
+                  <h3 className={styles.categoryTitle}>{t.insurance.categories[cat.category] ?? cat.category}</h3>
                   <div className={styles.planGrid}>
                     {cat.plans.map((plan) => {
                       const targetUrl = getInsuranceUrl(plan);
@@ -154,9 +128,7 @@ export default function InsurancePlansPage() {
               ))}
 
               <p className={styles.footNote}>
-                Don&apos;t see your plan listed? Call us at{" "}
-                <a href="tel:+13472299167">(347) 229-9167</a> — we work with many plans not
-                listed here and can quickly confirm whether we&apos;re in-network for you.
+                {t.insurance.footNotePrefix} <a href="tel:+13472299167">(347) 229-9167</a> {t.insurance.footNoteSuffix}
               </p>
             </div>
           </div>

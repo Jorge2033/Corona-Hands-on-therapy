@@ -22,7 +22,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div>
+          <div className={styles.quickLinksCol}>
             <h4>{t.footer.quickLinks}</h4>
             <ul>
               <li>

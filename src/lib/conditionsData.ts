@@ -28,6 +28,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Back Pain Relief",
     shortName: "Back Pain",
     category: "Joint & Muscle Pain",
+    heroImage: "/images/conditions/BackPain.webp",
     heroSubtitle:
       "From a dull ache to sharp, limiting pain, our team helps you find and treat the real source of back pain.",
     overview: [
@@ -86,6 +87,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Neck Pain Relief",
     shortName: "Neck Pain",
     category: "Joint & Muscle Pain",
+    heroImage: "/images/conditions/neck.jpeg",
     heroSubtitle:
       "Whiplash, tech neck, or an old injury — we help identify what's really causing your neck pain and treat it at the source.",
     overview: [
@@ -144,6 +146,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Shoulder Pain Relief",
     shortName: "Shoulder Pain",
     category: "Joint & Muscle Pain",
+    heroImage: "/images/conditions/Shoulder.jpeg",
     heroSubtitle:
       "From rotator cuff strain to post-accident injuries, we help restore shoulder strength and motion without surgery.",
     overview: [
@@ -202,6 +205,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Hip Pain Relief",
     shortName: "Hip Pain",
     category: "Joint & Muscle Pain",
+    heroImage: "/images/conditions/hip.jpg",
     heroSubtitle:
       "Hip pain affects how you walk, sit, and sleep — we help identify the cause and get you moving comfortably again.",
     overview: [
@@ -260,6 +264,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Knee Pain Relief",
     shortName: "Knee Pain",
     category: "Joint & Muscle Pain",
+    heroImage: "/images/conditions/Knee.jpeg",
     heroSubtitle:
       "Whether it's an old injury or a new one, we help you rebuild knee strength and stability without unnecessary surgery.",
     overview: [
@@ -318,6 +323,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Elbow Pain Relief",
     shortName: "Elbow Pain",
     category: "Joint & Muscle Pain",
+    heroImage: "/images/conditions/elbow.jpeg",
     heroSubtitle:
       "From tennis elbow to work-related strain, we help resolve elbow pain so you can grip, lift, and work without discomfort.",
     overview: [
@@ -376,6 +382,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Wrist Pain Relief",
     shortName: "Wrist Pain",
     category: "Joint & Muscle Pain",
+    heroImage: "/images/conditions/Wrist.jpg",
     heroSubtitle:
       "Whether it's from a fall, repetitive strain, or an old injury, we help restore wrist strength and pain-free motion.",
     overview: [
@@ -434,6 +441,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Hand Pain Relief",
     shortName: "Hand Pain",
     category: "Joint & Muscle Pain",
+    heroImage: "/images/conditions/hand.jpeg",
     heroSubtitle:
       "Hand pain affects everything from typing to gripping a steering wheel — we help you regain full, pain-free function.",
     overview: [
@@ -492,6 +500,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Foot Pain Relief",
     shortName: "Foot Pain",
     category: "Joint & Muscle Pain",
+    heroImage: "/images/conditions/foot.jpeg",
     heroSubtitle:
       "From plantar fasciitis to post-injury pain, we help get you back on your feet comfortably.",
     overview: [
@@ -550,6 +559,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Ankle Pain Relief",
     shortName: "Ankle Pain",
     category: "Joint & Muscle Pain",
+    heroImage: "/images/conditions/ankle.jpg",
     heroSubtitle:
       "From sprains to post-accident instability, we help rebuild ankle strength so you can move confidently again.",
     overview: [
@@ -608,6 +618,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Sciatica Relief",
     shortName: "Sciatica",
     category: "Nerve Pain",
+    heroImage: "/images/conditions/sciatica.jpeg",
     heroSubtitle:
       "Sharp, shooting pain down the leg isn't something to push through — we treat the nerve irritation at its source.",
     overview: [
@@ -666,6 +677,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Arthritis Pain Relief",
     shortName: "Arthritis",
     category: "Chronic Conditions",
+    heroImage: "/images/conditions/arthritis.jpg",
     heroSubtitle:
       "Joint stiffness and pain don't have to limit your daily life — we help you stay strong, mobile, and active.",
     overview: [
@@ -722,6 +734,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Whiplash & Auto Injury Recovery",
     shortName: "Whiplash & Auto Injuries",
     category: "Injury Recovery",
+    heroImage: "/images/conditions/Whiplash.jpg",
     heroSubtitle:
       "Even a low-speed collision can cause real injury — we evaluate and treat auto accident injuries from day one.",
     overview: [
@@ -777,6 +790,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Sports Injuries",
     shortName: "Sports Injuries",
     category: "Injury Recovery",
+    heroImage: "/images/conditions/sports.jpg",
     heroSubtitle:
       "Whether it's a weekend game or competitive training, we help athletes recover fully and get back in the game safely.",
     overview: [
@@ -833,6 +847,7 @@ export const CONDITIONS: ConditionData[] = [
     name: "Post-Surgical Rehabilitation",
     shortName: "Post-Surgical Rehab",
     category: "Chronic Conditions",
+    heroImage: "/images/conditions/postSurgical.jpg",
     heroSubtitle:
       "Surgery is only part of the recovery — proper rehab is what restores your strength, motion, and confidence.",
     overview: [

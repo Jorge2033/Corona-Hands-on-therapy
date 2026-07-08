@@ -181,22 +181,7 @@ git push -u origin main
 
 ---
 
-## 🌐 Production Deployment Guide via Vercel
 
-Vercel is the native cloud serverless engine optimized perfectly for Next.js 14 App Routers.
-
-### Step 1: Connect Repository
-
-1. Log into your [Vercel Dashboard](https://vercel.com).
-2. Click **Add New > Project** and link/import your `corona-landing` GitHub repository.
-
-### Step 2: Inject Environment Variables
-
-Before triggering the deployment build, expand the **Environment Variables** section and register the identical keys from your local configuration:
-
-* `GMAIL_USER`
-* `GMAIL_APP_PASSWORD`
-* `CONTACT_TO_EMAIL`
 
 
 ```

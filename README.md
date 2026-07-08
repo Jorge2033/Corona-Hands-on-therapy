@@ -85,16 +85,21 @@ Below are the visual highlights of the modular design implemented for the clinic
 ### 2. Clinical Disciplines & Services Offered
 
 *Clear layout displaying Physical Therapy, Chiropractic Care, and Acupuncture specialized treatments.*
+<img width="1469" height="803" alt="Captura de pantalla 2026-07-07 a la(s) 11 12 05 p  m" src="https://github.com/user-attachments/assets/07bf6822-1e92-454e-833d-19a15d8020c7" />
+
 
 ### 3. Specialty Anatomy Mapping (Pain Areas)
 
 *Interactive topography component allowing patients to visually explore clinical specializations based on symptoms.*
+<img width="1469" height="803" alt="Captura de pantalla 2026-07-07 a la(s) 11 12 20 p  m" src="https://github.com/user-attachments/assets/b1035939-21ce-4c37-918e-f8aed3d33e09" />
+
 
 ### 4. Patient Experience & Testimonials
 
 *Social proof module designed to highlight patient success, five-star ratings, and recovery stories.*
 
----
+---<img width="1469" height="803" alt="Captura de pantalla 2026-07-07 a la(s) 11 12 42 p  m" src="https://github.com/user-attachments/assets/f8bd35ee-5c2b-496d-a435-9faacdad1456" />
+
 
 ## 🛠️ Step-by-Step Local Development Setup
 

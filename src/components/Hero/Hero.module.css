@@ -1,31 +1,95 @@
+/* Contenedor principal del banner */
+.heroWrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #0b1c3b; /* Evita parpadeos blancos en la carga inicial */
+}
+
+/* Lógica de transición de fondos */
+.bgSlider {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.bgImage {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 1.4s ease-in-out, transform 1.4s ease-in-out;
+}
+
+.bgImage.active {
+  opacity: 0.35; /* Balance UI perfecto: la foto se nota clara pero no compite con la lectura */
+  transform: scale(1);
+}
+
+/* Capa de tinte azul translúcido con desenfoque de fondo médico elegante */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg, 
+    rgba(15, 44, 89, 0.75) 0%, 
+    rgba(10, 28, 59, 0.85) 100__
+  );
+  backdrop-filter: blur(2px); /* Suaviza imperfecciones de la fotografía detrás del texto */
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 1;
+}
+
+/* Estructura del Layout */
 .hero {
-  padding: 64px 0 40px;
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 56px;
-  align-items: center;
+  position: relative;
+  z-index: 2; 
+  padding: 100px 0 80px; /* Más aire para un look Premium */
+  max-width: 850px; /* Bloque de lectura óptimo en UX */
+}
+
+.heroEyebrow {
+  color: rgba(255, 255, 255, 0.8) !important;
 }
 
 .headline {
-  font-size: clamp(38px, 5vw, 60px);
+  font-size: clamp(38px, 5.5vw, 56px);
+  color: #ffffff; /* Contraste UI AAA máximo */
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 16px 0;
 }
 
 .headline em {
   font-style: italic;
-  color: var(--blue);
+  color: #38bdf8; /* Azul cielo vibrante para acentuar sobre el fondo oscuro */
 }
 
 .subhead {
-  font-size: 18px;
-  color: var(--ink-soft);
-  max-width: 520px;
+  font-size: 19px;
+  color: rgba(255, 255, 255, 0.85); /* Legibilidad suave sin fatiga visual */
+  max-width: 680px;
+  line-height: 1.6;
 }
 
 .ctas {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
-  margin: 28px 0 32px;
+  margin: 32px 0 40px;
+}
+
+/* Corrección del botón fantasma para fondos oscuros */
+.heroGhostBtn {
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.heroGhostBtn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
 .badgeRow {
@@ -34,86 +98,29 @@
   flex-wrap: wrap;
 }
 
+/* Badges translúcidos modernos (Estilo Glassmorphism para alta fidelidad de interfaz) */
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--white);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 999px;
   padding: 8px 16px;
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--navy);
+  color: #ffffff;
 }
 
 .badgeIcon {
   width: 15px;
   height: 15px;
-  color: var(--green);
+  color: #4ade80; /* Verde brillante nítido para UI médica accesible */
   flex-shrink: 0;
 }
 
-.visual {
-  position: relative;
-  aspect-ratio: 4 / 5;
-  border-radius: 24px;
-  overflow: hidden;
-  background: var(--navy);
-}
-
-.visual img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.heroHand {
-  position: absolute;
-  right: -30px;
-  bottom: -30px;
-  width: 190px;
-  height: 190px;
-  opacity: 0.14;
-  color: #fff;
-}
-
-.signature {
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
-  background: rgba(15, 42, 74, 0.88);
-  color: var(--white);
-  padding: 14px 18px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  max-width: 260px;
-}
-
-.signatureIcon {
-  width: 30px;
-  height: 30px;
-  flex-shrink: 0;
-  color: var(--gold);
-}
-
-.signatureT1 {
-  font-weight: 700;
-  font-size: 13.5px;
-}
-
-.signatureT2 {
-  font-size: 12px;
-  opacity: 0.8;
-}
-
-@media (max-width: 960px) {
+@media (max-width: 768px) {
   .hero {
-    grid-template-columns: 1fr;
-  }
-  .visual {
-    aspect-ratio: 16 / 10;
+    padding: 70px 0 50px;
   }
 }

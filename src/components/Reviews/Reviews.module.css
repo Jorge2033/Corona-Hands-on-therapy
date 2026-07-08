@@ -1,0 +1,91 @@
+.section {
+  background: #fbf9f4; /* Removido el azul oscuro; alineado al fondo original de la página */
+  color: #333333;
+  padding: 80px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* El subtítulo naranja alineado */
+.eyebrow {
+  color: #ff9f43; 
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 2px;
+  background-color: #ff9f43;
+}
+
+/* El título principal hermoso, ahora en azul oscuro corporativo para máximo contraste */
+.title {
+  color: #0d233a; /* Cambiado a tu azul corporativo */
+  font-family: "Playfair Display", "Georgia", "Merriweather", serif;
+  font-size: clamp(32px, 4.5vw, 44px);
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 48px 0;
+  letter-spacing: -0.02em;
+}
+
+/* ==========================================
+   UX/UI FIXES PARA ELFSIGHT WIDGET
+   ========================================== */
+
+/* Forzar que las tarjetas usen su fondo claro para leerse bien */
+.section :global([class*="Window__Component"]) {
+  background: transparent !important;
+}
+
+.section :global([class*="Card__Container"]) {
+  background: #ffffff !important; /* Tarjetas blancas limpias */
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02) !important; /* Sombra sutil de profundidad */
+}
+
+/* Nombres de los pacientes en azul oscuro legible */
+.section :global([class*="Header__Name"]) {
+  color: #0d233a !important;
+  font-weight: 600 !important;
+}
+
+/* Reseñas en texto oscuro nítido */
+.section :global([class*="ReviewText__ListComponent"]) {
+  color: #334155 !important; 
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+/* Subtítulos de fecha en gris intermedio */
+.section :global([class*="Header__Meta"]) {
+  color: #64748b !important;
+}
+
+/* OCULTAR EL BADGE DE "Free Google Reviews Widget" (POWERED BY) */
+.section :global([class*="BadgeContainer"]) {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Eliminar cualquier enlace flotante residual que ensucie el diseño */
+.section :global(a[href*="elfsight.com"]) {
+  display: none !important;
+}

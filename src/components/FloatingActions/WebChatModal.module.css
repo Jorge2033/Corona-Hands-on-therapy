@@ -1,0 +1,259 @@
+/* ==========================================================================
+   ENCABEZADO ESTILO APP DE CHAT (avatar + nombre + estado en línea)
+   ========================================================================== */
+.chatHeader {
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark)) !important;
+  color: var(--white) !important;
+  gap: 12px;
+}
+
+.headerIdentity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerAvatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  font-family: var(--font-display), serif;
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* Foto real del asistente, cuando exista (ver AssistantAvatar en WebChatModal.tsx).
+   Mientras no haya imagen, se muestra automáticamente la inicial "V" de respaldo. */
+.avatarImg {
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.headerSubtitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.onlineDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1f9d52;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(31, 157, 82, 0.3);
+}
+
+/* ==========================================================================
+   CUERPO DEL CHAT
+   ========================================================================== */
+.chatBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--cream);
+}
+
+.botRow,
+.userRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  animation: msgIn 0.25s ease;
+}
+
+.userRow {
+  justify-content: flex-end;
+}
+
+@keyframes msgIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  font-family: var(--font-display), serif;
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.botBubble {
+  background: var(--white);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 10px 14px;
+  border-radius: 4px 14px 14px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 78%;
+  box-shadow: 0 2px 6px rgba(15, 42, 74, 0.04);
+}
+
+.userBubble {
+  background: var(--blue);
+  color: var(--white);
+  padding: 10px 14px;
+  border-radius: 14px 14px 4px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 78%;
+}
+
+/* "Vika está escribiendo..." — simula una respuesta de IA en vivo */
+.typingBubble {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: 13px 16px;
+  border-radius: 4px 14px 14px 14px;
+  box-shadow: 0 2px 6px rgba(15, 42, 74, 0.04);
+}
+
+.typingDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  animation: typingBounce 1.1s infinite ease-in-out;
+}
+
+.typingDot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typingDot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes typingBounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+.optionsWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+  margin-left: 34px;
+  animation: msgIn 0.25s ease;
+}
+
+.optionBtn {
+  align-self: flex-start;
+  background: var(--navy);
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--white);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.optionBtn:hover {
+  background: var(--blue-dark);
+  transform: translateX(2px);
+}
+
+.timestamp {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ink-soft);
+  opacity: 0.75;
+  margin: 2px 0;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+  background: var(--white);
+}
+
+.inputRow input {
+  flex: 1;
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.inputRow input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(36, 120, 186, 0.25);
+}
+
+.inputRow button {
+  background: var(--blue);
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--white);
+  flex-shrink: 0;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.inputRow button:hover {
+  background: var(--blue-dark);
+  transform: scale(1.05);
+}
+
+.inputRow button svg {
+  width: 18px;
+  height: 18px;
+}

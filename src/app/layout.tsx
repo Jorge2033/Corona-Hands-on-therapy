@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Public_Sans } from "next/font/google";
 import FloatingActions from "@/components/FloatingActions/FloatingActions";
+import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 // @ts-ignore
 import "./globals.css";
 
@@ -40,10 +41,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${publicSans.variable}`}>
+    <html 
+      lang="en" 
+      className={`${fraunces.variable} ${publicSans.variable}`}
+      suppressHydrationWarning
+    >
       <body>
-        {children}
-        <FloatingActions />
+        <LanguageProvider>
+          {children}
+          <FloatingActions />
+        </LanguageProvider>
       </body>
     </html>
   );

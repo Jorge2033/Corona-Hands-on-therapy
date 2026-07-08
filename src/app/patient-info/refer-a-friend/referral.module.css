@@ -1,0 +1,183 @@
+.mainBackground {
+  background-color: #f5f4f0;
+  padding-bottom: 80px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.breadcrumbContainer {
+  background-color: #f5f4f0;
+  width: 100%;
+  padding: 104px 20px 20px;
+  box-sizing: border-box;
+}
+
+.breadcrumb {
+  max-width: 1120px;
+  margin: 0 auto;
+  font-size: 13px;
+  color: #00a896;
+  font-weight: 600;
+}
+
+/* CONTAINER PRINCIPAL EN DOS COLUMNAS */
+.layoutContainer {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 40px;
+  padding: 0 20px;
+  align-items: start;
+}
+
+.leftColumn {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  border: 1px solid #e2dfd8;
+}
+
+.hero {
+  margin-bottom: 16px;
+  border-bottom: 2px solid #f2eee6;
+  padding-bottom: 16px;
+}
+
+.title {
+  font-size: clamp(28px, 4vw, 36px);
+  color: #102a43;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.intro {
+  color: #486581;
+  font-size: 15.5px;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+/* CENTRADO PERFECTO DEL FORMULARIO INTERNO */
+.formCenteringWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 24px;
+}
+
+/* TARJETA INTERNA DEL FORMULARIO */
+.card {
+  background: var(--white);
+  border: 1px solid #e8e4da;
+  border-radius: 14px;
+  padding: 36px;
+  width: 100%;
+  max-width: 640px;
+}
+
+.card h3 {
+  font-size: 22px;
+  color: #102a43;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.sectionLabel {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #00a896;
+  margin: 24px 0 14px;
+  border-bottom: 1px dashed #e2dfd8;
+  padding-bottom: 4px;
+}
+
+.sectionLabel:first-of-type {
+  margin-top: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #102a43;
+}
+
+.field input,
+.field textarea {
+  font-family: inherit;
+  font-size: 15px;
+  padding: 12px 14px;
+  border-radius: 9px;
+  border: 1px solid #e2dfd8;
+  background: #fbf9f6;
+  color: #102a43;
+  transition: all 0.2s ease;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: #00a896;
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(0, 168, 150, 0.15);
+}
+
+.errorMsg {
+  color: #b3261e;
+  font-size: 13.5px;
+  margin: 12px 0 0 0;
+}
+
+/* ==========================================================================
+   BARRA LATERAL - SIDEBAR (REPLICADO DE PATIENT FORMS)
+   ========================================================================== */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  .layoutContainer {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .leftColumn {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 20px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

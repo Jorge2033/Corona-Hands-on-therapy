@@ -1,0 +1,11 @@
+services:
+  web:
+    build: .
+    container_name: corona-hands-on-therapy
+    restart: unless-stopped
+    ports:
+      # Expone el sitio en el puerto 80 del VPS -> http://IP-DEL-VPS
+      - "80:3000"
+    env_file:
+      # Credenciales del correo (crear este archivo en el VPS, NO subirlo a git)
+      - .env.production

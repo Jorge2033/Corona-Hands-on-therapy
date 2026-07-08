@@ -1,0 +1,104 @@
+/* ==========================================================================
+   QUICK LINKS: tarjeta blanca con lista dividida (estilo de /conditions/[slug])
+   ========================================================================== */
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+}
+
+.cardTitle {
+  font-family: var(--font-body), sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 14px;
+}
+
+.linkList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.linkList li {
+  border-bottom: 1px solid var(--line);
+}
+
+.linkList li:last-child {
+  border-bottom: none;
+}
+
+.linkList a {
+  display: block;
+  padding: 11px 2px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.linkList a:hover {
+  color: var(--blue);
+}
+
+.linkActive {
+  color: var(--blue) !important;
+}
+
+/* ==========================================================================
+   CTA "ARE YOU READY TO LIVE PAIN-FREE?": banner con foto de equipo
+   (estilo original de /patient-info)
+   ========================================================================== */
+.ctaCard {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.ctaOverlay {
+  background: linear-gradient(rgba(16, 42, 67, 0.5), rgba(16, 42, 67, 0.62)),
+    url("/images/GroupShot.jpg") center/cover no-repeat;
+  min-height: 168px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px;
+  text-align: center;
+}
+
+.ctaOverlay h4 {
+  color: var(--white);
+  font-size: 17px;
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.35;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.ctaBtn {
+  display: inline-block;
+  background: #ff4d4d;
+  color: white;
+  padding: 10px 24px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 30px;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
+}
+
+.ctaBtn:hover {
+  background: #ff3333;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(255, 77, 77, 0.4);
+}

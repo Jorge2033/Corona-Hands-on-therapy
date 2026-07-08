@@ -1,40 +1,29 @@
-
-import { SITE } from "@/lib/siteData";
-import { MailIcon, ClockIcon, WhatsappIcon } from "@/components/icons/Icons";
+"use client";
+import { useState } from "react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import UnifiedModal from "./UnifiedModal";
 import styles from "./FloatingActions.module.css";
 
-// Botones flotantes fijos en la esquina inferior derecha.
-// - Contact Us -> abre el cliente de correo con la dirección de la clínica
-// - Request Appointment -> lleva al formulario de la sección #contact
-// - Web Chat -> por ahora abre WhatsApp (no hay un chatbot real conectado
-//   todavía; si en el futuro agregan uno, este link se reemplaza por el
-//   trigger de ese widget)
+// Botón flotante único fijo en la esquina inferior derecha.
+// Al abrirse muestra un panel con 3 pestañas (Web Chat / Request Appointment /
+// Contact Us) que se pueden alternar sin cerrar el panel.
 export default function FloatingActions() {
-  const whatsappHref = `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(
-    "Hi, I have a question for Corona Hands-On Therapy."
-  )}`;
+  const { t } = useLanguage();
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className={styles.wrap} aria-label="Quick actions">
-      <a href={`mailto:${SITE.email}`} className={styles.action}>
-        <MailIcon className={styles.icon} />
-        <span>Contact Us</span>
-      </a>
+    <>
+      <div className={styles.wrap} aria-label="Quick actions">
+        <button type="button" className={styles.launcher} onClick={() => setOpen(true)} aria-label={t.floatingActions.webChat}>
+          <span className={styles.avatarCircle}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/assistant-avatar.png" alt="" className={styles.avatarImg} />
+            <span className={styles.onlineDot} aria-hidden="true" />
+          </span>
+        </button>
+      </div>
 
-      <a href="/#contact" className={styles.action}>
-        <ClockIcon className={styles.icon} />
-        <span>Request Appointment</span>
-      </a>
-
-      <a
-        href={whatsappHref}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.action}
-      >
-        <WhatsappIcon className={styles.icon} />
-        <span>Web Chat</span>
-      </a>
-    </div>
+      {open && <UnifiedModal onClose={() => setOpen(false)} />}
+    </>
   );
 }

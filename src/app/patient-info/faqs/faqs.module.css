@@ -1,0 +1,150 @@
+.mainBackground {
+  background-color: #f5f4f0;
+  padding-bottom: 80px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.breadcrumbContainer {
+  background-color: #f5f4f0;
+  width: 100%;
+  padding: 104px 20px 20px;
+  box-sizing: border-box;
+}
+
+.breadcrumb {
+  max-width: 1120px;
+  margin: 0 auto;
+  font-size: 13px;
+  color: #00a896;
+  font-weight: 600;
+}
+
+/* DISTRIBUCIÓN PRINCIPAL DEL LAYOUT */
+.layoutContainer {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 40px;
+  padding: 0 20px;
+  align-items: start;
+}
+
+.leftColumn {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  border: 1px solid #e2dfd8;
+}
+
+.hero {
+  margin-bottom: 16px;
+  border-bottom: 2px solid #f2eee6;
+  padding-bottom: 16px;
+}
+
+.title {
+  font-size: clamp(28px, 4vw, 36px);
+  color: #102a43;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.intro {
+  color: #486581;
+  font-size: 15.5px;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.intro a {
+  color: #ff4d4d;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.contentSection {
+  width: 100%;
+}
+
+/* ==========================================================================
+   ESTILOS DEL ACORDEÓN DE PREGUNTAS (ESTILO PREMIUM EN BLANCO)
+   ========================================================================== */
+.accordion {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item {
+  background: #ffffff;
+  border: 1px solid #e8e4da;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.item:hover {
+  box-shadow: 0 4px 12px rgba(16, 42, 67, 0.03);
+}
+
+.question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 20px 24px;
+  text-align: left;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 15.5px;
+  color: #102a43;
+}
+
+.chevron {
+  width: 20px;
+  height: 20px;
+  color: #00a896;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.answer {
+  padding: 0 24px 20px 24px;
+  color: #486581;
+  font-size: 14.5px;
+  line-height: 1.6;
+  border-top: 1px dashed #f2eee6;
+  padding-top: 14px;
+}
+
+/* ==========================================================================
+   BARRA LATERAL - SIDEBAR COMPARTIDA
+   ========================================================================== */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* RESPONSIVO */
+@media (max-width: 960px) {
+  .layoutContainer {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .leftColumn {
+    padding: 24px;
+  }
+}

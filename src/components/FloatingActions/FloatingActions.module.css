@@ -4,50 +4,81 @@
   bottom: 20px;
   z-index: 80;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
   align-items: flex-end;
 }
 
-.action {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--navy);
-  color: var(--white);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 12px 18px;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(15, 42, 74, 0.25);
-  white-space: nowrap;
-  transition: background 0.15s ease, transform 0.15s ease;
+/* Botón flotante: sin fondo, sin borde, sin texto — solo el avatar. */
+.launcher {
+  display: block;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  opacity: 0;
+  animation: floatIn 0.4s ease forwards;
+  transition: transform 0.15s ease;
 }
 
-.action:hover {
-  background: var(--navy-dark);
+.launcher:hover {
   transform: translateY(-2px);
 }
 
-.icon {
-  width: 18px;
-  height: 18px;
+/* Envoltorio del avatar: SIN overflow:hidden, para que el punto verde
+   pueda asomarse fuera del círculo sin que se recorte. */
+.avatarCircle {
+  position: relative;
+  width: 68px;
+  height: 68px;
   flex-shrink: 0;
 }
 
-/* En móvil se colapsa a solo el ícono para no tapar contenido */
+/* El círculo lo recorta la propia imagen (border-radius), sin div extra
+   de por medio. */
+.avatarImg {
+  display: block;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgba(15, 42, 74, 0.3);
+}
+
+/* Punto verde de "en línea" sobre la esquina superior derecha del avatar */
+.onlineDot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #22c55e;
+  border: 2px solid var(--white);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  z-index: 1;
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .launcher {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 @media (max-width: 640px) {
   .wrap {
     right: 14px;
     bottom: 14px;
-    gap: 8px;
-  }
-  .action {
-    padding: 12px;
-    border-radius: 50%;
-  }
-  .action span {
-    display: none;
   }
 }

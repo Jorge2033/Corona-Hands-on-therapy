@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.gitignore
+*.md
+Corona-Hands-On-Therapy-Website.docx
+capturas
+.env*
+.DS_Store
+.claude
+.vscode
+Dockerfile
+docker-compose.yml

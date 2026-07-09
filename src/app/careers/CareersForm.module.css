@@ -154,17 +154,13 @@
   text-align: left;
 }
 
+/* Estado de la vacante: texto simple en cursiva, sin pastilla */
 .vacancyBadge {
   flex-shrink: 0;
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 600;
   color: var(--green);
-  background: #eaf4ee;
-  border: 1px solid #cfe8d8;
-  border-radius: 999px;
-  padding: 4px 12px;
 }
 
 /* ==========================================================================

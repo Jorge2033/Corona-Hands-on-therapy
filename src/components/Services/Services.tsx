@@ -89,7 +89,7 @@ export default function Services() {
                   ))}
                 </ul>
 
-                <span className={styles.tag}>{service.provider}</span>
+                <em className={styles.tag}>Dr. {service.provider}</em>
               </div>
             );
           })}

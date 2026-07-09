@@ -138,16 +138,14 @@
   color: #23a36a;
 }
 
+/* Nombre del doctor a cargo: texto simple en cursiva, sin pastilla */
 .tag {
   display: inline-block;
   margin-top: 20px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: #23a36a;
-  background: #eaf4ee;
-  padding: 5px 12px;
-  border-radius: 999px;
+  font-size: 13.5px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--ink-soft);
 }
 
 /* =========================================================

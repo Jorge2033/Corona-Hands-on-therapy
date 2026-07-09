@@ -479,7 +479,7 @@
   }
 
   .brandIcon {
-    height: 48px !important; /* Mantiene un tamaño ideal balanceado en móviles */
+    height:125px !important; /* Mantiene un tamaño ideal balanceado en móviles */
   }
 
   .navCta {

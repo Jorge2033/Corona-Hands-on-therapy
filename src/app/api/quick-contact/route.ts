@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import {
+  isRateLimited,
+  isSameOrigin,
+  isBodyTooLarge,
+  isEmailish,
+  clamp,
+  FIELD_LIMITS,
+} from "@/lib/formSecurity";
 
 // Ruta genérica de correo para:
 // - el modal "Contact Us" (formType: "contact")
@@ -36,7 +44,39 @@ const SUBJECT_BY_TYPE: Record<string, string> = {
   careers: "New job application",
 };
 
+// Solo estos campos extra se aceptan y se copian al correo. Cualquier otra
+// llave del JSON se ignora (evita correos gigantes con campos inventados).
+const ALLOWED_EXTRA_FIELDS: Record<string, number> = {
+  message: FIELD_LIMITS.long,
+  notes: FIELD_LIMITS.long,
+  preferredDate: FIELD_LIMITS.medium,
+  preferredTime: FIELD_LIMITS.medium,
+  caseType: FIELD_LIMITS.medium,
+  role: FIELD_LIMITS.medium,
+};
+
+// Límite del currículum en base64 (~7.5 MB de archivo real).
+const MAX_RESUME_BASE64_CHARS = 10 * 1024 * 1024;
+const RESUME_EXTENSIONS = /\.(pdf|doc|docx)$/i;
+
+// El body puede incluir un currículum en base64, por eso el límite alto.
+// Formularios sin adjunto quedan igualmente cubiertos por los límites por campo.
+const MAX_BODY_BYTES = 12 * 1024 * 1024;
+
 export async function POST(req: NextRequest) {
+  if (!isSameOrigin(req)) {
+    return NextResponse.json({ ok: false, error: "Forbidden." }, { status: 403 });
+  }
+  if (isRateLimited(req)) {
+    return NextResponse.json(
+      { ok: false, error: "Too many requests. Please try again later or call us." },
+      { status: 429 }
+    );
+  }
+  if (isBodyTooLarge(req, MAX_BODY_BYTES)) {
+    return NextResponse.json({ ok: false, error: "Request too large." }, { status: 413 });
+  }
+
   let body: unknown;
   try {
     body = await req.json();
@@ -61,21 +101,55 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const formType = clamp(body.formType, FIELD_LIMITS.medium);
+  const fullName = clamp(body.fullName.trim(), FIELD_LIMITS.short);
+  const phone = clamp(body.phone.trim(), FIELD_LIMITS.short);
+  const email = clamp((body.email || "").trim(), FIELD_LIMITS.short);
+
+  if (email && !isEmailish(email)) {
+    return NextResponse.json(
+      { ok: false, error: "Please enter a valid email address." },
+      { status: 400 }
+    );
+  }
+
+  const subject = SUBJECT_BY_TYPE[formType] || "New website message";
+
+  // Solo los campos de la whitelist llegan al correo, ya recortados y escapados.
+  const extraRows = Object.entries(ALLOWED_EXTRA_FIELDS)
+    .filter(([key]) => typeof body[key] === "string" && body[key])
+    .map(
+      ([key, max]) =>
+        `<p><strong>${escapeHtml(key)}:</strong> ${escapeHtml(clamp(body[key], max)).replace(/\n/g, "<br>")}</p>`
+    )
+    .join("");
+
+  // Currículum (solo formulario de careers): viaja como adjunto real,
+  // nunca dentro del cuerpo del correo.
+  const attachments: { filename: string; content: string; encoding: "base64" }[] = [];
+  if (formType === "careers" && typeof body.resume === "string" && body.resume) {
+    const resume = body.resume;
+    if (resume.length > MAX_RESUME_BASE64_CHARS) {
+      return NextResponse.json(
+        { ok: false, error: "Resume file is too large (7 MB max)." },
+        { status: 413 }
+      );
+    }
+    if (!/^[A-Za-z0-9+/=\r\n]+$/.test(resume)) {
+      return NextResponse.json({ ok: false, error: "Invalid resume file." }, { status: 400 });
+    }
+    // Nombre del archivo saneado: solo el nombre base, extensión permitida.
+    const rawName = typeof body.resumeName === "string" ? body.resumeName : "";
+    const baseName = rawName.split(/[/\\]/).pop() || "";
+    const safeName = baseName.replace(/[^\w.\-() ]/g, "").slice(0, 120);
+    const filename = RESUME_EXTENSIONS.test(safeName) ? safeName : "resume.pdf";
+    attachments.push({ filename, content: resume, encoding: "base64" });
+  }
+
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD },
   });
-
-  const { formType, fullName, phone, email } = body;
-  const subject = SUBJECT_BY_TYPE[formType] || "New website message";
-
-  // Arma el cuerpo del correo con cualquier campo adicional recibido
-  // (message, date, time, caseType, role, etc.) sin necesitar un tipo fijo por formulario.
-  const knownKeys = new Set(["formType", "fullName", "phone", "email"]);
-  const extraRows = Object.entries(body)
-    .filter(([key, value]) => !knownKeys.has(key) && value)
-    .map(([key, value]) => `<p><strong>${escapeHtml(key)}:</strong> ${escapeHtml(value).replace(/\n/g, "<br>")}</p>`)
-    .join("");
 
   const html = `
     <h2>${escapeHtml(subject)}</h2>
@@ -89,9 +163,10 @@ export async function POST(req: NextRequest) {
     await transporter.sendMail({
       from: `"Corona Hands-On Therapy Website" <${GMAIL_USER}>`,
       to: CONTACT_TO_EMAIL,
-      replyTo: email && email.trim() ? email : undefined,
+      replyTo: email || undefined,
       subject: `${subject} — ${fullName}`,
       html,
+      attachments: attachments.length > 0 ? attachments : undefined,
     });
 
     return NextResponse.json({ ok: true });

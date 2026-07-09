@@ -26,6 +26,12 @@ export default function CareersForm() {
 
     try {
       if (file && file.size > 0) {
+        // Límite de 7 MB: coincide con el máximo que acepta el servidor
+        if (file.size > 7 * 1024 * 1024) {
+          setStatus("error");
+          setErrorMsg(t.careers.fileTooLarge);
+          return;
+        }
         resumeBase64 = await new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
           reader.readAsDataURL(file);
@@ -41,15 +47,16 @@ export default function CareersForm() {
       const firstName = String(data.get("firstName") || "").trim();
       const lastName = String(data.get("lastName") || "").trim();
 
-      // 🌟 ARREGLO DE ORO: Combinamos ambos campos en 'fullName' para pasar la validación del route.ts
+      // Combinamos ambos campos en 'fullName' para pasar la validación del route.ts
       const payload = {
         formType: "careers",
-        fullName: `${firstName} ${lastName}`.trim(), 
+        fullName: `${firstName} ${lastName}`.trim(),
         phone: String(data.get("phone") || "").trim(),
         email: String(data.get("email") || "").trim(),
         role: String(data.get("role") || ""),
         message: String(data.get("message") || ""),
-        resume: resumeBase64, // El backend lo mapeará automáticamente en 'extraRows'
+        resume: resumeBase64, // El backend lo envía como archivo adjunto
+        resumeName: file?.name || "",
       };
 
       const res = await fetch("/api/quick-contact", {

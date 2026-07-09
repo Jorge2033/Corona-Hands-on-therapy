@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation"; // Hook esencial para detectar la sección activa
 import { SITE, NAV_LINKS, PATIENT_QUICK_LINKS } from "@/lib/siteData";
 import { CONDITIONS } from "@/lib/conditionsData";
-import { MenuIcon, CloseIcon, PhoneIcon, WhatsappIcon } from "@/components/icons/Icons";
+import { MenuIcon, CloseIcon, PhoneIcon, WhatsappIcon, ChatBubbleIcon } from "@/components/icons/Icons";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./Header.module.css";
 
@@ -202,6 +202,10 @@ export default function Header() {
                     <a href={whatsappHref} target="_blank" rel="noopener noreferrer" role="menuitem" className={styles.phoneDropdownItem}>
                       <WhatsappIcon className={styles.dropdownIcon} />
                       {t.nav.messageWhatsapp}
+                    </a>
+                    <a href={`sms:${SITE.phoneHref}`} role="menuitem" className={styles.phoneDropdownItem}>
+                      <ChatBubbleIcon className={styles.dropdownIcon} />
+                      {t.nav.sendSms}
                     </a>
                   </div>
                 )}

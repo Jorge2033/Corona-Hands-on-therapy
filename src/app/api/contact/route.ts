@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import type { ContactFormPayload } from "@/lib/types";
 import { CASE_TYPES, SERVICES } from "@/lib/siteData";
+import {
+  isRateLimited,
+  isSameOrigin,
+  isBodyTooLarge,
+  isEmailish,
+  clamp,
+  FIELD_LIMITS,
+} from "@/lib/formSecurity";
 
 // Esta ruta corre en el servidor (Vercel serverless function), nunca en el navegador.
 // Las credenciales de Gmail viven solo en variables de entorno, nunca en el código.
@@ -30,6 +38,20 @@ function isValidPayload(body: unknown): body is ContactFormPayload {
 }
 
 export async function POST(req: NextRequest) {
+  if (!isSameOrigin(req)) {
+    return NextResponse.json({ ok: false, error: "Forbidden." }, { status: 403 });
+  }
+  if (isRateLimited(req)) {
+    return NextResponse.json(
+      { ok: false, error: "Too many requests. Please try again later or call us." },
+      { status: 429 }
+    );
+  }
+  // Este formulario no lleva adjuntos: 100 KB es más que suficiente.
+  if (isBodyTooLarge(req, 100 * 1024)) {
+    return NextResponse.json({ ok: false, error: "Request too large." }, { status: 413 });
+  }
+
   let body: unknown;
   try {
     body = await req.json();
@@ -62,7 +84,20 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  const { fullName, phone, email, caseType, serviceNeeded, notes } = body;
+  // Campos recortados a límites razonables antes de tocar el correo.
+  const fullName = clamp(body.fullName.trim(), FIELD_LIMITS.short);
+  const phone = clamp(body.phone.trim(), FIELD_LIMITS.short);
+  const email = clamp((body.email || "").trim(), FIELD_LIMITS.short);
+  const caseType = clamp(body.caseType, FIELD_LIMITS.medium);
+  const serviceNeeded = clamp(body.serviceNeeded || "", FIELD_LIMITS.medium);
+  const notes = clamp(body.notes || "", FIELD_LIMITS.long);
+
+  if (email && !isEmailish(email)) {
+    return NextResponse.json(
+      { ok: false, error: "Please enter a valid email address." },
+      { status: 400 }
+    );
+  }
 
   const html = `
     <h2>New appointment request — Corona Hands-On Therapy website</h2>
@@ -70,7 +105,7 @@ export async function POST(req: NextRequest) {
     <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
     <p><strong>Email:</strong> ${escapeHtml(email || "Not provided")}</p>
     <p><strong>Case type:</strong> ${escapeHtml(labelForCaseType(caseType))}</p>
-    <p><strong>Service needed:</strong> ${escapeHtml(labelForService(serviceNeeded || ""))}</p>
+    <p><strong>Service needed:</strong> ${escapeHtml(labelForService(serviceNeeded))}</p>
     <p><strong>Notes:</strong><br>${escapeHtml(notes || "None").replace(/\n/g, "<br>")}</p>
   `;
 
@@ -78,7 +113,7 @@ export async function POST(req: NextRequest) {
     await transporter.sendMail({
       from: `"Corona Hands-On Therapy Website" <${GMAIL_USER}>`,
       to: CONTACT_TO_EMAIL,
-      replyTo: email && email.trim() ? email : undefined,
+      replyTo: email || undefined,
       subject: `New appointment request from ${fullName}`,
       html,
     });

@@ -95,6 +95,18 @@
   color: var(--white);
 }
 
+/* Los Quick Links resaltan en azul claro y subrayados
+   (azul más claro que --blue para que contraste bien sobre el fondo navy) */
+.quickLinksCol a {
+  color: #6fb4e8;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.quickLinksCol a:hover {
+  color: var(--white);
+}
+
 .bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 22px;

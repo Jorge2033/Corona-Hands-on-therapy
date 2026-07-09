@@ -399,26 +399,6 @@
   margin-top: 4px;
 }
 
-.drawerLangToggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff !important;
-  font-family: var(--font-body), sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 10px 26px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.drawerLangToggle:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
 .drawerBookBtn {
   width: 100%;
   text-align: center;
@@ -508,12 +488,20 @@
     align-items: center !important;
   }
 
-  /* Desactivar elementos de desktop en versión móvil */
+  /* Desactivar elementos de desktop en versión móvil
+     (el toggle de idioma SÍ se queda visible junto a la hamburguesa) */
   .navCta > a,
   .phoneMenuWrap,
-  .langToggle,
   .links {
     display: none !important;
+  }
+
+  /* Toggle de idioma compacto al lado de la hamburguesa */
+  .langToggle {
+    display: flex !important;
+    font-size: 12.5px !important;
+    padding: 7px 14px !important;
+    margin-right: 6px !important;
   }
 
   .menuToggle {

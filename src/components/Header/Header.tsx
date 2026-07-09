@@ -286,15 +286,6 @@ export default function Header() {
         </nav>
 
         <div className={styles.drawerFooter}>
-          <button
-            type="button"
-            className={styles.drawerLangToggle}
-            onClick={toggleLanguage}
-            aria-label={`Switch to ${language === "en" ? "Spanish" : "English"}`}
-          >
-            {t.nav.langToggleLabel}
-          </button>
-
           <a href="/#contact" className={`btn btn-primary ${styles.drawerBookBtn}`} onClick={() => setDrawerOpen(false)}>
             {t.nav.bookAppointment}
           </a>

@@ -15,6 +15,7 @@
 
 import Database from "better-sqlite3";
 import { createDecipheriv } from "crypto";
+import { existsSync } from "fs";
 import path from "path";
 
 const keyHex = process.env.DATA_ENCRYPTION_KEY;
@@ -39,6 +40,12 @@ function decrypt(payload) {
   const decipher = createDecipheriv("aes-256-gcm", key, Buffer.from(ivB64, "base64"));
   decipher.setAuthTag(Buffer.from(tagB64, "base64"));
   return Buffer.concat([decipher.update(Buffer.from(dataB64, "base64")), decipher.final()]).toString("utf8");
+}
+
+if (!existsSync(dbPath)) {
+  console.log(`Todavía no hay envíos guardados (no existe ${dbPath}).`);
+  console.log("La base de datos se crea automáticamente con el primer formulario enviado.");
+  process.exit(0);
 }
 
 const db = new Database(dbPath, { readonly: true });

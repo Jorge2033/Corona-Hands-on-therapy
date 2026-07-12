@@ -10,6 +10,7 @@ import {
   clamp,
   FIELD_LIMITS,
 } from "@/lib/formSecurity";
+import { saveSubmission } from "@/lib/db";
 
 // Esta ruta corre en el servidor (Vercel serverless function), nunca en el navegador.
 // Las credenciales de Gmail viven solo en variables de entorno, nunca en el código.
@@ -98,6 +99,16 @@ export async function POST(req: NextRequest) {
       { status: 400 }
     );
   }
+
+  // Guarda el envío cifrado en la base de datos antes de intentar el correo
+  saveSubmission("appointment-main", {
+    fullName,
+    phone,
+    email,
+    caseType,
+    serviceNeeded,
+    notes,
+  });
 
   const html = `
     <h2>New appointment request — Corona Hands-On Therapy website</h2>

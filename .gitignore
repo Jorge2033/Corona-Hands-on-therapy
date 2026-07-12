@@ -23,3 +23,8 @@ npm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 .claude/
+# base de datos local de envíos (nunca subir datos de pacientes)
+/data/
+*.db
+*.db-wal
+*.db-shm

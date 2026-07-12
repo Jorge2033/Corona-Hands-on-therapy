@@ -8,6 +8,7 @@ import {
   clamp,
   FIELD_LIMITS,
 } from "@/lib/formSecurity";
+import { saveSubmission } from "@/lib/db";
 
 // Ruta genérica de correo para:
 // - el modal "Contact Us" (formType: "contact")
@@ -145,6 +146,18 @@ export async function POST(req: NextRequest) {
     const filename = RESUME_EXTENSIONS.test(safeName) ? safeName : "resume.pdf";
     attachments.push({ filename, content: resume, encoding: "base64" });
   }
+
+  // Guarda el envío cifrado en la base de datos ANTES de intentar el correo,
+  // así el dato nunca se pierde aunque Gmail falle. El currículum adjunto no
+  // se almacena (solo su nombre); llega por correo.
+  const toStore: Record<string, string> = { fullName, phone, email };
+  for (const key of Object.keys(ALLOWED_EXTRA_FIELDS)) {
+    if (typeof body[key] === "string" && body[key]) {
+      toStore[key] = clamp(body[key], ALLOWED_EXTRA_FIELDS[key]);
+    }
+  }
+  if (attachments.length > 0) toStore.resumeName = attachments[0].filename;
+  saveSubmission(formType, toStore);
 
   const transporter = nodemailer.createTransport({
     service: "gmail",

@@ -7,5 +7,15 @@ services:
       # Expone el sitio en el puerto 80 del VPS -> http://IP-DEL-VPS
       - "80:3000"
     env_file:
-      # Credenciales del correo (crear este archivo en el VPS, NO subirlo a git)
+      # Credenciales del correo y clave de cifrado (crear en el VPS, NO subir a git)
       - .env.production
+    environment:
+      # Base de datos SQLite en el volumen persistente
+      - DB_PATH=/app/data/submissions.db
+    volumes:
+      # Volumen administrado por Docker: la base de datos sobrevive
+      # reconstrucciones y reinicios del contenedor
+      - corona-data:/app/data
+
+volumes:
+  corona-data:

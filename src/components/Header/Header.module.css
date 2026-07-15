@@ -22,9 +22,10 @@
 .nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  /* Menos padding a la izquierda: el logo se corre hacia el borde y
-     respira mejor respecto al primer enlace del menú */
+  /* El bloque de secciones (enlaces + CTA) queda centrado en el header,
+     sin importar el ancho de la página; el logo se ancla a la izquierda. */
+  justify-content: center;
+  position: relative;
   padding: 0 40px 0 16px;
   max-width: 100% !important;
   width: 100%;
@@ -45,7 +46,11 @@
   gap: 10px;
   text-decoration: none;
   flex-shrink: 0;
-  margin-right: auto;
+  /* Anclado a la izquierda para que el menú pueda centrarse sin desplazarlo */
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .brandIcon {
@@ -476,6 +481,9 @@
   }
 
   .nav {
+    /* En móvil el logo sigue a la izquierda (absoluto) y el toggle de idioma
+       + la hamburguesa se anclan al borde derecho. */
+    justify-content: flex-end !important;
     padding: 0 20px !important;
     height: 100% !important;
   }

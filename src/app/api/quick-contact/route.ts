@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
 import {
   isRateLimited,
   isSameOrigin,
@@ -9,12 +8,13 @@ import {
   FIELD_LIMITS,
 } from "@/lib/formSecurity";
 import { saveSubmission } from "@/lib/db";
+import { mailerReady, sendContactMail } from "@/lib/mailer";
 
 // Ruta genérica de correo para:
 // - el modal "Contact Us" (formType: "contact")
 // - el modal "Request Appointment" (formType: "appointment")
 // - el formulario de /careers (formType: "careers")
-// Reutiliza las mismas credenciales de Gmail que /api/contact.
+// Reutiliza el mismo mailer (SMTP relay, ver lib/mailer.ts) que /api/contact.
 
 function escapeHtml(value: string): string {
   return value
@@ -92,10 +92,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { GMAIL_USER, GMAIL_APP_PASSWORD, CONTACT_TO_EMAIL } = process.env;
-
-  if (!GMAIL_USER || !GMAIL_APP_PASSWORD || !CONTACT_TO_EMAIL) {
-    console.error("Missing email environment variables.");
+  if (!mailerReady()) {
+    console.error("Missing email environment variables (SMTP_HOST/PORT/USER/PASS, MAIL_FROM_EMAIL, CONTACT_TO_EMAIL).");
     return NextResponse.json(
       { ok: false, error: "This form isn't configured yet. Please call us instead." },
       { status: 500 }
@@ -125,9 +123,9 @@ export async function POST(req: NextRequest) {
     )
     .join("");
 
-  // Currículum (solo formulario de careers): viaja como adjunto real,
-  // nunca dentro del cuerpo del correo.
-  const attachments: { filename: string; content: string; encoding: "base64" }[] = [];
+  // Currículum (solo formulario de careers): viaja como adjunto real
+  // (base64), nunca dentro del cuerpo del correo.
+  const attachments: { filename: string; content: string }[] = [];
   if (formType === "careers" && typeof body.resume === "string" && body.resume) {
     const resume = body.resume;
     if (resume.length > MAX_RESUME_BASE64_CHARS) {
@@ -144,7 +142,7 @@ export async function POST(req: NextRequest) {
     const baseName = rawName.split(/[/\\]/).pop() || "";
     const safeName = baseName.replace(/[^\w.\-() ]/g, "").slice(0, 120);
     const filename = RESUME_EXTENSIONS.test(safeName) ? safeName : "resume.pdf";
-    attachments.push({ filename, content: resume, encoding: "base64" });
+    attachments.push({ filename, content: resume });
   }
 
   // Guarda el envío cifrado en la base de datos ANTES de intentar el correo,
@@ -159,11 +157,6 @@ export async function POST(req: NextRequest) {
   if (attachments.length > 0) toStore.resumeName = attachments[0].filename;
   saveSubmission(formType, toStore);
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD },
-  });
-
   const html = `
     <h2>${escapeHtml(subject)}</h2>
     <p><strong>Name:</strong> ${escapeHtml(fullName)}</p>
@@ -173,9 +166,7 @@ export async function POST(req: NextRequest) {
   `;
 
   try {
-    await transporter.sendMail({
-      from: `"Corona Hands-On Therapy Website" <${GMAIL_USER}>`,
-      to: CONTACT_TO_EMAIL,
+    await sendContactMail({
       replyTo: email || undefined,
       subject: `${subject} — ${fullName}`,
       html,

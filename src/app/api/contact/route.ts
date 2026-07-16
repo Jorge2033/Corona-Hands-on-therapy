@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
 import type { ContactFormPayload } from "@/lib/types";
 import { CASE_TYPES, SERVICES } from "@/lib/siteData";
 import {
@@ -11,9 +10,11 @@ import {
   FIELD_LIMITS,
 } from "@/lib/formSecurity";
 import { saveSubmission } from "@/lib/db";
+import { mailerReady, sendContactMail } from "@/lib/mailer";
 
-// Esta ruta corre en el servidor (Vercel serverless function), nunca en el navegador.
-// Las credenciales de Gmail viven solo en variables de entorno, nunca en el código.
+// Esta ruta corre en el servidor, nunca en el navegador.
+// El correo sale por un relay SMTP en puerto 2525 (ver lib/mailer.ts);
+// las credenciales viven solo en variables de entorno.
 
 function labelForCaseType(value: string) {
   return CASE_TYPES.find((c) => c.value === value)?.label || value || "Not specified";
@@ -67,23 +68,13 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { GMAIL_USER, GMAIL_APP_PASSWORD, CONTACT_TO_EMAIL } = process.env;
-
-  if (!GMAIL_USER || !GMAIL_APP_PASSWORD || !CONTACT_TO_EMAIL) {
-    console.error("Missing email environment variables.");
+  if (!mailerReady()) {
+    console.error("Missing email environment variables (SMTP_HOST/PORT/USER/PASS, MAIL_FROM_EMAIL, CONTACT_TO_EMAIL).");
     return NextResponse.json(
       { ok: false, error: "The contact form isn't configured yet. Please call us instead." },
       { status: 500 }
     );
   }
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: GMAIL_USER,
-      pass: GMAIL_APP_PASSWORD,
-    },
-  });
 
   // Campos recortados a límites razonables antes de tocar el correo.
   const fullName = clamp(body.fullName.trim(), FIELD_LIMITS.short);
@@ -121,9 +112,7 @@ export async function POST(req: NextRequest) {
   `;
 
   try {
-    await transporter.sendMail({
-      from: `"Corona Hands-On Therapy Website" <${GMAIL_USER}>`,
-      to: CONTACT_TO_EMAIL,
+    await sendContactMail({
       replyTo: email || undefined,
       subject: `New appointment request from ${fullName}`,
       html,

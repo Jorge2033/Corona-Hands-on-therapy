@@ -2,6 +2,9 @@
 const nextConfig = {
   // Genera un servidor autocontenido en .next/standalone para Docker
   output: "standalone",
+  // nodemailer se resuelve en runtime (Node), no lo empaqueta Turbopack:
+  // su import profundo (lib/mail-composer) rompe la compilación si se bundlea
+  serverExternalPackages: ["nodemailer"],
   images: {
     remotePatterns: [
       {

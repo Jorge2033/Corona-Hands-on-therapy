@@ -20,13 +20,19 @@
 }
 
 .nav {
-  display: flex;
-  align-items: center;
-  /* El bloque de secciones (enlaces + CTA) queda centrado en el header,
-     sin importar el ancho de la página; el logo se ancla a la izquierda. */
-  justify-content: center;
-  position: relative;
-  padding: 0 40px 0 16px;
+  /* Tres columnas: logo | secciones | vacía. Las dos columnas laterales son
+     1fr, así que el bloque de secciones queda centrado en el header sin
+     importar el ancho. Si el espacio se acorta, la columna del logo no baja
+     de su ancho mínimo y el menú se corre en vez de superponerse. */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  /* Fila de la altura exacta del header: el logo mide más que la barra y sin
+     esto estiraría la fila, empujando el menú por debajo del header. */
+  grid-template-rows: 100%;
+  align-items: stretch;
+  /* Padding simétrico: con laterales iguales el centrado del bloque coincide
+     exactamente con el centro del header. */
+  padding: 0 28px;
   max-width: 100% !important;
   width: 100%;
   height: 100%;
@@ -46,11 +52,11 @@
   gap: 10px;
   text-decoration: none;
   flex-shrink: 0;
-  /* Anclado a la izquierda para que el menú pueda centrarse sin desplazarlo */
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
+  /* Primera columna de la grilla, pegado al borde izquierdo. El padding
+     derecho garantiza aire entre el logo y el primer enlace cuando la
+     ventana es angosta y las columnas se ajustan al mínimo. */
+  justify-self: start;
+  padding-right: 28px;
 }
 
 .brandIcon {
@@ -468,7 +474,21 @@
    3. INTERFACES MÓVILES (MEDIAS QUERIES)
    ========================================================================== */
 
-@media (max-width: 900px) {
+/* Ventanas de escritorio angostas (laptops): espaciados más ajustados para
+   que el menú completo siga cabiendo y centrado. */
+@media (max-width: 1500px) {
+  .navRight {
+    gap: 24px;
+  }
+
+  .links {
+    gap: 20px;
+  }
+}
+
+/* Por debajo de 1250px el menú completo ya no cabe en una sola línea,
+   así que se cambia a la hamburguesa en vez de encogerlo hasta romperlo. */
+@media (max-width: 1250px) {
   .header {
     position: fixed !important;
     top: 0 !important;
@@ -481,9 +501,11 @@
   }
 
   .nav {
-    /* En móvil el logo sigue a la izquierda (absoluto) y el toggle de idioma
-       + la hamburguesa se anclan al borde derecho. */
-    justify-content: flex-end !important;
+    /* En móvil no hay menú que centrar: logo a la izquierda, toggle de
+       idioma + hamburguesa al borde derecho. */
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
     padding: 0 20px !important;
     height: 100% !important;
   }

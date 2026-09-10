@@ -3,9 +3,10 @@ services:
     build: .
     container_name: corona-hands-on-therapy
     restart: unless-stopped
-    ports:
-      # Expone el sitio en el puerto 80 del VPS -> http://IP-DEL-VPS
-      - "80:3000"
+    # Ya no publica el puerto 80: ahora Caddy recibe el tráfico público
+    # y lo reenvía aquí por la red interna de Docker.
+    expose:
+      - "3000"
     env_file:
       # Credenciales del correo y clave de cifrado (crear en el VPS, NO subir a git)
       - .env.production
@@ -17,5 +18,27 @@ services:
       # reconstrucciones y reinicios del contenedor
       - corona-data:/app/data
 
+  caddy:
+    image: caddy:2-alpine
+    container_name: corona-caddy
+    restart: unless-stopped
+    ports:
+      # El 80 hace falta para el desafío de Let's Encrypt y para redirigir a HTTPS
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      # Los certificados viven aquí: sin este volumen se volverían a pedir en
+      # cada reinicio y Let's Encrypt aplica límites de frecuencia
+      - caddy-data:/data
+      - caddy-config:/config
+      - caddy-logs:/var/log/caddy
+    depends_on:
+      - web
+
 volumes:
   corona-data:
+  caddy-data:
+  caddy-config:
+  caddy-logs:

@@ -21,10 +21,16 @@ const publicSans = Public_Sans({
 });
 
 export const metadata: Metadata = {
+  // Dominio base: las URLs canónicas y las previews de redes sociales se
+  // resuelven contra esta base en vez de rutas relativas.
+  metadataBase: new URL("https://corona-handsontherapy.com"),
   title:
     "Corona Hands-On Therapy | Physical Therapy, Chiropractic & Acupuncture — Elmhurst, NY",
   description:
     "Corona Hands-On Therapy in Elmhurst, NY provides physical therapy, chiropractic care, and acupuncture for auto, work, home, and personal injury recovery.",
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: [
       {

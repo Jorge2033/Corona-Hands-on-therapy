@@ -1,0 +1,25 @@
+# Reverse proxy con HTTPS automático (Let's Encrypt).
+# Caddy pide y renueva los certificados solo; no hay que tocar nada.
+
+# Dominio principal
+corona-handsontherapy.com {
+	# La app Next.js corre en el contenedor "web" del docker-compose
+	reverse_proxy web:3000
+
+	encode gzip zstd
+
+	# HSTS: obliga al navegador a usar HTTPS en visitas futuras
+	header Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 10mb
+			roll_keep 5
+		}
+	}
+}
+
+# www redirige al dominio principal: evita contenido duplicado de cara a Google
+www.corona-handsontherapy.com {
+	redir https://corona-handsontherapy.com{uri} permanent
+}

@@ -7,7 +7,7 @@ export const SITE = {
   city: "Elmhurst, NY",
   phoneDisplay: " +1 (347) 229-9167",
   phoneHref: "+13472299167", // formato E.164 para tel:
-  whatsappNumber: "13472299167", // sin '+' para wa.me
+  whatsappNumber: "16463168495", // sin '+' para wa.me (línea de WhatsApp, distinta a la de llamadas)
   fax: "(347) 502-2998",
   email: "coronahealthcare90@gmail.com",
   address: {

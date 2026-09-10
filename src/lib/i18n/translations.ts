@@ -28,7 +28,11 @@ const en = {
     messageWhatsapp: "Message on WhatsApp",
     sendSms: "Send a text (SMS)",
     whatsappChat: "WhatsApp Chat",
-    langToggleLabel: "Español",
+    // La etiqueta va en el idioma DESTINO: quien busca español la reconoce
+    // aunque la página esté en inglés. La versión corta se usa en pantallas
+    // estrechas, donde la larga empujaría la hamburguesa fuera de la vista.
+    langToggleLabel: "Cambiar a Español",
+    langToggleLabelShort: "Español",
   },
   breadcrumb: {
     home: "Home",
@@ -578,7 +582,9 @@ const es: TranslationDict = {
     messageWhatsapp: "Escribir por WhatsApp",
     sendSms: "Enviar mensaje de texto (SMS)",
     whatsappChat: "Chat de WhatsApp",
-    langToggleLabel: "English",
+    // Idioma destino, igual que arriba
+    langToggleLabel: "Change to English",
+    langToggleLabelShort: "English",
   },
   breadcrumb: {
     home: "Inicio",

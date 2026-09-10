@@ -57,6 +57,9 @@
      ventana es angosta y las columnas se ajustan al mínimo. */
   justify-self: start;
   padding-right: 28px;
+  /* Sin esto la columna se encoge y, por la regla global img{max-width:100%},
+     el logo se aplasta hasta desaparecer en ventanas angostas. */
+  min-width: max-content;
 }
 
 .brandIcon {
@@ -243,6 +246,13 @@
   background: var(--white);
   border-color: var(--blue);
   color: var(--blue);
+}
+
+/* Etiqueta del botón de idioma: por defecto la versión larga y explícita
+   ("Cambiar a Español"). La corta solo aparece en móviles estrechos,
+   donde la larga desplazaría la hamburguesa fuera de la pantalla. */
+.langLabelShort {
+  display: none;
 }
 
 .navPhone {
@@ -478,17 +488,26 @@
    que el menú completo siga cabiendo y centrado. */
 @media (max-width: 1500px) {
   .navRight {
-    gap: 24px;
+    gap: 18px;
   }
 
   .links {
-    gap: 20px;
+    gap: 15px;
+  }
+
+  .navCta {
+    gap: 11px;
+  }
+
+  .langToggle {
+    padding: 8px 13px;
   }
 }
 
-/* Por debajo de 1250px el menú completo ya no cabe en una sola línea,
+/* Por debajo de 1350px el menú completo ya no cabe en una sola línea
+   (el botón de idioma dice "Cambiar a Español", no solo "Español"),
    así que se cambia a la hamburguesa en vez de encogerlo hasta romperlo. */
-@media (max-width: 1250px) {
+@media (max-width: 1350px) {
   .header {
     position: fixed !important;
     top: 0 !important;
@@ -511,7 +530,10 @@
   }
 
   .brandIcon {
-    height:125px !important; /* Mantiene un tamaño ideal balanceado en móviles */
+    /* Reducido de 125px: con la etiqueta larga del botón de idioma
+       ("Cambiar a Español") el logo de 125px empujaba la hamburguesa
+       fuera de la pantalla en teléfonos de 375px o menos. */
+    height: 95px !important;
   }
 
   .navCta {
@@ -531,9 +553,10 @@
   /* Toggle de idioma compacto al lado de la hamburguesa */
   .langToggle {
     display: flex !important;
-    font-size: 12.5px !important;
-    padding: 7px 14px !important;
-    margin-right: 6px !important;
+    font-size: 12px !important;
+    padding: 6px 11px !important;
+    margin-right: 4px !important;
+    white-space: nowrap;
   }
 
   .menuToggle {
@@ -616,5 +639,20 @@
     color: var(--gold);
     margin-right: 8px;
     display: inline-block;
+  }
+}
+/* ==========================================================================
+   4. PANTALLAS ESTRECHAS: etiqueta corta del botón de idioma
+   ========================================================================== */
+
+/* Por debajo de 420px no caben logo + "Cambiar a Español" + hamburguesa.
+   Se muestra la etiqueta corta para que el menú siga siendo accesible. */
+@media (max-width: 420px) {
+  .langLabelFull {
+    display: none;
+  }
+
+  .langLabelShort {
+    display: inline;
   }
 }

@@ -217,7 +217,10 @@ export default function Header() {
                 onClick={toggleLanguage}
                 aria-label={`Switch to ${language === "en" ? "Spanish" : "English"}`}
               >
-                {t.nav.langToggleLabel}
+                {/* Etiqueta larga en pantallas con espacio; corta en móviles
+                    estrechos. El CSS decide cuál se ve (ver Header.module.css). */}
+                <span className={styles.langLabelFull}>{t.nav.langToggleLabel}</span>
+                <span className={styles.langLabelShort}>{t.nav.langToggleLabelShort}</span>
               </button>
 
               <a href="/#contact" className="btn btn-primary">

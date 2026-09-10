@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Public_Sans } from "next/font/google";
 import FloatingActions from "@/components/FloatingActions/FloatingActions";
+import StructuredData from "@/components/StructuredData/StructuredData";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 // @ts-ignore
 import "./globals.css";
@@ -53,6 +54,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body>
+        {/* Ficha del negocio para Google (schema.org). Ver StructuredData.tsx */}
+        <StructuredData />
         <LanguageProvider>
           {children}
           <FloatingActions />

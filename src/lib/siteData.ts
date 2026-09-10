@@ -5,6 +5,8 @@ export const SITE = {
   name: "Corona Hands-On Therapy",
   shortName: "Corona Hands-On",
   city: "Elmhurst, NY",
+  url: "https://corona-handsontherapy.com", // sin barra final
+
   phoneDisplay: " +1 (347) 229-9167",
   phoneHref: "+13472299167", // formato E.164 para tel:
   whatsappNumber: "16463168495", // sin '+' para wa.me (línea de WhatsApp, distinta a la de llamadas)
@@ -13,6 +15,13 @@ export const SITE = {
   address: {
     line1: "90-46 Corona Ave",
     line2: "Elmhurst, NY 11373",
+    // Campos desglosados: los usan los datos estructurados de Google
+    // (schema.org PostalAddress). Deben coincidir con line1/line2.
+    street: "90-46 Corona Ave",
+    locality: "Elmhurst",
+    region: "NY",
+    postalCode: "11373",
+    country: "US",
   },
   mapEmbedSrc:
     "https://www.google.com/maps?q=90-46+Corona+Ave,+Elmhurst,+NY+11373&output=embed",

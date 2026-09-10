@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Fraunces, Public_Sans } from "next/font/google";
+import Script from "next/script";
 import FloatingActions from "@/components/FloatingActions/FloatingActions";
 import StructuredData from "@/components/StructuredData/StructuredData";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
+import { SITE } from "@/lib/siteData";
 // @ts-ignore
 import "./globals.css";
 
@@ -56,6 +58,23 @@ export default function RootLayout({
       <body>
         {/* Ficha del negocio para Google (schema.org). Ver StructuredData.tsx */}
         <StructuredData />
+
+        {/* Google tag (gtag.js) — Google Ads y Analytics.
+            "afterInteractive" lo carga tras pintar la página: mide igual
+            pero no retrasa lo que ve el paciente. */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${SITE.googleTagId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${SITE.googleTagId}');
+          `}
+        </Script>
+
         <LanguageProvider>
           {children}
           <FloatingActions />

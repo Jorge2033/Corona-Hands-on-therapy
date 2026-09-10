@@ -6,6 +6,9 @@ export const SITE = {
   shortName: "Corona Hands-On",
   city: "Elmhurst, NY",
   url: "https://corona-handsontherapy.com", // sin barra final
+  // ID de medición de Google (gtag.js), usado por Google Ads y Analytics.
+  // No es un secreto: viaja en el HTML de todas las páginas.
+  googleTagId: "G-GP8597E0MG",
 
   phoneDisplay: " +1 (347) 229-9167",
   phoneHref: "+13472299167", // formato E.164 para tel:

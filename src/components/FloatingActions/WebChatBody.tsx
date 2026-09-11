@@ -24,6 +24,42 @@ interface QuickOption {
   onSelect: () => void;
 }
 
+// ============================================================
+// Persistencia de la conversación (solo durante la sesión).
+//
+// sessionStorage y no localStorage a propósito: la charla vive mientras la
+// pestaña está abierta y desaparece al cerrarla. Se trata de una clínica, así
+// que no conviene dejar en el equipo un historial de lo que alguien preguntó
+// sobre su lesión — sobre todo en computadoras compartidas.
+//
+// Los accesos van en try/catch: en modo incógnito o con las cookies
+// bloqueadas, sessionStorage lanza excepción en vez de devolver null.
+// ============================================================
+const CHAT_STORAGE_KEY = "corona-chat-session";
+
+function loadConversation(): ChatMessage[] {
+  try {
+    const raw = sessionStorage.getItem(CHAT_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    // Filtra cualquier cosa que no tenga la forma esperada
+    return parsed.filter(
+      (m) => m && typeof m.text === "string" && (m.from === "bot" || m.from === "user")
+    );
+  } catch {
+    return [];
+  }
+}
+
+function saveConversation(messages: ChatMessage[]) {
+  try {
+    sessionStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(messages));
+  } catch {
+    // Sin almacenamiento disponible el chat sigue funcionando, solo no persiste
+  }
+}
+
 // Avatar de Vika con foto real. Si la imagen falla en cargar, cae en la inicial "V".
 export function AssistantAvatar({ size, className }: { size: number; className: string }) {
   const [imageFailed, setImageFailed] = useState(false);
@@ -390,18 +426,33 @@ export default function WebChatBody({ onNavigate }: { onNavigate?: () => void } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages.length]);
 
-  // Saludo inicial escalonado (con pausa de "escribiendo") al abrir el chat.
-  // El guard evita que el doble-montaje de React Strict Mode en desarrollo
-  // dispare el saludo dos veces.
-  const hasGreetedRef = useRef(false);
+  // Al abrir el chat: si ya hay una conversación de esta sesión, se restaura
+  // tal cual (incluso si el visitante navegó a otra página siguiendo un enlace
+  // del bot). Si no hay nada guardado, saluda desde cero.
+  // El guard evita que el doble-montaje de React Strict Mode lo dispare dos veces.
+  const hasStartedRef = useRef(false);
   useEffect(() => {
-    if (hasGreetedRef.current) return;
-    hasGreetedRef.current = true;
+    if (hasStartedRef.current) return;
+    hasStartedRef.current = true;
+
+    const saved = loadConversation();
+    if (saved.length > 0) {
+      setMessages(saved);
+      showMainMenu();
+      return;
+    }
+
     pushBotMessage(`${t.webchat.greeting1Prefix} ${SITE.name}.`, {
       after: () => pushBotMessage(t.webchat.greeting2, { after: showMainMenu }),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Guarda la conversación en cada cambio. Los mensajes son datos planos
+  // (texto + enlace opcional), así que serializan sin problema.
+  useEffect(() => {
+    if (messages.length > 0) saveConversation(messages);
+  }, [messages]);
 
   return (
     <>

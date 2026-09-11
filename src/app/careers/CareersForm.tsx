@@ -158,27 +158,11 @@ export default function CareersForm() {
           </div>
         </section>
 
-        {/* 4. SECCIÓN PUESTOS ABIERTOS */}
-        <section className={styles.vacanciesSection}>
-          <h2 className={styles.sectionTitle}>{t.careers.vacanciesTitle}</h2>
-
-          <div className={styles.vacancyCard}>
-            <span>{t.careers.vacancy1}</span>
-            <span className={styles.vacancyBadge}>{t.careers.openPosition}</span>
-          </div>
-
-          <div className={styles.vacancyCard}>
-            <span>{t.careers.vacancy2}</span>
-            <span className={styles.vacancyBadge}>{t.careers.openPosition}</span>
-          </div>
-
-          <div className={styles.vacancyCard}>
-            <span>{t.careers.vacancy3}</span>
-            <span className={styles.vacancyBadge}>{t.careers.openPosition}</span>
-          </div>
-        </section>
-
-        {/* 5. SECCIÓN FORMULARIO, EN TARJETA BLANCA SOBRE EL MISMO FONDO DE LA PÁGINA */}
+        {/* 4. SECCIÓN FORMULARIO, EN TARJETA BLANCA SOBRE EL MISMO FONDO DE LA PÁGINA
+            (El listado de vacantes se retiró: la clínica recibe candidaturas
+            abiertas, y publicar puestos marcados como cerrados desalienta a
+            quien podría aplicar. Las cadenas vacancy1..3 y openPosition siguen
+            en translations.ts por si se quiere volver a listar puestos.) */}
         <section className={styles.formSection}>
           <div className={styles.formCard}>
             <div className={styles.formSectionHeader}>

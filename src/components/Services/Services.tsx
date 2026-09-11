@@ -48,14 +48,41 @@ function AcupunctureIcon({ className }: { className?: string }) {
   );
 }
 
+function PainManagementIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3l7 3v5.5c0 4.3-2.9 7.3-7 8.5-4.1-1.2-7-4.2-7-8.5V6z" />
+      <path d="M8 12h2l1.2-2.5 1.6 5 1.2-2.5H17" />
+    </svg>
+  );
+}
+
+function OrthopedicIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="7" cy="7" r="3.2" />
+      <circle cx="17" cy="17" r="3.2" />
+      <path d="M9.3 9.3l5.4 5.4" />
+    </svg>
+  );
+}
+
 export default function Services() {
   const { t } = useLanguage();
 
-  // Mapeo preciso basado en el índice o ID de tus servicios médicos
-  const getProfessionalIcon = (id: string, index: number) => {
-    if (id?.toLowerCase().includes("chiro") || index === 1) return <ChiropracticIcon className={styles.icon} />;
-    if (id?.toLowerCase().includes("acu") || index === 2) return <AcupunctureIcon className={styles.icon} />;
-    return <PhysicalTherapyIcon className={styles.icon} />;
+  // Icono por id del servicio. Antes dependía del índice, así que cualquier
+  // servicio nuevo caía en el icono de terapia física por descarte.
+  const ICONS: Record<string, (props: { className?: string }) => JSX.Element> = {
+    "physical-therapy": PhysicalTherapyIcon,
+    chiropractic: ChiropracticIcon,
+    acupuncture: AcupunctureIcon,
+    "pain-management": PainManagementIcon,
+    orthopedic: OrthopedicIcon,
+  };
+
+  const getProfessionalIcon = (id: string) => {
+    const Icon = ICONS[id] ?? PhysicalTherapyIcon;
+    return <Icon className={styles.icon} />;
   };
 
   return (
@@ -75,7 +102,7 @@ export default function Services() {
             return (
               <div key={service.id || index} className={styles.card}>
                 <div className={styles.iconWrap}>
-                  {getProfessionalIcon(service.id, index)}
+                  {getProfessionalIcon(service.id)}
                 </div>
                 <h3>{localized.name}</h3>
                 <p className={styles.desc}>{localized.description}</p>
@@ -89,7 +116,9 @@ export default function Services() {
                   ))}
                 </ul>
 
-                <em className={styles.tag}>Dr. {service.provider}</em>
+                {/* Solo se muestra si el servicio tiene un proveedor asignado:
+                    sin esta guarda saldría un "Dr." suelto sin nombre. */}
+                {service.provider && <em className={styles.tag}>Dr. {service.provider}</em>}
               </div>
             );
           })}

@@ -86,7 +86,7 @@ const en = {
   },
   services: {
     eyebrow: "What we treat",
-    title: "Three disciplines, one recovery plan.",
+    title: "Five disciplines, one recovery plan.",
     lead:
       "Whether your injury happened in a car accident, at work, at home, or another way, our providers work from a shared plan so your care stays coordinated from your first visit to your last.",
     items: {
@@ -121,6 +121,28 @@ const en = {
           "Complements physical therapy & chiropractic care",
           "Helps reduce inflammation and muscle tension",
           "Supports faster, more complete recovery",
+        ],
+      },
+      "pain-management": {
+        name: "Pain Management",
+        description:
+          "Non-surgical care for persistent and post-injury pain, coordinated with your therapy plan so relief and rehabilitation move forward together.",
+        highlights: [
+          "Chronic and post-accident pain care",
+          "Non-surgical, conservative approaches",
+          "Coordinated with your therapy plan",
+          "Progress reviewed at every visit",
+        ],
+      },
+      orthopedic: {
+        name: "Orthopedic Care",
+        description:
+          "Evaluation and conservative treatment for muscle, joint, and bone injuries — from sprains and overuse to post-surgical recovery.",
+        highlights: [
+          "Joint, muscle, and bone injury care",
+          "Sprains, strains, and overuse injuries",
+          "Post-surgical rehabilitation support",
+          "Imaging and specialist referrals coordinated",
         ],
       },
     } as Record<string, { name: string; description: string; highlights: string[] }>,
@@ -448,10 +470,9 @@ const en = {
     moon: { role: "Physical Therapist", note: "Leads individualized rehabilitation plans for accident and injury recovery." },
     weiner: { role: "Chiropractor", note: "Focuses on spinal and joint care for whiplash and injury-related pain." },
     yom: { role: "Acupuncturist", note: "Provides complementary pain management as part of a coordinated care plan." },
-    "cindy-rodriguez": { role: "Business Manager Operator", note: "Oversees daily clinic operations to ensure exceptional care and service delivery." },
     "daniela-suarez": { role: "Front Desk", note: "Welcomes patients, coordinates schedules, and assists with check-in procedures." },
     "daniela-front-desk": { role: "Front Desk", note: "Greets patients on arrival, answers calls, and keeps the front desk running smoothly." },
-    "maria-hanna": { role: "Business Manager Operator", note: "Coordinates internal operations and supports team development." },
+    "maria-hanna": { role: "Business Administrator", note: "Coordinates internal operations and supports team development." },
     "erick-hannah": { role: "Billing Department Coordinator", note: "Manages billing processes and coordinates with medical insurance providers." },
     "maite-pardo": { role: "Billing Department Coordinator", note: "Ensures accurate account processing and supports provider billing workflows." },
     "george-billing": { role: "Billing Department", note: "Handles account claims, verification, and payment processing." },
@@ -528,6 +549,42 @@ const en = {
     inputPlaceholder: "Type your message",
     send: "Send",
     typingLabel: "Vika is typing",
+    // --- Opciones y respuestas ampliadas del chat ---
+    optionConditions: "Conditions we treat",
+    idlePrompt: "Are you still there? Can I help you with anything else?",
+    // Etiquetas de los enlaces que el bot ofrece para llevarte a la sección
+    linkAppointmentForm: "Open the appointment form",
+    linkServices: "See all services",
+    linkConditions: "See all conditions",
+    linkInsurance: "See accepted insurance plans",
+    linkTeam: "Meet the team",
+    linkForms: "Go to patient forms",
+    linkFaqs: "Read the FAQs",
+    linkCareers: "See careers",
+    linkMap: "Open in Google Maps",
+    linkReferral: "Refer a friend",
+    linkContact: "See contact details",
+    // Horario: respuesta con el día de hoy resaltado
+    hoursTodayOpen: "Today we're open",
+    hoursTodayClosed: "We're closed today.",
+    hoursFullIntro: "Our full schedule:",
+    // Respuestas nuevas
+    conditionsInfo:
+      "We treat back, neck, shoulder, hip, knee, elbow, wrist, hand, foot and ankle pain, plus sciatica, arthritis, whiplash, sports injuries and post-surgical rehab.",
+    teamInfo:
+      "Our team includes physical therapists, a chiropractor and an acupuncturist, along with front desk, billing and medical records staff.",
+    careersInfo:
+      "We're always glad to hear from physical therapists, chiropractors, acupuncturists and front-desk staff. You can send your details through the careers form.",
+    formsInfo:
+      "You can review and fill out our patient forms before your first visit to save time at check-in.",
+    faqsInfo:
+      "Most common questions about visits, insurance and what to bring are answered on our FAQ page.",
+    contactInfo: "You can call or text us at",
+    contactInfoEmail: "or email us at",
+    languagesInfo:
+      "Yes — we speak Spanish. Sí, hablamos español. You can call us or write here in either language.",
+    firstVisitInfo:
+      "For your first visit bring a photo ID, your insurance card, and any claim or case number if your injury was from an auto or work accident. Arriving 10 minutes early helps with check-in.",
   },
   footer: {
     quickLinks: "Quick Links",
@@ -640,7 +697,7 @@ const es: TranslationDict = {
   },
   services: {
     eyebrow: "Qué tratamos",
-    title: "Tres disciplinas, un solo plan de recuperación.",
+    title: "Cinco disciplinas, un solo plan de recuperación.",
     lead:
       "Ya sea que tu lesión haya ocurrido en un accidente automovilístico, en el trabajo, en casa o de otra forma, nuestros proveedores trabajan con un plan compartido para que tu atención se mantenga coordinada desde tu primera hasta tu última visita.",
     items: {
@@ -675,6 +732,28 @@ const es: TranslationDict = {
           "Complementa la terapia física y quiropráctica",
           "Ayuda a reducir la inflamación y la tensión muscular",
           "Apoya una recuperación más rápida y completa",
+        ],
+      },
+      "pain-management": {
+        name: "Manejo del Dolor",
+        description:
+          "Atención no quirúrgica para el dolor persistente y posterior a una lesión, coordinada con tu plan de terapia para que el alivio y la rehabilitación avancen juntos.",
+        highlights: [
+          "Dolor crónico y posterior a accidentes",
+          "Enfoques conservadores, sin cirugía",
+          "Coordinado con tu plan de terapia",
+          "Progreso revisado en cada visita",
+        ],
+      },
+      orthopedic: {
+        name: "Atención Ortopédica",
+        description:
+          "Evaluación y tratamiento conservador de lesiones de músculos, articulaciones y huesos — desde esguinces y sobreuso hasta la recuperación posquirúrgica.",
+        highlights: [
+          "Lesiones de articulaciones, músculos y huesos",
+          "Esguinces, distensiones y lesiones por sobreuso",
+          "Apoyo en rehabilitación posquirúrgica",
+          "Coordinación de imágenes y referencias a especialistas",
         ],
       },
     },
@@ -1002,10 +1081,9 @@ const es: TranslationDict = {
     moon: { role: "Terapeuta Física", note: "Lidera planes de rehabilitación individualizados para la recuperación de accidentes y lesiones." },
     weiner: { role: "Quiropráctico", note: "Se enfoca en el cuidado espinal y articular para el latigazo cervical y el dolor relacionado con lesiones." },
     yom: { role: "Acupunturista", note: "Brinda manejo del dolor complementario como parte de un plan de atención coordinado." },
-    "cindy-rodriguez": { role: "Gerente de Operaciones", note: "Supervisa las operaciones diarias de la clínica para asegurar una atención y servicio excepcionales." },
     "daniela-suarez": { role: "Recepción", note: "Recibe a los pacientes, coordina horarios y asiste con los procedimientos de registro." },
     "daniela-front-desk": { role: "Recepción", note: "Recibe a los pacientes al llegar, atiende llamadas y mantiene la recepción funcionando sin contratiempos." },
-    "maria-hanna": { role: "Gerente de Operaciones", note: "Coordina las operaciones internas y apoya el desarrollo del equipo." },
+    "maria-hanna": { role: "Administradora de Negocios", note: "Coordina las operaciones internas y apoya el desarrollo del equipo." },
     "erick-hannah": { role: "Coordinador del Departamento de Facturación", note: "Gestiona los procesos de facturación y coordina con las aseguradoras médicas." },
     "maite-pardo": { role: "Coordinadora del Departamento de Facturación", note: "Asegura el procesamiento preciso de cuentas y apoya los flujos de facturación de los proveedores." },
     "george-billing": { role: "Departamento de Facturación", note: "Maneja reclamos de cuentas, verificación y procesamiento de pagos." },
@@ -1082,6 +1160,39 @@ const es: TranslationDict = {
     inputPlaceholder: "Escribe tu mensaje",
     send: "Enviar",
     typingLabel: "Vika está escribiendo",
+    // --- Opciones y respuestas ampliadas del chat ---
+    optionConditions: "Condiciones que tratamos",
+    idlePrompt: "¿Sigues ahí? ¿Te puedo ayudar en algo más?",
+    linkAppointmentForm: "Abrir el formulario de citas",
+    linkServices: "Ver todos los servicios",
+    linkConditions: "Ver todas las condiciones",
+    linkInsurance: "Ver seguros aceptados",
+    linkTeam: "Conocer al equipo",
+    linkForms: "Ir a los formularios del paciente",
+    linkFaqs: "Leer las preguntas frecuentes",
+    linkCareers: "Ver oportunidades de trabajo",
+    linkMap: "Abrir en Google Maps",
+    linkReferral: "Referir a un amigo",
+    linkContact: "Ver datos de contacto",
+    hoursTodayOpen: "Hoy atendemos",
+    hoursTodayClosed: "Hoy estamos cerrados.",
+    hoursFullIntro: "Nuestro horario completo:",
+    conditionsInfo:
+      "Tratamos dolor de espalda, cuello, hombro, cadera, rodilla, codo, muñeca, mano, pie y tobillo, además de ciática, artritis, latigazo cervical, lesiones deportivas y rehabilitación posquirúrgica.",
+    teamInfo:
+      "Nuestro equipo incluye terapeutas físicos, un quiropráctico y un acupunturista, junto con personal de recepción, facturación y registros médicos.",
+    careersInfo:
+      "Siempre nos alegra recibir candidaturas de terapeutas físicos, quiroprácticos, acupunturistas y personal de recepción. Puedes enviarnos tus datos por el formulario de empleo.",
+    formsInfo:
+      "Puedes revisar y llenar los formularios del paciente antes de tu primera visita para ahorrar tiempo en el registro.",
+    faqsInfo:
+      "Las preguntas más comunes sobre las visitas, el seguro y qué traer están respondidas en nuestra página de preguntas frecuentes.",
+    contactInfo: "Puedes llamarnos o enviarnos un mensaje al",
+    contactInfoEmail: "o escribirnos a",
+    languagesInfo:
+      "Sí, hablamos español. Puedes llamarnos o escribir aquí en español sin problema.",
+    firstVisitInfo:
+      "Para tu primera visita trae una identificación con foto, tu tarjeta del seguro y el número de caso o reclamo si tu lesión fue por un accidente de auto o de trabajo. Llegar 10 minutos antes ayuda con el registro.",
   },
   footer: {
     quickLinks: "Enlaces Rápidos",

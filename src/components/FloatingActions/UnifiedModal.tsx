@@ -46,7 +46,9 @@ export default function UnifiedModal({ onClose }: { onClose: () => void }) {
           </div>
         )}
 
-        {tab === "webchat" && <WebChatBody />}
+        {/* onNavigate cierra el modal cuando el bot enlaza a una sección
+            del sitio, para que el visitante vea la página a la que va. */}
+        {tab === "webchat" && <WebChatBody onNavigate={onClose} />}
         {tab === "appointment" && <AppointmentBody />}
         {tab === "contact" && <ContactBody />}
 

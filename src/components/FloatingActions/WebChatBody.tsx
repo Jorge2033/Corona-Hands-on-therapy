@@ -6,10 +6,17 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 import styles from "./Modal.module.css";
 import chatStyles from "./WebChatModal.module.css";
 
+interface ChatLink {
+  label: string;
+  href: string;
+}
+
 interface ChatMessage {
   id: number;
   from: "bot" | "user";
   text: string;
+  // Enlace opcional que lleva a la sección del sitio que responde la pregunta
+  link?: ChatLink;
 }
 
 interface QuickOption {
@@ -45,7 +52,7 @@ export function AssistantAvatar({ size, className }: { size: number; className: 
 // respuesta de respaldo que siempre dirige a llamar o escribir por email.
 // El indicador de "escribiendo..." es solo una pausa simulada para que la
 // experiencia se sienta como un chat en vivo, no una respuesta real generada.
-export default function WebChatBody() {
+export default function WebChatBody({ onNavigate }: { onNavigate?: () => void } = {}) {
   const { t } = useLanguage();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [options, setOptions] = useState<QuickOption[]>([]);
@@ -56,16 +63,19 @@ export default function WebChatBody() {
     setMessages((prev) => [...prev, { id: prev.length + 1, from: "user", text }]);
   }
 
-  // Simula una breve pausa de "escribiendo" antes de insertar el mensaje del bot,
-  // y opcionalmente ejecuta algo después (mostrar las siguientes opciones, etc.)
-  function pushBotMessage(text: string, after?: () => void) {
+  // Simula una breve pausa de "escribiendo" antes de insertar el mensaje del bot.
+  // `link` adjunta un botón que lleva a la sección correspondiente del sitio.
+  function pushBotMessage(text: string, opts?: { link?: ChatLink; after?: () => void }) {
     setOptions([]);
     setIsTyping(true);
     const delay = 1400 + Math.random() * 900;
     setTimeout(() => {
-      setMessages((prev) => [...prev, { id: prev.length + 1, from: "bot", text }]);
+      setMessages((prev) => [
+        ...prev,
+        { id: prev.length + 1, from: "bot", text, link: opts?.link },
+      ]);
       setIsTyping(false);
-      after?.();
+      (opts?.after ?? backToMenuOption)();
     }, delay);
   }
 
@@ -74,8 +84,9 @@ export default function WebChatBody() {
       { label: t.webchat.optionAppointment, onSelect: () => selectOption(t.webchat.optionAppointment, showAppointmentInfo) },
       { label: t.webchat.optionHours, onSelect: () => selectOption(t.webchat.optionHours, showHours) },
       { label: t.webchat.optionInsurance, onSelect: () => selectOption(t.webchat.optionInsurance, showInsurance) },
-      { label: t.webchat.optionLocation, onSelect: () => selectOption(t.webchat.optionLocation, showLocation) },
       { label: t.webchat.optionServices, onSelect: () => selectOption(t.webchat.optionServices, showServices) },
+      { label: t.webchat.optionConditions, onSelect: () => selectOption(t.webchat.optionConditions, showConditions) },
+      { label: t.webchat.optionLocation, onSelect: () => selectOption(t.webchat.optionLocation, showLocation) },
     ]);
   }
 
@@ -84,29 +95,99 @@ export default function WebChatBody() {
     next();
   }
 
+  // --- Respuestas -------------------------------------------------------
+
   function showAppointmentInfo() {
-    pushBotMessage(
-      `${t.webchat.appointmentInfoPrefix} ${SITE.phoneDisplay}.`,
-      backToMenuOption
-    );
+    pushBotMessage(`${t.webchat.appointmentInfoPrefix} ${SITE.phoneDisplay}.`, {
+      link: { label: t.webchat.linkAppointmentForm, href: "/#contact" },
+    });
   }
 
+  // Resalta el horario de HOY antes de listar la semana completa: es lo que
+  // casi siempre quiere saber quien pregunta "¿están abiertos?".
   function showHours() {
-    const hoursText = HOURS.map((h) => `${t.contact.days[h.day] ?? h.day}: ${h.time}`).join(" · ");
-    pushBotMessage(hoursText, backToMenuOption);
+    const todayName = new Date().toLocaleDateString("en-US", { weekday: "long" });
+    const today = HOURS.find((h) => h.day === todayName);
+    const isClosed = !today || /closed/i.test(today.time);
+    const todayLine = isClosed
+      ? t.webchat.hoursTodayClosed
+      : `${t.webchat.hoursTodayOpen} ${today.time}.`;
+    const full = HOURS.map((h) => `${t.contact.days[h.day] ?? h.day}: ${h.time}`).join(" · ");
+    pushBotMessage(`${todayLine} ${t.webchat.hoursFullIntro} ${full}`);
   }
 
   function showInsurance() {
-    pushBotMessage(t.webchat.insuranceInfo, backToMenuOption);
+    pushBotMessage(t.webchat.insuranceInfo, {
+      link: { label: t.webchat.linkInsurance, href: "/patient-info/insurance" },
+    });
   }
 
   function showLocation() {
-    pushBotMessage(`${t.webchat.locationPrefix} ${SITE.address.line1}, ${SITE.address.line2}.`, backToMenuOption);
+    pushBotMessage(`${t.webchat.locationPrefix} ${SITE.address.line1}, ${SITE.address.line2}.`, {
+      link: {
+        label: t.webchat.linkMap,
+        href: "https://www.google.com/maps/search/?api=1&query=90-46+Corona+Ave+Elmhurst+NY+11373",
+      },
+    });
   }
 
   function showServices() {
     const list = SERVICES.map((s) => t.services.items[s.id]?.name ?? s.name).join(", ");
-    pushBotMessage(`${t.webchat.servicesPrefix} ${list}.`, backToMenuOption);
+    pushBotMessage(`${t.webchat.servicesPrefix} ${list}.`, {
+      link: { label: t.webchat.linkServices, href: "/#services" },
+    });
+  }
+
+  function showConditions() {
+    pushBotMessage(t.webchat.conditionsInfo, {
+      link: { label: t.webchat.linkConditions, href: "/conditions" },
+    });
+  }
+
+  function showTeam() {
+    pushBotMessage(t.webchat.teamInfo, {
+      link: { label: t.webchat.linkTeam, href: "/team" },
+    });
+  }
+
+  function showCareers() {
+    pushBotMessage(t.webchat.careersInfo, {
+      link: { label: t.webchat.linkCareers, href: "/careers" },
+    });
+  }
+
+  function showForms() {
+    pushBotMessage(t.webchat.formsInfo, {
+      link: { label: t.webchat.linkForms, href: "/patient-info/forms" },
+    });
+  }
+
+  function showFaqs() {
+    pushBotMessage(t.webchat.faqsInfo, {
+      link: { label: t.webchat.linkFaqs, href: "/patient-info/faqs" },
+    });
+  }
+
+  function showReferral() {
+    pushBotMessage(t.webchat.formsInfo, {
+      link: { label: t.webchat.linkReferral, href: "/patient-info/refer-a-friend" },
+    });
+  }
+
+  function showContact() {
+    pushBotMessage(
+      `${t.webchat.contactInfo} ${SITE.phoneDisplay}, ${t.webchat.contactInfoEmail} ${SITE.email}.`
+    );
+  }
+
+  function showLanguages() {
+    pushBotMessage(t.webchat.languagesInfo);
+  }
+
+  function showFirstVisit() {
+    pushBotMessage(t.webchat.firstVisitInfo, {
+      link: { label: t.webchat.linkForms, href: "/patient-info/forms" },
+    });
   }
 
   function backToMenuOption() {
@@ -158,16 +239,78 @@ export default function WebChatBody() {
       "services", "service", "treatment", "treatments", "therapy",
       "physical therapy", "chiropractic", "chiropractor", "acupuncture",
       "offer", "offerings", "what do you do", "what do you treat", "treat",
-      "rehab", "rehabilitation",
+      "rehab", "rehabilitation", "pain management", "orthopedic", "orthopaedic",
+      "massage", "dry needling", "traction", "ultrasound", "modalities",
       "servicios", "servicio", "tratamiento", "tratamientos", "terapia",
       "fisioterapia", "quiropráctico", "quiropractico", "quiropráctica",
       "acupuntura", "ofrecen", "que tratan", "qué tratan", "tratan",
-      "rehabilitación", "rehabilitacion",
+      "rehabilitación", "rehabilitacion", "manejo del dolor", "ortopedia",
+      "ortopédico", "ortopedico", "masaje",
+    ],
+    conditions: [
+      "back pain", "neck pain", "shoulder", "hip pain", "knee", "elbow",
+      "wrist", "hand pain", "foot", "ankle", "sciatica", "arthritis",
+      "whiplash", "sports injury", "sports injuries", "post surgical",
+      "post-surgical", "herniated", "disc", "pinched nerve", "condition",
+      "conditions", "injury", "injuries", "hurt", "pain",
+      "dolor de espalda", "dolor de cuello", "hombro", "cadera", "rodilla",
+      "codo", "muñeca", "muneca", "mano", "pie", "tobillo", "ciática", "ciatica",
+      "artritis", "latigazo", "lesión", "lesion", "lesiones", "hernia",
+      "nervio", "condición", "condicion", "dolor",
+    ],
+    firstVisit: [
+      "first visit", "first appointment", "what to bring", "bring", "what do i need",
+      "prepare", "preparation", "what should i bring", "id", "before my visit",
+      "primera visita", "primera cita", "que llevar", "qué llevar", "que traer",
+      "qué traer", "que necesito", "qué necesito", "preparar", "antes de mi visita",
+    ],
+    forms: [
+      "form", "forms", "paperwork", "intake", "documents", "download",
+      "new patient form", "fill out",
+      "formulario", "formularios", "papeleo", "documentos", "descargar", "llenar",
+    ],
+    faqs: [
+      "faq", "faqs", "question", "questions", "frequently asked", "how does it work",
+      "preguntas", "pregunta", "preguntas frecuentes", "como funciona", "cómo funciona",
+    ],
+    team: [
+      "team", "staff", "doctor", "doctors", "therapist", "therapists",
+      "who works", "provider", "providers", "physician", "specialist",
+      "equipo", "personal", "doctor", "doctora", "doctores", "terapeuta",
+      "terapeutas", "quien trabaja", "quién trabaja", "proveedor", "especialista",
+    ],
+    careers: [
+      "job", "jobs", "career", "careers", "hiring", "hire", "employment",
+      "work with you", "vacancy", "vacancies", "position", "apply", "resume",
+      "trabajo", "trabajos", "empleo", "empleos", "carrera", "contratan",
+      "contratando", "vacante", "vacantes", "postular", "aplicar", "currículum",
+      "curriculum", "hoja de vida",
+    ],
+    referral: [
+      "refer", "referral", "refer a friend", "recommend",
+      "referir", "referencia", "recomendar", "referido",
+    ],
+    languages: [
+      "spanish", "espanol", "español", "habla espanol", "habla español",
+      "language", "translator", "interpreter",
+      "idioma", "hablan español", "hablan espanol", "traductor", "intérprete",
+      "interprete",
+    ],
+    contact: [
+      "phone", "call", "telephone", "number", "whatsapp", "text", "sms",
+      "email", "e-mail", "contact", "reach you", "talk to someone", "speak to",
+      "teléfono", "telefono", "llamar", "número", "numero", "correo",
+      "contacto", "contactar", "hablar con alguien", "escribir",
     ],
   } as const;
 
+  // El orden decide qué categoría gana cuando el texto coincide con varias.
+  // Las más específicas van primero: "first visit" contiene "visit", y
+  // "back pain" contiene "pain", así que deben ganarle a las genéricas.
   const INTENT_ORDER: (keyof typeof INTENT_KEYWORDS)[] = [
-    "appointment", "insurance", "location", "hours", "services",
+    "firstVisit", "forms", "referral", "careers", "faqs", "languages",
+    "appointment", "insurance", "location", "hours", "team", "services",
+    "conditions", "contact",
   ];
 
   const INTENT_HANDLERS: Record<keyof typeof INTENT_KEYWORDS, () => void> = {
@@ -176,6 +319,15 @@ export default function WebChatBody() {
     insurance: showInsurance,
     location: showLocation,
     services: showServices,
+    conditions: showConditions,
+    firstVisit: showFirstVisit,
+    forms: showForms,
+    faqs: showFaqs,
+    team: showTeam,
+    careers: showCareers,
+    referral: showReferral,
+    languages: showLanguages,
+    contact: showContact,
   };
 
   function detectIntent(text: string): keyof typeof INTENT_KEYWORDS | null {
@@ -191,19 +343,52 @@ export default function WebChatBody() {
   function handleTextSubmit(e: React.FormEvent) {
     e.preventDefault();
     const text = inputValue.trim();
+    // Enviar vacío no hace nada: el reenganche por inactividad se encarga
     if (!text) return;
     pushUserMessage(text);
     setInputValue("");
+    bumpActivity();
     const intent = detectIntent(text);
     if (intent) {
       INTENT_HANDLERS[intent]();
       return;
     }
     pushBotMessage(
-      `${t.webchat.fallbackPrefix} ${SITE.phoneDisplay} ${t.webchat.fallbackMiddle} ${SITE.email} ${t.webchat.fallbackSuffix}`,
-      backToMenuOption
+      `${t.webchat.fallbackPrefix} ${SITE.phoneDisplay} ${t.webchat.fallbackMiddle} ${SITE.email} ${t.webchat.fallbackSuffix}`
     );
   }
+
+  // --- Reenganche por inactividad ---------------------------------------
+  // Si el visitante se queda callado, Vika vuelve a ofrecer ayuda y muestra
+  // el menú otra vez. Se limita a 2 veces para no resultar insistente.
+  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const idleCountRef = useRef(0);
+  const IDLE_MS = 45000;
+  const MAX_IDLE_PROMPTS = 2;
+
+  function bumpActivity() {
+    idleCountRef.current = 0;
+    scheduleIdlePrompt();
+  }
+
+  function scheduleIdlePrompt() {
+    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+    if (idleCountRef.current >= MAX_IDLE_PROMPTS) return;
+    idleTimerRef.current = setTimeout(() => {
+      idleCountRef.current += 1;
+      pushBotMessage(t.webchat.idlePrompt, { after: showMainMenu });
+    }, IDLE_MS);
+  }
+
+  // Reprograma el recordatorio cada vez que cambia la conversación, y lo
+  // limpia al cerrar el chat para no dejar temporizadores sueltos.
+  useEffect(() => {
+    if (messages.length > 0) scheduleIdlePrompt();
+    return () => {
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages.length]);
 
   // Saludo inicial escalonado (con pausa de "escribiendo") al abrir el chat.
   // El guard evita que el doble-montaje de React Strict Mode en desarrollo
@@ -212,8 +397,8 @@ export default function WebChatBody() {
   useEffect(() => {
     if (hasGreetedRef.current) return;
     hasGreetedRef.current = true;
-    pushBotMessage(`${t.webchat.greeting1Prefix} ${SITE.name}.`, () => {
-      pushBotMessage(t.webchat.greeting2, showMainMenu);
+    pushBotMessage(`${t.webchat.greeting1Prefix} ${SITE.name}.`, {
+      after: () => pushBotMessage(t.webchat.greeting2, { after: showMainMenu }),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -226,6 +411,21 @@ export default function WebChatBody() {
             {m.from === "bot" && <AssistantAvatar size={26} className={chatStyles.avatar} />}
             <div className={m.from === "bot" ? chatStyles.botBubble : chatStyles.userBubble}>
               {m.text}
+              {m.link && (
+                <a
+                  className={chatStyles.bubbleLink}
+                  href={m.link.href}
+                  target={m.link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={m.link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  // Los enlaces internos cierran el chat para que se vea
+                  // la sección a la que llevan.
+                  onClick={() => {
+                    if (!m.link!.href.startsWith("http")) onNavigate?.();
+                  }}
+                >
+                  {m.link.label} →
+                </a>
+              )}
             </div>
           </div>
         ))}
